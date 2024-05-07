@@ -1,5 +1,5 @@
 import React from "react";
-import { FormData } from "../../interfaces/interfaces";
+import { FormData } from "../../../../interfaces";
 import {
   Table,
   TableBody,
