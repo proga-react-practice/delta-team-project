@@ -1,6 +1,6 @@
 import React from "react";
 import { SelectChangeEvent } from "@mui/material";
-import { FormData} from "../../interfaces/interfaces";
+import { FormData} from "../../../../interfaces";
 import {
   TextField,
   FormControl,
