@@ -109,6 +109,7 @@ const RadioGroupStyle = {
 const Form: React.FC<FormProps> = ({ onSubmit }) => {
   const { register, handleSubmit, control, formState: { errors }, reset } = useForm<FormData>({
     defaultValues: initialFormData,
+    mode: 'onChange'
   });
 
   const handleReset = () => {
