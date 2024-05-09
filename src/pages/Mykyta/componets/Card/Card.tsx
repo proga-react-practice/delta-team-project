@@ -7,6 +7,7 @@ import {
   TableContainer,
   TableRow,
   Button,
+  TextField,
 } from "@mui/material";
 
 type CardProps = {
@@ -34,6 +35,18 @@ const TableContainerStyle = {
   },
 };
 
+const CardTextField = {
+  width: "100%",
+};
+
+const SaveEditButtonStyle = {
+  marginTop: 2,
+  marginBottom: 2,
+  marginLeft: 2,
+  marginRight: 2,
+};
+
+
 const DeleteButtonStyle = {
   marginTop: 2,
   marginBottom: 2,
@@ -47,56 +60,206 @@ const DeleteButtonStyle = {
 };
 
 const Card: React.FC<CardProps> = ({ data, onDelete }) => {
+  const [isEditing, setIsEditing] = React.useState(false);
+  const [formData, setFormData] = React.useState(data);
+
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleSave = () => {
+    setIsEditing(false);
+    data = formData;
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
   return (
     <TableContainer sx={TableContainerStyle}>
       <Table aria-label="a dense table" size="small">
         <TableBody>
           <TableRow>
             <TableCell>Brand:</TableCell>
-            <TableCell>{data.brand}</TableCell>
+            <TableCell>
+              {isEditing ? (
+                <TextField
+                  name="brand"
+                  sx={CardTextField}
+                  value={formData.brand}
+                  onChange={handleChange}
+                />
+              ) : (
+                formData.brand
+              )}
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Model:</TableCell>
-            <TableCell>{data.model}</TableCell>
+            <TableCell>
+              {isEditing ? (
+                <TextField
+                  name="model"
+                  sx={CardTextField}
+                  value={formData.model}
+                  onChange={handleChange}
+                />
+              ) : (
+                formData.model
+              )}
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Year:</TableCell>
-            <TableCell>{data.year}</TableCell>
+            <TableCell>
+              {isEditing ? (
+                <TextField
+                  name="year"
+                  sx={CardTextField}
+                  value={formData.year}
+                  onChange={handleChange}
+                />
+              ) : (
+                formData.year
+              )}
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Body Type:</TableCell>
-            <TableCell>{data.body_type}</TableCell>
+            <TableCell>
+              {isEditing ? (
+                <TextField
+                  name="body_type"
+                  sx={CardTextField}
+                  value={formData.body_type}
+                  onChange={handleChange}
+                />
+              ) : (
+                formData.body_type
+              )}
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Mileage:</TableCell>
-            <TableCell>{data.mileage_km}</TableCell>
+            <TableCell>
+              {isEditing ? (
+                <TextField
+                  name="mileage_km"
+                  sx={CardTextField}
+                  value={formData.mileage_km}
+                  onChange={handleChange}
+                />
+              ) : (
+                formData.mileage_km
+              )}
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Gearbox:</TableCell>
-            <TableCell>{data.gearbox}</TableCell>
+            <TableCell>
+              {isEditing ? (
+                <TextField
+                  name="gearbox"
+                  sx={CardTextField}
+                  value={formData.gearbox}
+                  onChange={handleChange}
+                />
+              ) : (
+                formData.gearbox
+              )}
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Fuel:</TableCell>
-            <TableCell>{data.fuel}</TableCell>
+            <TableCell>
+              {isEditing ? (
+                <TextField
+                  name="fuel"
+                  sx={CardTextField}
+                  value={formData.fuel}
+                  onChange={handleChange}
+                />
+              ) : (
+                formData.fuel
+              )}
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Price per day:</TableCell>
-            <TableCell>{data.price_per_day}</TableCell>
+            <TableCell>
+              {isEditing ? (
+                <TextField
+                  name="price_per_day"
+                  sx={CardTextField}
+                  value={formData.price_per_day}
+                  onChange={handleChange}
+                />
+              ) : (
+                formData.price_per_day
+              )}
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Horse Power:</TableCell>
-            <TableCell>{data.horse_power}</TableCell>
+            <TableCell>
+              {isEditing ? (
+                <TextField
+                  name="horse_power"
+                  sx={CardTextField}
+                  value={formData.horse_power}
+                  onChange={handleChange}
+                />
+              ) : (
+                formData.horse_power
+              )}
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Engine Capacity:</TableCell>
-            <TableCell>{data.engine_capacity}</TableCell>
+            <TableCell>
+              {isEditing ? (
+                <TextField
+                  name="engine_capacity"
+                  sx={CardTextField}
+                  value={formData.engine_capacity}
+                  onChange={handleChange}
+                />
+              ) : (
+                formData.engine_capacity
+              )}
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Purpose:</TableCell>
-            <TableCell>{data.purpose}</TableCell>
+            <TableCell>
+              {isEditing ? (
+                <TextField
+                  name="purpose"
+                  sx={CardTextField}
+                  value={formData.purpose}
+                  onChange={handleChange}
+                />
+              ) : (
+                formData.purpose
+              )}
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>
+      {isEditing ? (
+        <Button variant="contained" onClick={handleSave} sx={SaveEditButtonStyle}>
+          Save
+        </Button>
+      ) : (
+        <Button variant="contained" onClick={handleEdit}  sx={SaveEditButtonStyle}>
+          Edit
+        </Button>
+      )}
       <Button variant="contained" onClick={onDelete} sx={DeleteButtonStyle}>
         Delete
       </Button>
