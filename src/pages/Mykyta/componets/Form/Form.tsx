@@ -116,8 +116,13 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
     reset(initialFormData);
   };
 
+  const handleOnSubmit = (data: FormData) => {
+    onSubmit(data);
+    handleReset();
+  };
+
   return (
-    <Box component="form"  onSubmit={handleSubmit(onSubmit)} sx={BoxFormStyle}>
+    <Box component="form"  onSubmit={handleSubmit(handleOnSubmit)} sx={BoxFormStyle}>
       <Typography
         variant="h5"
         sx={{ textAlign: "center", color: "primary.main", marginBottom: {xs: "10px" } }}
