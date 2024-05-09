@@ -34,13 +34,13 @@ export interface FieldErrors {
 export interface FormData {
     brand: string;
     model: string;
-    year: number | string;
+    year: number ;
     body_type: string;
-    mileage_km: number | string;
+    mileage_km: number ;
     gearbox: string;
     fuel: string;
-    price_per_day: number  | string;
-    horse_power: number  | string ;
-    engine_capacity: number  | string;
+    price_per_day: number 
+    horse_power: number   ;
+    engine_capacity: number ;
     purpose: string;
   }
