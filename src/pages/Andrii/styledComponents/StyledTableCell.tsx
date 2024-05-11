@@ -5,7 +5,6 @@ export const StyledTableCell = styled(TableCell)(({theme}) => ({
     fontSize: 16,
     textAlign: 'center',
     color: theme.palette.primary.light,
-    fontFamily: "'Comic Sans MS', sans-serif",
     padding: 10,
     borderBottom: '1px solid #ddd',
     
