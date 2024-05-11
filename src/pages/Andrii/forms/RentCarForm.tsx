@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import dayjs, { Dayjs } from 'dayjs';
+import React from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import InputMask from 'react-input-mask';
 import { RentCar, initialFormState } from '../../../interfaces';
@@ -8,98 +9,31 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { StyledTextField } from '../styledComponents/StyledTextField'
-import { DateTimeValidationError } from '@mui/x-date-pickers/models';
 import { createTransform } from '../animations/animation' 
 
 interface RentCarFormProps {
-    form: RentCar;
-    setForm: React.Dispatch<React.SetStateAction<RentCar>>;
-    onSubmit: (e: React.FormEvent) => void;
+    onSubmit: (data: RentCar) => void;
 }
 
-const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => {
+const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
 
-    const [error, setError] = React.useState<DateTimeValidationError | null>(null);
+    const { control, register, handleSubmit, reset, watch, formState: { errors } } = useForm<RentCar>({
+        defaultValues: initialFormState,
+        mode: 'onChange'
+    });
 
     const theme = useTheme();
     const Transform = createTransform(theme);
     dayjs.extend(advancedFormat);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
-    };
-
-    const handleDateChange = (name: string) => (date: Dayjs | null) => {
-        if (date) {
-            if (name === 'finishRentDate' && date.isBefore(dayjs(form.startRentDate).add(5, 'hours'))) {
-                setFieldErrors(prevErrors => ({ ...prevErrors, finishRentDate: true }));
-            } else {
-                setFieldErrors(prevErrors => ({ ...prevErrors, finishRentDate: false }));
-                setForm(prevForm => ({ ...prevForm, [name]: date }));
-            }
-        }
-    };
-
     const handleReset = () => {
-        setForm(initialFormState);
+        reset(initialFormState);
     };
 
-    const handleStartRentDateChange = (date: Dayjs | null) => {
-        if (date) {
-            setForm(prevForm => ({ ...prevForm, startRentDate: date }));
-        }
-    };
-
-    const handlePhoneNumberBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        const phoneNumberPattern = /^\+38\(\d{3}\) \d{3} \d{4}$/;
-        setFieldErrors({
-            ...fieldErrors,
-            phoneNumber: !value.match(phoneNumberPattern),
-        });
-    };
-
-    const errorMessage = React.useMemo(() => {
-        switch (error) {
-          case 'maxDate':
-          case 'minDate': {
-            return 'You can rent for at least 5 hours.';
-          }
-    
-          case 'invalidDate': {
-            return 'Your date is not valid';
-          }
-    
-          default: {
-            return '';
-          }
-        }
-      }, [error]);
-
-    const [fieldErrors, setFieldErrors] = useState({
-        firstName: false,
-        lastName: false,
-        phoneNumber: false,
-        email: false,
-        placeOfIssue: false,
-        finishRentDate: false,
-    });
-    
-    const handleFieldChange = (name: string, pattern: RegExp) => (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setFieldErrors({
-            ...fieldErrors,
-            [name]: !value.match(pattern),
-        });
-        handleChange(e);
+    const onSubmitForm = (data: RentCar) => {
+        onSubmit(data);
+        handleReset();
     }; 
-
-    const handleSubmit = (e: React.FormEvent) => {
-        onSubmit(e);
-        const newStartRentDate = dayjs();
-        const newFinishRentDate = newStartRentDate.add(5, 'hour');
-        setForm(prevForm => ({ ...prevForm, startRentDate: newStartRentDate, finishRentDate: newFinishRentDate }));
-    };
 
     const FormStyle = {
         minWidth: '230px',
@@ -164,7 +98,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
     return (
         <Box 
             component="form" 
-            onSubmit={ handleSubmit } 
+            onSubmit={handleSubmit(onSubmitForm)}
             sx={{...FormStyle, ...Transform}}
         >
             <Box>
@@ -173,109 +107,149 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                     sx={FullNameStyle}
                 >
                     <StyledTextField 
-                        error={fieldErrors.firstName}
+                        {...register('firstName', { 
+                            required: 'First name is required', 
+                            pattern: {
+                                value: /^[A-Z][a-z]*$/, 
+                                message: 'First name must start with a capital letter and cannot contain numbers or special characters'
+                            } 
+                        })}
+                        error={Boolean(errors.firstName)}
+                        helperText={errors.firstName && errors.firstName.type === 'required' && errors.firstName.message}
                         className="firstName" 
                         label="First Name"
                         name="firstName" 
-                        value={form.firstName} 
-                        onChange={handleFieldChange('firstName', /^[A-Z][a-z]*$/)} 
                         placeholder="First Name" 
-                        required
-                        inputProps = {{ pattern: "^[A-Z][a-z]*$" }}
                     />
                     <StyledTextField 
-                        error={fieldErrors.lastName}
+                        {...register('lastName', { 
+                            required: 'Last name is required', 
+                            pattern: {
+                                value: /^[A-Z][a-z]*$/, 
+                                message: 'Last name must start with a capital letter and cannot contain numbers or special characters'
+                            } 
+                        })}
+                        error={Boolean(errors.lastName)}
+                        helperText={errors.lastName && errors.lastName.type === 'required' && errors.lastName.message}
                         className="lastName" 
                         label="Last Name"
                         name="lastName" 
-                        value={form.lastName} 
-                        onChange={handleFieldChange('lastName', /^[A-Z][a-z]*$/)} 
                         placeholder="Last Name" 
-                        required
-                        inputProps = {{ pattern: "^[A-Z][a-z]*$" }}
                     />
                 </Box>
-                    {(fieldErrors.firstName || fieldErrors.lastName) && (
-                        <FormHelperText error>
-                            {fieldErrors.firstName ? "First name must start with a capital letter and contain only letters." : ""}
-                            {fieldErrors.firstName && fieldErrors.lastName && <br />}
-                            {fieldErrors.lastName ? "Last name must start with a capital letter and contain only letters." : ""}
-                        </FormHelperText>
-                    )}
+                {(errors.firstName && errors.firstName.type === 'pattern') || (errors.lastName && errors.lastName.type === 'pattern') && (
+                    <FormHelperText error>
+                        {errors.firstName && errors.firstName.type === 'pattern' && errors.firstName.message}
+                        {errors.firstName && errors.lastName && <br />}
+                        {errors.lastName && errors.lastName.type === 'pattern' && errors.lastName.message}
+                    </FormHelperText>
+                )}
             </Box>
-            <InputMask
-                mask="+38(099) 999 9999"
-                value={form.phoneNumber}
-                onChange={handleChange}
-                onBlur={handlePhoneNumberBlur}
-            >
-                <StyledTextField
-                    name="phoneNumber"
-                    error={fieldErrors.phoneNumber}
-                    helperText={fieldErrors.phoneNumber ? "Please enter a valid phone number in the format: +38(0__) ___ ____" : ""}
-                    label="Phone Number"
-                    placeholder="+38(0__) ___ ____"
-                    required
-                    inputProps = {{ pattern: "\\+38\\(0[0-9]{2}\\) [0-9]{3} [0-9]{4}" }}
-                />
-            </InputMask>
+            <Controller
+                name="phoneNumber"
+                control={control}
+                rules={{ required: 'Phone number is required', pattern: {
+                    value: /\+38\(0\d{2}\) \d{3} \d{4}/,
+                    message: 'Phone number must be in format: +38(0__) ___ ____'
+                }}}
+                render={({ field }) => (
+                    <InputMask
+                        mask="+38(099) 999 9999"
+                        value={field.value}
+                        onChange={field.onChange}
+                    >
+                        <StyledTextField
+                            error={Boolean(errors.phoneNumber)}
+                            label="Phone Number"
+                            placeholder="+38(0__) ___ ____"
+                            helperText={errors.phoneNumber && errors.phoneNumber.message}
+                        />
+                    </InputMask>
+                )}
+            />
             <StyledTextField 
-                error={fieldErrors.email}
-                helperText={fieldErrors.email ? "Email must contain '@'." : ''}
+                {...register('email', { required: 'Email is required', pattern: /.+@.+/ })}
+                error={Boolean(errors.email)}
+                helperText={errors.email && errors.email.message}
                 className="email"
                 label="Email" 
                 name="email" 
-                value={form.email} 
-                onChange={handleFieldChange('email', /.+@.+/)}  
                 placeholder="Email" 
-                required
                 inputProps={{ pattern: ".+@.+" }}
             />
             <StyledTextField 
-                error={fieldErrors.placeOfIssue}
-                helperText={fieldErrors.placeOfIssue ? "Place must start with a capital letter and contain only letters." : ""}
+                {...register('placeOfIssue', { 
+                    required: 'Place of Issue is required', 
+                    pattern: {
+                        value: /^[A-Z][a-z]*$/, 
+                        message: 'Place of Issue must start with a capital letter and cannot contain numbers or special characters'
+                    } 
+                })}
+                error={Boolean(errors.placeOfIssue)}
+                helperText={errors.placeOfIssue && errors.placeOfIssue.message}
                 className="placeOfIssue"
                 label="Place of Issue"   
                 name="placeOfIssue" 
-                value={form.placeOfIssue} 
-                onChange={handleFieldChange('placeOfIssue', /^[A-Z][a-z]*$/)}  
                 placeholder="Place of Issue" 
-                required
                 inputProps={{ pattern: "^[A-Z][a-z]*$" }}
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateTimePicker
-                    label="Start Rent Date"
+                <Controller
                     name="startRentDate"
-                    value={form.startRentDate}
-                    onChange={handleStartRentDateChange}
-                    format="YYYY-MM-DD HH:mm"
-                    minDateTime={dayjs().subtract(1, 'minutes')}
-                    sx={DateAndTimeStyle}
+                    control={control}
+                    rules={{ required: 'Start Rent Date is required' }}
+                    render={({ field: { onChange, ref } }) => (
+                        <>
+                            <DateTimePicker
+                                onChange={onChange}
+                                value={dayjs().add(1, 'h')}
+                                label="Start Rent Date"
+                                ref={ref}
+                                sx={DateAndTimeStyle}  
+                                format="YYYY-MM-DD HH:mm"
+                                minDateTime={dayjs()}
+                            />
+                            {errors.startRentDate && (
+                                <FormHelperText error>
+                                    {errors.startRentDate.message}
+                                </FormHelperText>
+                            )}
+                        </>
+                    )}
                 />
 
-                <DateTimePicker
-                    label="Finish Rent Date"
+                <Controller
                     name="finishRentDate"
-                    value={form.finishRentDate}
-                    onChange={handleDateChange('finishRentDate')}
-                    format="YYYY-MM-DD HH:mm"
-                    minDateTime={form.startRentDate ? dayjs(form.startRentDate).add(5, 'h') : dayjs()}
-                    onError={(newError) => setError(newError)}
-                    slotProps={{
-                        textField: {
-                          helperText: errorMessage,
-                        },
-                      }}
-                    sx={DateAndTimeStyle}
+                    control={control}
+                    rules={{
+                        required: 'Finish Rent Date is required',
+                        validate: value =>
+                            dayjs(value).diff(dayjs(watch('startRentDate')), 'hour') >= 5 || 'Finish Rent Date should be at least 5 hours later than Start Rent Date'
+                    }}
+                    render={({ field: { onChange, ref } }) => (
+                        <>
+                            <DateTimePicker
+                                onChange={onChange}
+                                value={dayjs().add(6, 'h')}
+                                label="Finish Rent Date"
+                                ref={ref}
+                                sx={DateAndTimeStyle}
+                                format="YYYY-MM-DD HH:mm"
+                                minDateTime={watch('startRentDate') ? dayjs(watch('startRentDate')).add(5, 'h') : dayjs()}
+                            />
+                            {errors.finishRentDate && (
+                                <FormHelperText error>
+                                    {errors.finishRentDate.message}
+                                </FormHelperText>
+                            )}
+                        </>
+                    )}
                 />
             </LocalizationProvider>
             <StyledTextField
                 className="comments"
                 label="Comments"
-                name="comments" 
-                value={form.comments} 
-                onChange={handleChange} 
+                name="comments"  
                 placeholder="Comments" 
             />
             <Box 
