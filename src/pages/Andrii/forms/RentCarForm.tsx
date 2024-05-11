@@ -41,7 +41,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
         display: 'flex',
         flexDirection: 'column',
         marginTop: '70px',
-        backgroundColor: theme.palette.background.default,
+        backgroundColor: theme.palette.secondary.main,
         padding: '20px',
         borderRadius: '10px',
         boxShadow: '0 0 10px rgba(0,0,0,0.20)',

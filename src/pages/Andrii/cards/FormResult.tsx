@@ -51,7 +51,7 @@ export const FormResults: React.FC<FormResultsProps> = ({ forms, onDelete, onEdi
     justifyContent: 'space-around',
     marginBottom: '20px',
     marginTop: '50px',
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.secondary.main,
     borderRadius: '5px',
     boxShadow: '0 0 10px rgba(0,0,0,0.15)',
   }
