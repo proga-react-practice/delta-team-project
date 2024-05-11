@@ -3,14 +3,16 @@ import { createTheme } from "@mui/material/styles";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#1A4D2E",
+      main: "#000000",
       dark: "#388023",
     },
     secondary: {
-      main: "#f9f9f9",
+      main: "#eeeeee",
+      dark: '#484542',
+      light: '#ffffff',
     },
     background: {
-      default: "#F5EFE6",
+      default: "#f3e9db",
     },
     error: {
       main: "#960909",
@@ -28,7 +30,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: '"Century Gothic", "Roboto", sans-serif',
+    fontFamily: 'Goudy Bookletter 1911',
   },
 });
 
