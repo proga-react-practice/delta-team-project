@@ -8,7 +8,13 @@ import {
   TableRow,
   Button,
   TextField,
+  MenuItem,
+  Select,
 } from "@mui/material";
+import { purposes }  from "../../../../interfaces";
+import { bodyTypes } from "../../../../interfaces";
+import { gearboxTypes } from "../../../../interfaces";
+import { fuelTypes } from "../../../../interfaces";
 
 type CardProps = {
   data: FormData;
@@ -135,16 +141,22 @@ const Card: React.FC<CardProps> = ({ data, onDelete }) => {
           <TableRow>
             <TableCell>Body Type:</TableCell>
             <TableCell>
-              {isEditing ? (
-                <TextField
-                  name="body_type"
-                  sx={CardTextField}
-                  value={formData.body_type}
-                  onChange={handleChange}
-                />
-              ) : (
-                formData.body_type
-              )}
+            {isEditing ? (
+              <Select
+                name="body_type"
+                sx={CardTextField}
+                value={formData.body_type}
+                onChange={handleChange}
+              >
+                {bodyTypes.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </Select>
+            ) : (
+              formData.body_type
+            )}
             </TableCell>
           </TableRow>
           <TableRow>
@@ -165,28 +177,40 @@ const Card: React.FC<CardProps> = ({ data, onDelete }) => {
           <TableRow>
             <TableCell>Gearbox:</TableCell>
             <TableCell>
-              {isEditing ? (
-                <TextField
-                  name="gearbox"
-                  sx={CardTextField}
-                  value={formData.gearbox}
-                  onChange={handleChange}
-                />
-              ) : (
-                formData.gearbox
-              )}
+            {isEditing ? (
+              <Select
+                name="gearbox"
+                sx={CardTextField}
+                value={formData.gearbox}
+                onChange={handleChange}
+              >
+                {gearboxTypes.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </Select>
+            ) : (
+              formData.gearbox
+            )}
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Fuel:</TableCell>
             <TableCell>
               {isEditing ? (
-                <TextField
+                <Select
                   name="fuel"
                   sx={CardTextField}
                   value={formData.fuel}
                   onChange={handleChange}
-                />
+                >
+                  {fuelTypes.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
               ) : (
                 formData.fuel
               )}
@@ -240,17 +264,23 @@ const Card: React.FC<CardProps> = ({ data, onDelete }) => {
           <TableRow>
             <TableCell>Purpose:</TableCell>
             <TableCell>
-              {isEditing ? (
-                <TextField
-                  name="purpose"
-                  sx={CardTextField}
-                  value={formData.purpose}
-                  onChange={handleChange}
-                />
-              ) : (
-                formData.purpose
-              )}
-            </TableCell>
+            {isEditing ? (
+              <Select
+                name="purpose"
+                sx={CardTextField}
+                value={formData.purpose}
+                onChange={handleChange}
+              >
+                {purposes.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </Select>
+            ) : (
+              formData.purpose
+            )}
+          </TableCell>
           </TableRow>
         </TableBody>
       </Table>
