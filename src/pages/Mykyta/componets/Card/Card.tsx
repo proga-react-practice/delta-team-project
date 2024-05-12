@@ -44,6 +44,9 @@ const SaveEditButtonStyle = {
   marginBottom: 2,
   marginLeft: 2,
   marginRight: 2,
+  "&:hover": {
+      backgroundColor: "dark",
+    },
 };
 
 
@@ -252,11 +255,11 @@ const Card: React.FC<CardProps> = ({ data, onDelete }) => {
         </TableBody>
       </Table>
       {isEditing ? (
-        <Button variant="contained" onClick={handleSave} sx={SaveEditButtonStyle}>
+        <Button variant="contained" color="success" onClick={handleSave} sx={SaveEditButtonStyle}>
           Save
         </Button>
       ) : (
-        <Button variant="contained" onClick={handleEdit}  sx={SaveEditButtonStyle}>
+        <Button variant="contained" color="success" onClick={handleEdit}  sx={SaveEditButtonStyle}>
           Edit
         </Button>
       )}
