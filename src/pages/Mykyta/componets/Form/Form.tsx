@@ -284,7 +284,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
         <Button
           type="submit"
           variant="contained"
-          color="primary"
+          color="success"
           sx={{
             "&:hover": {
               backgroundColor: "primary.dark",
@@ -297,11 +297,11 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
         <Button
           type="button"
           variant="contained"
-          color="primary"
+          color="error"
           onClick={handleReset}
           sx={{
             "&:hover": {
-              backgroundColor: "primary.dark",
+              backgroundColor: "dark",
             },
             ButtonStyle,
           }}
