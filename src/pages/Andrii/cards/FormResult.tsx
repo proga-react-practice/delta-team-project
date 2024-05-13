@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { Dayjs } from 'dayjs';
 import { RentCar } from '../../../interfaces';
 import { StyledTableCell } from '../styledComponents/StyledTableCell'
 import { StyledTableRow } from '../styledComponents/StyledTableRow'
@@ -7,7 +8,10 @@ import { StyledButtonEdit } from '../styledComponents/StyledButtonEdit'
 import { StyledButtonSave } from '../styledComponents/StyledButtonSave'
 import { StyledTextField } from '../styledComponents/StyledTextField'
 import { createTransform } from '../animations/animation' 
-import { Table, TableBody, TableContainer, TableHead, TableRow, useTheme } from '@mui/material';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { Table, TableBody, TableContainer, TableHead, TableRow, useTheme, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
 interface FormResultsProps {
   forms: RentCar[];
@@ -22,9 +26,18 @@ export const FormResults: React.FC<FormResultsProps> = ({ forms, onDelete, onEdi
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editingData, setEditingData] = useState<RentCar | null>(null);
 
+  const [openDialog, setOpenDialog] = useState(false);
+
   const handleEditClick = (index: number) => {
     setEditingIndex(index);
     setEditingData(forms[index]);
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setEditingIndex(null);
+    setEditingData(null);
+    setOpenDialog(false);
   };
 
   const handleSaveClick = () => {
@@ -33,12 +46,20 @@ export const FormResults: React.FC<FormResultsProps> = ({ forms, onDelete, onEdi
     }
     setEditingIndex(null);
     setEditingData(null);
+    setOpenDialog(false);
   };
 
   const handleInputChange = (prop: keyof RentCar) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setEditingData(prev => ({
       ...prev,
-      [prop]: event.target.value || '',
+      [prop]: event.target.value,
+    }) as RentCar);
+  };
+
+  const handleDateChange = (prop: keyof RentCar) => (newValue: Dayjs | null) => {
+    setEditingData(prev => ({
+      ...prev,
+      [prop]: newValue,
     }) as RentCar);
   };
 
@@ -55,6 +76,19 @@ export const FormResults: React.FC<FormResultsProps> = ({ forms, onDelete, onEdi
     borderRadius: '5px',
     boxShadow: '0 0 10px rgba(0,0,0,0.15)',
   }
+
+  const DialogButtons = {
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  }
+
+  const DateAndTimeStyle = {
+    width: '100%', 
+    padding: '10px',
+    marginBottom: '10px',
+    boxSizing: 'border-box',
+}
 
   return (
     <TableContainer sx={FormResultStyle}>
@@ -77,57 +111,56 @@ export const FormResults: React.FC<FormResultsProps> = ({ forms, onDelete, onEdi
                 <StyledTableRow key={index}>
                   {index === editingIndex ? (
                     <React.Fragment>
-                      <StyledTableCell>
-                        <StyledTextField
-                          value={editingData?.firstName}
-                          onChange={handleInputChange('firstName')}
-                        />
-                      </StyledTableCell>
-                      <StyledTableCell>
-                      <StyledTextField
-                          value={editingData?.lastName || ''}
-                          onChange={handleInputChange('lastName')}
-                        />
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <StyledTextField
-                          value={editingData?.phoneNumber}
-                          onChange={handleInputChange('phoneNumber')}
-                        />
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <StyledTextField
-                          value={editingData?.email}
-                          onChange={handleInputChange('email')}
-                        />
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <StyledTextField
-                          value={editingData?.placeOfIssue}
-                          onChange={handleInputChange('placeOfIssue')}
-                        />
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <StyledTextField
-                          value={editingData?.startRentDate.format('YYYY-MM-DD HH:mm')}
-                          onChange={handleInputChange('startRentDate')}
-                        />
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <StyledTextField
-                          value={editingData?.finishRentDate.format('YYYY-MM-DD HH:mm')}
-                          onChange={handleInputChange('finishRentDate')}
-                        />
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <StyledTextField
-                          value={editingData?.comments}
-                          onChange={handleInputChange('comments')}
-                        />
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <StyledButtonSave onClick={handleSaveClick}>Save</StyledButtonSave>
-                      </StyledTableCell>                    
+                      <Dialog open={openDialog} onClose={handleCloseDialog}>
+                        <DialogTitle>Edit Form</DialogTitle>
+                        <DialogContent>
+                          {editingData && (
+                            <>
+                              <StyledTextField
+                                label = 'First Name'
+                                value={editingData.firstName}
+                                onChange={handleInputChange('firstName')}
+                              />
+                              <StyledTextField
+                                value={editingData?.lastName || ''}
+                                onChange={handleInputChange('lastName')}
+                              />
+                              <StyledTextField
+                                value={editingData?.phoneNumber}
+                                onChange={handleInputChange('phoneNumber')}
+                              />
+                              <StyledTextField
+                                value={editingData?.email}
+                                onChange={handleInputChange('email')}
+                              />
+                              <StyledTextField
+                                value={editingData?.placeOfIssue}
+                                onChange={handleInputChange('placeOfIssue')}
+                              />
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DateTimePicker
+                                  value={editingData?.startRentDate || null}
+                                  onChange={handleDateChange('startRentDate')}
+                                  sx={DateAndTimeStyle}
+                                />
+                                <DateTimePicker
+                                  value={editingData?.finishRentDate || null}
+                                  onChange={handleDateChange('finishRentDate')}
+                                  sx={DateAndTimeStyle}
+                                />
+                              </LocalizationProvider>
+                              <StyledTextField
+                                value={editingData?.comments}
+                                onChange={handleInputChange('comments')}
+                              />
+                            </>
+                          )}
+                        </DialogContent>
+                        <DialogActions sx={DialogButtons}>
+                          <StyledButtonDelete sx={{width: '40%'}} onClick={handleCloseDialog}>Close</StyledButtonDelete>
+                          <StyledButtonSave sx={{width: '40%'}} onClick={handleSaveClick}>Save</StyledButtonSave>
+                        </DialogActions>
+                      </Dialog>                    
                     </React.Fragment>
                   ) : (
                     <React.Fragment>
