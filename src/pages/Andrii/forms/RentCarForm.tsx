@@ -31,6 +31,8 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
     };
 
     const onSubmitForm = (data: RentCar) => {
+        data.startRentDate = data.startRentDate.add(1, 'hour');
+        data.finishRentDate = data.finishRentDate.add(1, 'hour');
         onSubmit(data);
         handleReset();
     }; 
