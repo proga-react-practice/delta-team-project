@@ -65,23 +65,23 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
     }
 
     const getError = (fieldName: string) => ({
-        borderColor: errors[fieldName] ? theme.palette.error.main : 'initial',
+        borderColor: errors[fieldName] ? theme.palette.error.main : '#bcbcbc',
         '& .MuiOutlinedInput-root': {
             '& fieldset': {
-                borderColor: errors[fieldName] ? theme.palette.error.main : 'initial',
+                borderColor: errors[fieldName] ? theme.palette.error.main : '#bcbcbc',
             },
             '&:hover fieldset': {
-                borderColor: errors[fieldName] ? theme.palette.error.main : 'initial',
+                borderColor: errors[fieldName] ? theme.palette.error.main : '#bcbcbc',
             },
             '&.Mui-focused fieldset': {
-                borderColor: errors[fieldName] ? theme.palette.error.main : 'initial',
+                borderColor: errors[fieldName] ? theme.palette.error.main : '#bcbcbc',
             },
         },
         '& .MuiFormLabel-root': {
-            color: errors[fieldName] ? theme.palette.error.main : 'initial',
+            color: errors[fieldName] ? theme.palette.error.main: '#636363',
         },
         '& .MuiFormLabel-root.Mui-focused': {
-            color: errors[fieldName] ? theme.palette.error.main : theme.palette.primary.main,
+            color: errors[fieldName] ? theme.palette.error.main : '#636363',
         },
     });
 
@@ -120,8 +120,9 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
     }
 
     const HelperText = {
-        marginTop: '-15px',
+        marginTop: '-10px',
         marginLeft: '25px',
+        marginBottom: '10px'
     }
 
     return (

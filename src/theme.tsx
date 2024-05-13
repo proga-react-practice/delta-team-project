@@ -15,8 +15,9 @@ const theme = createTheme({
       default: "#f3e9db",
     },
     error: {
-      main: "#960909",
-      dark: "#700404",
+      main: '#c84238',
+      light: '#dc3545',
+      dark: '#9a000f'
     },
     success: {
       main: '#28a745',
