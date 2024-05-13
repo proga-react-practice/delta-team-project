@@ -15,15 +15,13 @@ import {
 } from "@mui/material";
 import RadioFormControlLabel from "../RadioFormControlLabel/RadioFormControlLabel";
 import FormHelperText from '@mui/material/FormHelperText';
+import { purposes }  from "../../../../interfaces";
+import { bodyTypes } from "../../../../interfaces";
+import { InputAdornment } from "@mui/material";
 
 interface FormProps {
   onSubmit: (data: FormData) => void;
 }
-import { InputAdornment } from "@mui/material";
-
-const bodyTypes = ["Sedan", "SUV", "Hatchback", "Convertible", "Coupe"];
-
-const purposes = ["Personal", "Commercial"];
 
 const initialFormData = {
   brand: "",

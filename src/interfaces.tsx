@@ -44,3 +44,11 @@ export interface FormData {
     engine_capacity: number ;
     purpose: string;
   }
+
+export const purposes = ["Personal", "Commercial"];
+
+export const bodyTypes = ["Sedan", "SUV", "Hatchback", "Convertible", "Coupe"];
+
+export const gearboxTypes = ["Manual", "Automatic"];
+
+export const fuelTypes = ["Petrol", "Diesel", "Electric"];
