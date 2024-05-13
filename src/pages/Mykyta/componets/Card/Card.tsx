@@ -79,8 +79,18 @@ const Card: React.FC<CardProps> = ({ data, onDelete }) => {
   };
 
   const handleSave = () => {
+    if (!validateForm()) {
+      return;
+    }
     setIsEditing(false);
     data = formData;
+  };
+
+  const validateForm = () => {
+    if (formData.brand === "" || formData.model === "" || formData.year < 1900 || formData.year > new Date().getFullYear() || formData.mileage_km < 0 || formData.mileage_km > 1000 || formData.price_per_day < 1 || formData.horse_power < 1 || formData.horse_power > 1000 || formData.engine_capacity < 0.1 || formData.engine_capacity > 10){
+      return false;
+    }
+    return true;
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,6 +120,8 @@ const Card: React.FC<CardProps> = ({ data, onDelete }) => {
                   sx={CardTextField}
                   value={formData.brand}
                   onChange={handleChange}
+                  error={formData.brand === ""}
+                  helperText={formData.brand === "" ? "This field is required" : ""}
                 />
               ) : (
                 formData.brand
@@ -125,6 +137,8 @@ const Card: React.FC<CardProps> = ({ data, onDelete }) => {
                   sx={CardTextField}
                   value={formData.model}
                   onChange={handleChange}
+                  error={formData.model === ""}
+                  helperText={formData.model === "" ? "This field is required" : ""}
                 />
               ) : (
                 formData.model
@@ -137,9 +151,12 @@ const Card: React.FC<CardProps> = ({ data, onDelete }) => {
               {isEditing ? (
                 <TextField
                   name="year"
+                  type="number"
                   sx={CardTextField}
                   value={formData.year}
                   onChange={handleChange}
+                  error={formData.year < 1900 || formData.year > new Date().getFullYear()}
+                  helperText={formData.year < 1900 || formData.year > new Date().getFullYear() ? "Year must be among 1900 and 2024" : ""}
                 />
               ) : (
                 formData.year
@@ -173,9 +190,12 @@ const Card: React.FC<CardProps> = ({ data, onDelete }) => {
               {isEditing ? (
                 <TextField
                   name="mileage_km"
+                  type="number"
                   sx={CardTextField}
                   value={formData.mileage_km}
                   onChange={handleChange}
+                  error={formData.mileage_km < 0 || formData.mileage_km > 1000}
+                  helperText={formData.mileage_km < 0 || formData.mileage_km > 1000 ? "Mileage must be among 0 and 1000" : ""}
                 />
               ) : (
                 formData.mileage_km
@@ -230,9 +250,12 @@ const Card: React.FC<CardProps> = ({ data, onDelete }) => {
               {isEditing ? (
                 <TextField
                   name="price_per_day"
+                  type="number"
                   sx={CardTextField}
                   value={formData.price_per_day}
                   onChange={handleChange}
+                  error={formData.price_per_day < 1}
+                  helperText={formData.price_per_day < 1 ? "Price must be 1 or bigger" : ""}
                 />
               ) : (
                 formData.price_per_day
@@ -245,9 +268,12 @@ const Card: React.FC<CardProps> = ({ data, onDelete }) => {
               {isEditing ? (
                 <TextField
                   name="horse_power"
+                  type="number"
                   sx={CardTextField}
                   value={formData.horse_power}
                   onChange={handleChange}
+                  error={formData.horse_power < 1 || formData.horse_power > 1000}
+                  helperText={formData.horse_power < 1 || formData.horse_power > 1000 ? "Horse power must be among 1 and 1000" : ""}
                 />
               ) : (
                 formData.horse_power
@@ -261,8 +287,11 @@ const Card: React.FC<CardProps> = ({ data, onDelete }) => {
                 <TextField
                   name="engine_capacity"
                   sx={CardTextField}
+                  type="number"
                   value={formData.engine_capacity}
                   onChange={handleChange}
+                  error={formData.engine_capacity < 0.1 || formData.engine_capacity > 10}
+                  helperText={formData.engine_capacity < 0.1 || formData.engine_capacity > 10 ? "Engine capacity must be among 1 and 10" : ""}
                 />
               ) : (
                 formData.engine_capacity
