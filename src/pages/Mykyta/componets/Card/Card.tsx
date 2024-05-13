@@ -1,5 +1,6 @@
 import React from "react";
 import { FormData } from "../../../../interfaces";
+import { SelectChangeEvent } from "@mui/material";
 import {
   Table,
   TableBody,
@@ -89,6 +90,13 @@ const Card: React.FC<CardProps> = ({ data, onDelete }) => {
     });
   };
 
+  const handleSelectChange = (event: SelectChangeEvent<string>) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
   return (
     <TableContainer sx={TableContainerStyle}>
       <Table aria-label="a dense table" size="small">
@@ -146,7 +154,7 @@ const Card: React.FC<CardProps> = ({ data, onDelete }) => {
                 name="body_type"
                 sx={CardTextField}
                 value={formData.body_type}
-                onChange={handleChange}
+                onChange={handleSelectChange}
               >
                 {bodyTypes.map((option) => (
                   <MenuItem key={option} value={option}>
@@ -182,7 +190,7 @@ const Card: React.FC<CardProps> = ({ data, onDelete }) => {
                 name="gearbox"
                 sx={CardTextField}
                 value={formData.gearbox}
-                onChange={handleChange}
+                onChange={handleSelectChange}
               >
                 {gearboxTypes.map((option) => (
                   <MenuItem key={option} value={option}>
@@ -203,7 +211,7 @@ const Card: React.FC<CardProps> = ({ data, onDelete }) => {
                   name="fuel"
                   sx={CardTextField}
                   value={formData.fuel}
-                  onChange={handleChange}
+                  onChange={handleSelectChange}
                 >
                   {fuelTypes.map((option) => (
                     <MenuItem key={option} value={option}>
@@ -269,7 +277,7 @@ const Card: React.FC<CardProps> = ({ data, onDelete }) => {
                 name="purpose"
                 sx={CardTextField}
                 value={formData.purpose}
-                onChange={handleChange}
+                onChange={handleSelectChange}
               >
                 {purposes.map((option) => (
                   <MenuItem key={option} value={option}>
