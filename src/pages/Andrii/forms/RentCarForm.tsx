@@ -18,7 +18,11 @@ interface RentCarFormProps {
 const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
 
     const { control, register, handleSubmit, reset, watch, formState: { errors } } = useForm<RentCar>({
-        defaultValues: initialFormState,
+        defaultValues: {
+            ...initialFormState,
+            startRentDate: undefined,
+            finishRentDate: undefined,
+        },
         mode: 'onChange'
     });
 
@@ -31,8 +35,6 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
     };
 
     const onSubmitForm = (data: RentCar) => {
-        data.startRentDate = data.startRentDate.add(1, 'hour');
-        data.finishRentDate = data.finishRentDate.add(1, 'hour');
         onSubmit(data);
         handleReset();
     }; 
@@ -59,9 +61,29 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
     const DateAndTimeStyle = {
         width: '100%', 
         padding: '10px',
-        marginBottom: '10px',
         boxSizing: 'border-box',
     }
+
+    const getError = (fieldName: string) => ({
+        borderColor: errors[fieldName] ? theme.palette.error.main : 'initial',
+        '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+                borderColor: errors[fieldName] ? theme.palette.error.main : 'initial',
+            },
+            '&:hover fieldset': {
+                borderColor: errors[fieldName] ? theme.palette.error.main : 'initial',
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: errors[fieldName] ? theme.palette.error.main : 'initial',
+            },
+        },
+        '& .MuiFormLabel-root': {
+            color: errors[fieldName] ? theme.palette.error.main : 'initial',
+        },
+        '& .MuiFormLabel-root.Mui-focused': {
+            color: errors[fieldName] ? theme.palette.error.main : theme.palette.primary.main,
+        },
+    });
 
     const BoxStyle = {
         width: '100%',
@@ -95,6 +117,11 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
         '&:hover': {
             backgroundColor: theme.palette.error.dark,
         },
+    }
+
+    const HelperText = {
+        marginTop: '-15px',
+        marginLeft: '25px',
     }
 
     return (
@@ -140,7 +167,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
                     />
                 </Box>
                 {(errors.firstName && errors.firstName.type === 'pattern') || (errors.lastName && errors.lastName.type === 'pattern') && (
-                    <FormHelperText error>
+                    <FormHelperText sx={HelperText} error>
                         {errors.firstName && errors.firstName.type === 'pattern' && errors.firstName.message}
                         {errors.firstName && errors.lastName && <br />}
                         {errors.lastName && errors.lastName.type === 'pattern' && errors.lastName.message}
@@ -200,19 +227,21 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
                     name="startRentDate"
                     control={control}
                     rules={{ required: 'Start Rent Date is required' }}
-                    render={({ field: { onChange, ref } }) => (
+                    render={({ field: { onChange, value, ref } }) => (
                         <>
                             <DateTimePicker
                                 onChange={onChange}
-                                value={dayjs().add(1, 'h')}
+                                value={value}
                                 label="Start Rent Date"
                                 ref={ref}
-                                sx={DateAndTimeStyle}  
+                                sx={{...DateAndTimeStyle,
+                                    ...getError('startRentDate')
+                                }}  
                                 format="YYYY-MM-DD HH:mm"
                                 minDateTime={dayjs()}
                             />
                             {errors.startRentDate && (
-                                <FormHelperText error>
+                                <FormHelperText sx={HelperText} error>
                                     {errors.startRentDate.message}
                                 </FormHelperText>
                             )}
@@ -228,19 +257,21 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
                         validate: value =>
                             dayjs(value).diff(dayjs(watch('startRentDate')), 'hour') >= 5 || 'Finish Rent Date should be at least 5 hours later than Start Rent Date'
                     }}
-                    render={({ field: { onChange, ref } }) => (
+                    render={({ field: { onChange, value, ref } }) => (
                         <>
                             <DateTimePicker
                                 onChange={onChange}
-                                value={dayjs().add(6, 'h')}
+                                value={value}
                                 label="Finish Rent Date"
                                 ref={ref}
-                                sx={DateAndTimeStyle}
+                                sx={{...DateAndTimeStyle,
+                                    ...getError('finishRentDate')
+                                }}
                                 format="YYYY-MM-DD HH:mm"
                                 minDateTime={watch('startRentDate') ? dayjs(watch('startRentDate')).add(5, 'h') : dayjs()}
                             />
                             {errors.finishRentDate && (
-                                <FormHelperText error>
+                                <FormHelperText sx={HelperText} error>
                                     {errors.finishRentDate.message}
                                 </FormHelperText>
                             )}
