@@ -71,17 +71,17 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
                 borderColor: errors[fieldName] ? theme.palette.error.main : '#bcbcbc',
             },
             '&:hover fieldset': {
-                borderColor: errors[fieldName] ? theme.palette.error.main : '#bcbcbc',
+                borderColor: errors[fieldName] ? theme.palette.error.main : theme.palette.secondary.dark,
             },
             '&.Mui-focused fieldset': {
-                borderColor: errors[fieldName] ? theme.palette.error.main : '#bcbcbc',
+                borderColor: errors[fieldName] ? theme.palette.error.main : theme.palette.secondary.dark,
             },
         },
         '& .MuiFormLabel-root': {
             color: errors[fieldName] ? theme.palette.error.main: '#636363',
         },
         '& .MuiFormLabel-root.Mui-focused': {
-            color: errors[fieldName] ? theme.palette.error.main : '#636363',
+            color: errors[fieldName] ? theme.palette.error.main : theme.palette.secondary.dark,
         },
     });
 
