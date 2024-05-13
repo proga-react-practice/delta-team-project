@@ -31,7 +31,11 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
     dayjs.extend(advancedFormat);
 
     const handleReset = () => {
-        reset(initialFormState);
+        reset({
+            ...initialFormState,
+            startRentDate: undefined,
+            finishRentDate: undefined,
+        });
     };
 
     const onSubmitForm = (data: RentCar) => {
