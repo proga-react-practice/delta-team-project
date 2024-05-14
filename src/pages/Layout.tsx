@@ -3,8 +3,6 @@ import {AppBar, Toolbar, Typography, Button } from '@mui/material';
 
 function Layout() {
 
-    // const theme = useTheme();
-
     const NavBar = {
         width: '100%', 
         backgroundColor: '#c19f7b', 
