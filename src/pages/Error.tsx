@@ -1,14 +1,14 @@
 import React from 'react';
-import { ThemeProvider} from '@mui/material'
+import { CssBaseline, ThemeProvider} from '@mui/material'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
-import { useTheme } from '@mui/material/styles';
+import theme from '../theme';
 
 
 const Error: React.FC = () => {
-    const theme = useTheme();
     return (
         <ThemeProvider theme={theme}>
+            <CssBaseline />
             <Container sx={{width:"100%" , display:"flex" , flexDirection:"column", alignItems: "center"}}>
                 <Typography variant="h1" component="h2" gutterBottom>
                     Error 404
