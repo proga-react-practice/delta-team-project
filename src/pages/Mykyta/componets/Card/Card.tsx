@@ -344,7 +344,7 @@ const Card: React.FC<CardProps> = ({
           sx={SaveEditButtonStyle}
           type="submit"
         >
-          {isEditing ? "Save" : "Edit " + index}
+          {isEditing ? "Save" : "Edit"}
         </Button>
         <Button
           variant="contained"
