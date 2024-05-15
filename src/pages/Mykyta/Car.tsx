@@ -1,28 +1,44 @@
-import React from "react";
 import Form from "./componets/Form/Form";
 import Card from "./componets/Card/Card";
-import { FormData } from "../../interfaces";
+import { CarGroup, FormData } from "../../interfaces";
 import { Box } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../../theme";
 import { CssBaseline } from "@mui/material";
+import { useFieldArray, useForm } from "react-hook-form";
+import { useState } from "react";
 
 function Car() {
-  const [submittedData, setSubmittedData] = React.useState<FormData[]>([]);
-  function handleSubmit(formData: FormData) {
-    setSubmittedData([...submittedData, formData]);
+  const { control } = useForm<CarGroup>();
+  const { fields, append, update, remove } = useFieldArray({
+    control,
+    name: "cars",
+  });
+
+  const [editingCardIndex, setEditingCardIndex] = useState<number | null>(null);
+
+  const handleEditClick = (index: number) => {
+    console.log("EDITING INDEX", index);
+    setEditingCardIndex(index);
+  };
+
+  function handleAddNewCar(formData: FormData) {
+    append(formData);
   }
 
-  function handleDelete(index: number) {
-    const newData = [...submittedData];
-    newData.splice(index, 1);
-    setSubmittedData(newData);
-  }
+  const handleDelete = (index: number) => {
+    remove(index);
+  };
+
+  const handleSave = (index: number, data: FormData) => {
+    update(index, data);
+    setEditingCardIndex(null);
+  };
 
   const ContainerStyle = {
     display: "flex",
     flexDirection: { md: "row", sm: "column", xs: "column" },
-    justifyContent: { md: "space-evenly", sm: "center", xs: "center"},
+    justifyContent: { md: "space-evenly", sm: "center", xs: "center" },
     marginTop: "2%",
     width: "100%",
     backgroundColor: "background.default",
@@ -30,34 +46,37 @@ function Car() {
 
   const FormLayout = {
     display: "flex",
-    width: {md: "35%",sm : "100%", xs : "100%"},
+    width: { md: "35%", sm: "100%", xs: "100%" },
     marginBottom: "30px",
-    justifyContent: {md: "flex-start",sm : "center", xs : "center"},
-    alignItems:{sm : "flex-start", xs : "center"},
+    justifyContent: { md: "flex-start", sm: "center", xs: "center" },
+    alignItems: { sm: "flex-start", xs: "center" },
   };
 
   const CardLayout = {
-    width: {md: "30%",sm : "100%", xs : "100%"},
+    width: { md: "30%", sm: "100%", xs: "100%" },
     display: "flex",
     flexDirection: "column",
-    justifyContent: {md: "flex-start",sm : "center", xs : "center"},
-    alignItems:{sm : "center", xs : "center"},
-  }; 
-
+    justifyContent: { md: "flex-start", sm: "center", xs: "center" },
+    alignItems: { sm: "center", xs: "center" },
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box sx={ContainerStyle}>
         <Box sx={FormLayout}>
-          <Form onSubmit={handleSubmit} />
+          <Form onSubmit={handleAddNewCar} />
         </Box>
         <Box sx={CardLayout}>
-          {submittedData.map((data, index) => (
+          {fields.map((data, index) => (
             <Card
               key={index}
               data={data}
-              onDelete={() => handleDelete(index)}
+              onDelete={handleDelete}
+              onSave={(data) => handleSave(index, data)}
+              index={index}
+              onEdit={handleEditClick}
+              isEditing={index === editingCardIndex}
             />
           ))}
         </Box>
