@@ -4,7 +4,7 @@ import { FormResults } from './Andrii/cards/FormResult';
 import { FormResultsMobile} from './Andrii/cards/FormResultMobile';
 import { RentCar } from '../interfaces';
 import { useMediaQuery} from '@mui/material';
-import theme from '../theme';
+import { theme } from '../theme';
 import Box from '@mui/material/Box';
 
 function Rent() {
