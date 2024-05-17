@@ -1,10 +1,7 @@
-import Form from "./componets/Form/Form";
-import Card from "./componets/Card/Card";
-import { CarGroup, FormData } from "../../interfaces";
+import Form from "./Mykyta/componets/Form/Form";
+import Card from "./Mykyta/componets/Card/Card";
+import { CarGroup, FormData } from "../interfaces";
 import { Box } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
-import theme from "../../theme";
-import { CssBaseline } from "@mui/material";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useState } from "react";
 
@@ -18,7 +15,7 @@ function Car() {
   const [editingCardIndex, setEditingCardIndex] = useState<number | null>(null);
 
   const handleEditClick = (index: number) => {
-    console.log("EDITING INDEX", index);
+    // console.log("EDITING INDEX", index);
     setEditingCardIndex(index);
   };
 
@@ -61,8 +58,6 @@ function Car() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
       <Box sx={ContainerStyle}>
         <Box sx={FormLayout}>
           <Form onSubmit={handleAddNewCar} />
@@ -81,7 +76,6 @@ function Car() {
           ))}
         </Box>
       </Box>
-    </ThemeProvider>
   );
 }
 

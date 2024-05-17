@@ -1,6 +1,4 @@
-import { ThemeProvider } from "@mui/material/styles";
-import theme from "../theme";
-import { CssBaseline, Typography, Box } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 
 const ContainerHomeStyle = {
   display: "flex",
@@ -16,8 +14,6 @@ const TypographyStyle = {
 
 function Home() {
   return (
-    <ThemeProvider theme={theme}>
-    <CssBaseline />
     <Box sx={ContainerHomeStyle}>
         <Typography variant="h2"  sx={TypographyStyle}>About our project</Typography>
         <Typography variant="h6"  sx={TypographyStyle} >
@@ -28,7 +24,6 @@ function Home() {
          Mykyta made the form for adding a car. Andrii made the form for renting a car. To connect these two forms, we used the react-router-dom library.
         </Typography>
     </Box>
-    </ThemeProvider>
   );
 }
 

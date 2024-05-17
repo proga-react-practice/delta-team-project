@@ -3,8 +3,7 @@ import RentCarForm from './Andrii/forms/RentCarForm';
 import { FormResults } from './Andrii/cards/FormResult';
 import { FormResultsMobile} from './Andrii/cards/FormResultMobile';
 import { RentCar } from '../interfaces';
-import { ThemeProvider } from '@mui/material/styles';
-import { useMediaQuery, CssBaseline } from '@mui/material';
+import { useMediaQuery} from '@mui/material';
 import theme from '../theme';
 import Box from '@mui/material/Box';
 
@@ -51,8 +50,6 @@ function Rent() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
       <Box sx={ RentStyle }>
         <Box sx={ RentCar }>
           <RentCarForm onSubmit={handleSubmit} />
@@ -66,7 +63,6 @@ function Rent() {
           }
         </Box>
       </Box>
-    </ThemeProvider>
   );
 }
 
