@@ -16,7 +16,7 @@ import { purposes } from "../../../../interfaces";
 import { bodyTypes } from "../../../../interfaces";
 import { gearboxTypes } from "../../../../interfaces";
 import { fuelTypes } from "../../../../interfaces";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 
 type CardProps = {
   data: FormData;
@@ -84,6 +84,7 @@ const Card: React.FC<CardProps> = ({
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: data,
@@ -162,17 +163,22 @@ const Card: React.FC<CardProps> = ({
               <TableCell>Body Type:</TableCell>
               <TableCell>
                 {isEditing ? (
-                  <Select
-                    {...register(`body_type`, { required: true })}
-                    name="body_type"
-                    sx={CardTextField}
-                  >
+              <Controller
+                name="body_type"
+                control={control}
+                defaultValue={data.body_type}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Select {...field} sx={CardTextField}>
                     {bodyTypes.map((option) => (
                       <MenuItem key={option} value={option}>
                         {option}
                       </MenuItem>
                     ))}
-                  </Select>
+                  </Select>  
+                )}
+              />
+
                 ) : (
                   data.body_type
                 )}
@@ -204,20 +210,23 @@ const Card: React.FC<CardProps> = ({
             <TableRow>
               <TableCell>Gearbox:</TableCell>
               <TableCell>
-                {isEditing ? (
-                  <Select
-                    {...register(`gearbox`, { required: true })}
-                    name="gearbox"
-                    sx={CardTextField}
-                    value={data.gearbox}
-                    //onChange={handleSelectChange}
-                  >
+              {isEditing ? (
+              <Controller
+                name="gearbox"
+                control={control}
+                defaultValue={data.gearbox}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Select {...field} sx={CardTextField}>
                     {gearboxTypes.map((option) => (
                       <MenuItem key={option} value={option}>
                         {option}
                       </MenuItem>
                     ))}
-                  </Select>
+                  </Select>  
+                )}
+              />
+
                 ) : (
                   data.gearbox
                 )}
@@ -226,20 +235,22 @@ const Card: React.FC<CardProps> = ({
             <TableRow>
               <TableCell>Fuel:</TableCell>
               <TableCell>
-                {isEditing ? (
-                  <Select
-                    {...register(`fuel`, { required: true })}
-                    name="fuel"
-                    sx={CardTextField}
-                    value={data.fuel}
-                    //onChange={handleSelectChange}
-                  >
+              {isEditing ? (
+              <Controller
+                name="fuel"
+                control={control}
+                defaultValue={data.fuel}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Select {...field} sx={CardTextField}>
                     {fuelTypes.map((option) => (
                       <MenuItem key={option} value={option}>
                         {option}
                       </MenuItem>
                     ))}
-                  </Select>
+                  </Select>  
+                )}
+              />
                 ) : (
                   data.fuel
                 )}
@@ -317,20 +328,23 @@ const Card: React.FC<CardProps> = ({
             <TableRow>
               <TableCell>Purpose:</TableCell>
               <TableCell>
-                {isEditing ? (
-                  <Select
-                    {...register(`purpose`, { required: true })}
-                    name="purpose"
-                    sx={CardTextField}
-                    value={data.purpose}
-                    //onChange={handleSelectChange}
-                  >
+              {isEditing ? (
+              <Controller
+                name="purpose"
+                control={control}
+                defaultValue={data.purpose}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Select {...field} sx={CardTextField}>
                     {purposes.map((option) => (
                       <MenuItem key={option} value={option}>
                         {option}
                       </MenuItem>
                     ))}
-                  </Select>
+                  </Select>  
+                )}
+              />
+
                 ) : (
                   data.purpose
                 )}
