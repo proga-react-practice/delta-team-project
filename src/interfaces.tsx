@@ -19,7 +19,7 @@ export const initialFormState: RentCar = {
   email: "",
   placeOfIssue: "",
   startRentDate: dayjs(),
-  finishRentDate: dayjs().add(5, "h"),
+  finishRentDate: dayjs(),
   comments: "",
 };
 
