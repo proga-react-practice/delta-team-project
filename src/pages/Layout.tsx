@@ -1,7 +1,9 @@
 import { Link, Outlet } from 'react-router-dom';
-import {AppBar, Toolbar, Typography, Button } from '@mui/material';
+import {AppBar, Toolbar, Typography, Button, IconButton } from '@mui/material';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
 
-function Layout() {
+function Layout({ darkMode, toggleDarkMode }: { darkMode: any, toggleDarkMode: any }) {
 
     const NavBar = {
         width: '100%', 
@@ -26,6 +28,9 @@ function Layout() {
                     <Button sx={Buttons} color="inherit" component={Link} to="/">Main page</Button>
                     <Button sx={Buttons} color="inherit" component={Link} to="/rent-car-form">Rent Car</Button>
                     <Button sx={Buttons} color="inherit" component={Link} to="/adding-car-form">Add Car</Button>
+                    <IconButton edge="end" color="inherit" onClick={toggleDarkMode}>
+                        {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+                    </IconButton>
                 </Toolbar>
             </AppBar>
             <Outlet/>
