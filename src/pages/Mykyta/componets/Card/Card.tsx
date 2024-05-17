@@ -17,6 +17,7 @@ import { bodyTypes } from "../../../../interfaces";
 import { gearboxTypes } from "../../../../interfaces";
 import { fuelTypes } from "../../../../interfaces";
 import { useForm, Controller } from "react-hook-form";
+import { InputAdornment } from "@mui/material";
 
 type CardProps = {
   data: FormData;
@@ -105,13 +106,17 @@ const Card: React.FC<CardProps> = ({
               <TableCell>
                 {isEditing ? (
                   <TextField
-                    {...register(`brand`, { required: true })}
+                  {...register("brand", {
+                    required: "Brand is required",
+                    validate: {
+                      isFirstLetterUppercase: (value) =>
+                        /^[A-Z]/.test(value) || "The first letter must be uppercase",
+                    },
+                  })}
                     name="brand"
                     sx={CardTextField}
-                    error={data.brand === ""}
-                    helperText={
-                      data.brand === "" ? "This field is required" : ""
-                    }
+                    error={Boolean(errors.brand)}
+                    helperText={errors.brand?.message}
                   />
                 ) : (
                   data.brand
@@ -123,13 +128,17 @@ const Card: React.FC<CardProps> = ({
               <TableCell>
                 {isEditing ? (
                   <TextField
-                    {...register(`model`, { required: true })}
+                  {...register("model", {
+                    required: "Model is required",
+                    validate: {
+                      isFirstLetterUppercase: (value) =>
+                        /^[A-Z]/.test(value) || "The first letter must be uppercase",
+                    },
+                  })}
                     name="model"
                     sx={CardTextField}
-                    error={data.model === ""}
-                    helperText={
-                      data.model === "" ? "This field is required" : ""
-                    }
+                    error={Boolean(errors.model)}
+                    helperText={errors.model?.message}
                   />
                 ) : (
                   data.model
@@ -141,18 +150,19 @@ const Card: React.FC<CardProps> = ({
               <TableCell>
                 {isEditing ? (
                   <TextField
-                    {...register(`year`, { required: true })}
+                  {...register("year", {
+                    required: "Year is required",
+                    min: { value: 1900, message: "Year must be 1900 or later" },
+                    max: {
+                      value: new Date().getFullYear(),
+                      message: "Year must be this year or earlier",
+                    },
+                  })}
                     name="year"
                     type="number"
                     sx={CardTextField}
-                    error={
-                      data.year < 1900 || data.year > new Date().getFullYear()
-                    }
-                    helperText={
-                      data.year < 1900 || data.year > new Date().getFullYear()
-                        ? "Year must be among 1900 and 2024"
-                        : ""
-                    }
+                    error={Boolean(errors.year)}
+                    helperText={errors.year?.message}
                   />
                 ) : (
                   data.year
@@ -189,18 +199,21 @@ const Card: React.FC<CardProps> = ({
               <TableCell>
                 {isEditing ? (
                   <TextField
-                    {...register(`mileage_km`, {
-                      required: true,
-                    })}
+                  {...register("mileage_km", {
+                    required: "Mileage is required",
+                    min: { value: 0, message: "Mileage must be 0 or bigger" },
+                    max: { value: 1000, message: "Mileage must be 1000 or fewer" },
+                  })}
                     name="mileage_km"
                     type="number"
                     sx={CardTextField}
-                    error={data.mileage_km < 0 || data.mileage_km > 1000}
-                    helperText={
-                      data.mileage_km < 0 || data.mileage_km > 1000
-                        ? "Mileage must be among 0 and 1000"
-                        : ""
-                    }
+                    error={Boolean(errors.mileage_km)}
+                    helperText={errors.mileage_km?.message}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">1,000 km</InputAdornment>
+                      ),
+                    }}
                   />
                 ) : (
                   data.mileage_km
@@ -261,16 +274,18 @@ const Card: React.FC<CardProps> = ({
               <TableCell>
                 {isEditing ? (
                   <TextField
-                    {...register(`price_per_day`, {
-                      required: true,
-                    })}
+                  {...register("price_per_day", {
+                    required: "Price is required",
+                    min: { value: 1, message: "Price must be 1 or bigger" },
+                  })}
                     name="price_per_day"
                     type="number"
                     sx={CardTextField}
-                    error={data.price_per_day < 1}
-                    helperText={
-                      data.price_per_day < 1 ? "Price must be 1 or bigger" : ""
-                    }
+                    error={Boolean(errors.price_per_day)}
+                    helperText={errors.price_per_day?.message}
+                    InputProps={{
+                      endAdornment: <InputAdornment position="end">$</InputAdornment>,
+                    }}
                   />
                 ) : (
                   data.price_per_day
@@ -282,18 +297,19 @@ const Card: React.FC<CardProps> = ({
               <TableCell>
                 {isEditing ? (
                   <TextField
-                    {...register(`horse_power`, {
-                      required: true,
-                    })}
+                  {...register("horse_power", {
+                    required: "Horse power is required",
+                    min: { value: 1, message: "Horse power must be 1 or bigger" },
+                    max: { value: 1000, message: "Horse power must be 1000 or fewer" },
+                  })}
                     name="horse_power"
                     type="number"
                     sx={CardTextField}
-                    error={data.horse_power < 1 || data.horse_power > 1000}
-                    helperText={
-                      data.horse_power < 1 || data.horse_power > 1000
-                        ? "Horse power must be among 1 and 1000"
-                        : ""
-                    }
+                    error={Boolean(errors.horse_power)}
+                    helperText={errors.horse_power?.message}
+                    InputProps={{
+                      endAdornment: <InputAdornment position="end">kW</InputAdornment>,
+                    }}
                   />
                 ) : (
                   data.horse_power
@@ -305,20 +321,19 @@ const Card: React.FC<CardProps> = ({
               <TableCell>
                 {isEditing ? (
                   <TextField
-                    {...register(`engine_capacity`, {
-                      required: true,
-                    })}
+                  {...register("engine_capacity", {
+                    required: "Engine capacity is required",
+                    min: { value: 0.1, message: "Engine capacity must be 0.1 or bigger" },
+                    max: { value: 10, message: "Engine capacity must be 10 or fewer" },
+                  })}
                     name="engine_capacity"
                     sx={CardTextField}
                     type="number"
-                    error={
-                      data.engine_capacity < 0.1 || data.engine_capacity > 10
-                    }
-                    helperText={
-                      data.engine_capacity < 0.1 || data.engine_capacity > 10
-                        ? "Engine capacity must be among 1 and 10"
-                        : ""
-                    }
+                    error={Boolean(errors.engine_capacity)}
+                    helperText={errors.engine_capacity?.message}
+                    InputProps={{
+                      endAdornment: <InputAdornment position="end">cm3</InputAdornment>,
+                    }}
                   />
                 ) : (
                   data.engine_capacity
