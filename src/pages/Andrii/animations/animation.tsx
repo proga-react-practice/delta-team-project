@@ -1,6 +1,4 @@
-import { Theme } from '@mui/material/styles'
-
-export const createTransform = (theme: Theme) => ({
+export const createTransform = () => ({
     '@keyframes scaleDown': {
       '0%': {
         transform: 'scaleY(0)',
@@ -10,7 +8,7 @@ export const createTransform = (theme: Theme) => ({
       '100%': {
         transform: 'scaleY(1)',
         transformOrigin: 'top',
-        backgroundColor: theme.palette.background.default,
+        backgroundColor: "background.default",
       },
     },
     animation: 'scaleDown 1.3s ease-in-out',

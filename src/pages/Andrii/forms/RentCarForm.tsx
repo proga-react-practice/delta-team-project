@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import InputMask from 'react-input-mask';
 import { RentCar, initialFormState } from '../../../interfaces';
-import { Button, Box, useTheme, FormHelperText } from '@mui/material';
+import { Button, Box, FormHelperText } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -27,8 +27,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
         mode: 'onChange'
     });
 
-    const theme = useTheme();
-    const Transform = createTransform(theme);
+    const Transform = createTransform();
     dayjs.extend(advancedFormat);
 
     const handleReset = () => {
@@ -50,7 +49,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
         display: 'flex',
         flexDirection: 'column',
         marginTop: '70px',
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: "secondary.main",
         padding: '20px',
         borderRadius: '10px',
         boxShadow: '0 0 10px rgba(0,0,0,0.20)',
@@ -70,23 +69,23 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
     }
 
     const getError = (fieldName: keyof RentCar) => ({
-        borderColor: errors[fieldName] ? theme.palette.error.main : '#bcbcbc',
+        borderColor: errors[fieldName] ? "error.main" : '#bcbcbc',
         '& .MuiOutlinedInput-root': {
             '& fieldset': {
-                borderColor: errors[fieldName] ? theme.palette.error.main : '#bcbcbc',
+                borderColor: errors[fieldName] ? "error.main" : '#bcbcbc',
             },
             '&:hover fieldset': {
-                borderColor: errors[fieldName] ? theme.palette.error.main : theme.palette.secondary.dark,
+                borderColor: errors[fieldName] ? "error.main" : "secondary.dark",
             },
             '&.Mui-focused fieldset': {
-                borderColor: errors[fieldName] ? theme.palette.error.main : theme.palette.secondary.dark,
+                borderColor: errors[fieldName] ? "error.main" : "secondary.dark",
             },
         },
         '& .MuiFormLabel-root': {
-            color: errors[fieldName] ? theme.palette.error.main: '#636363',
+            color: errors[fieldName] ? "error.main": '#636363',
         },
         '& .MuiFormLabel-root.Mui-focused': {
-            color: errors[fieldName] ? theme.palette.error.main : theme.palette.secondary.dark,
+            color: errors[fieldName] ? "error.main" : "secondary.dark",
         },
     });
 
@@ -103,11 +102,11 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
         marginTop: '10px',
         border: 'none',
         borderRadius: '5px',
-        color: theme.palette.secondary.light,
-        backgroundColor: theme.palette.info.light,
+        color: "secondary.light",
+        backgroundColor: "info.light",
         marginRight: '10%', 
         '&:hover': {
-            backgroundColor: theme.palette.info.dark,
+            backgroundColor: "info.dark",
         },
     }
 
@@ -117,10 +116,10 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
         marginTop: '10px',
         border: 'none',
         borderRadius: '5px',
-        color: theme.palette.secondary.light,
-        backgroundColor: theme.palette.error.light,
+        color: "secondary.light",
+        backgroundColor: "error.light",
         '&:hover': {
-            backgroundColor: theme.palette.error.dark,
+            backgroundColor: "error.dark",
         },
     }
 

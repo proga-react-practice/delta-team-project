@@ -15,7 +15,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { DateTimeValidationError } from '@mui/x-date-pickers/models';
 // import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useForm, Controller } from 'react-hook-form';
-import { Table, TableBody, TableContainer, TableHead, TableRow, useTheme, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { Table, TableBody, TableContainer, TableHead, TableRow, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
 interface FormResultsProps {
   forms: RentCar[];
@@ -24,9 +24,8 @@ interface FormResultsProps {
 }
 
 export const FormResults: React.FC<FormResultsProps> = ({ forms, onDelete, onEdit }) => {
-  const theme = useTheme()
-  const Transform = createTransform(theme)
-
+  const Transform = createTransform();
+  
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editingData, setEditingData] = useState<RentCar | null>(null);
   const [error, setError] = React.useState<DateTimeValidationError | null>(null);
@@ -82,7 +81,7 @@ export const FormResults: React.FC<FormResultsProps> = ({ forms, onDelete, onEdi
     justifyContent: 'space-around',
     marginBottom: '20px',
     marginTop: '50px',
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: "secondary.main",
     borderRadius: '5px',
     boxShadow: '0 0 10px rgba(0,0,0,0.15)',
   }

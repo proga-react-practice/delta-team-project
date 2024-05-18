@@ -13,7 +13,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { Table, TableBody, TableContainer, useTheme } from '@mui/material';
+import { Table, TableBody, TableContainer } from '@mui/material';
 
 interface FormResultsMobileProps {
   form: RentCar;
@@ -22,8 +22,7 @@ interface FormResultsMobileProps {
 }
 
 export const FormResultsMobile: React.FC<FormResultsMobileProps> = ({ form, onDelete, onEdit }) => {
-  const theme = useTheme()
-  const Transform = createTransform(theme)
+  const Transform = createTransform()
   const [editingData, setEditingData] = useState<RentCar | null>(null);
 
   const { handleSubmit, control } = useForm<RentCar>();
@@ -45,7 +44,7 @@ export const FormResultsMobile: React.FC<FormResultsMobileProps> = ({ form, onDe
     minWidth: 260,
     marginBottom: '20px',
     marginTop: '50px',
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: "secondary.main",
     borderRadius: '5px',
     boxShadow: '0 0 10px rgba(0,0,0,0.25)',
   }  
