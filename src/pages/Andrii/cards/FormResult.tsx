@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import { RentCar } from '../../../interfaces';
+import { textPattern, numberPattern, emailPattern, format } from '../../../pattern';
 import { StyledTableCell } from '../styledComponents/StyledTableCell'
 import { StyledTableRow } from '../styledComponents/StyledTableRow'
 import { StyledButtonDelete } from '../styledComponents/StyledButtonDelete'
@@ -32,10 +33,6 @@ export const FormResults: React.FC<FormResultsProps> = ({ forms, onDelete, onEdi
 
   const { handleSubmit, control, formState: { errors } } = useForm<RentCar>();
 
-  const textPattern = /^[A-Z][a-z]*$/;
-  const numberPattern = /^\+38\(0\d{2}\) \d{3} \d{4}$/;
-  const emailPattern = /.+@.+/;
-
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleEditClick = (index: number) => {
@@ -58,13 +55,6 @@ export const FormResults: React.FC<FormResultsProps> = ({ forms, onDelete, onEdi
     setEditingData(null);
     setOpenDialog(false);
   });
-
-  const handleDateChange = (prop: keyof RentCar) => (newValue: Dayjs | null) => {
-    setEditingData(prev => ({
-      ...prev,
-      [prop]: newValue,
-    }) as RentCar);
-  };
 
   const errorMessage = React.useMemo(() => {
     switch (error) {
@@ -172,30 +162,44 @@ export const FormResults: React.FC<FormResultsProps> = ({ forms, onDelete, onEdi
                                 render={({ field }) => <StyledTextField {...field} error={!!errors.placeOfIssue} helperText={errors.placeOfIssue?.message} />}
                               />
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DateTimePicker
-                                  value={editingData?.startRentDate || null}
-                                  minDateTime={dayjs()}
-                                  onError={(newError) => setError(newError)}
-                                  slotProps={{
-                                    textField: {
-                                      helperText: errorMessage,
-                                    },
-                                  }}
-                                  onChange={handleDateChange('startRentDate')}
-                                  sx={DateAndTimeStyle}
+                                <Controller 
+                                  name="startRentDate"
+                                  control = {control}
+                                  defaultValue={editingData.startRentDate}
+                                  render = { ({ field }) => (                                    
+                                    <DateTimePicker
+                                      {...field}
+                                      minDateTime={dayjs()}
+                                      onError={(newError) => setError(newError)}
+                                      slotProps={{
+                                        textField: {
+                                          helperText: errorMessage,
+                                        },
+                                      }}
+                                      sx={DateAndTimeStyle}
+                                    />
+                                  )}
                                 />
-                                <DateTimePicker
-                                  value={editingData?.finishRentDate || null}
-                                  minDateTime={editingData?.finishRentDate ? editingData.startRentDate.add(5, 'hour') : dayjs()}
-                                  onError={(newError) => setError(newError)}
-                                  slotProps={{
-                                    textField: {
-                                      helperText: errorMessage,
-                                    },
-                                  }}
-                                  onChange={handleDateChange('finishRentDate')}
-                                  sx={DateAndTimeStyle}
+                                
+                                <Controller 
+                                  name="finishRentDate"
+                                  control = {control}
+                                  defaultValue={editingData.finishRentDate}
+                                  render={ ({ field }) => (
+                                    <DateTimePicker
+                                      {...field}
+                                      minDateTime={editingData?.finishRentDate ? editingData.startRentDate?.add(5, 'hour') : dayjs()}
+                                      onError={(newError) => setError(newError)}
+                                      slotProps={{
+                                        textField: {
+                                          helperText: errorMessage,
+                                        },
+                                      }}
+                                      sx={DateAndTimeStyle}
+                                    />
+                                  )}
                                 />
+                                
                               </LocalizationProvider>
                               <Controller
                                 name="comments"
@@ -219,8 +223,8 @@ export const FormResults: React.FC<FormResultsProps> = ({ forms, onDelete, onEdi
                       <StyledTableCell>{form.phoneNumber}</StyledTableCell>
                       <StyledTableCell>{form.email}</StyledTableCell>
                       <StyledTableCell>{form.placeOfIssue}</StyledTableCell>
-                      <StyledTableCell>{form.startRentDate.format('YYYY-MM-DD HH:mm')}</StyledTableCell>
-                      <StyledTableCell>{form.finishRentDate.format('YYYY-MM-DD HH:mm')}</StyledTableCell>
+                      <StyledTableCell>{form.startRentDate?.format(format)}</StyledTableCell>
+                      <StyledTableCell>{form.finishRentDate?.format(format)}</StyledTableCell>
                       <StyledTableCell>{form.comments}</StyledTableCell>
                       <StyledTableCell>
                         <StyledButtonDelete onClick={() => onDelete(index)}>Delete</StyledButtonDelete>
