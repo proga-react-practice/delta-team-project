@@ -6,10 +6,9 @@ export interface RentCar {
   phoneNumber: string;
   email: string;
   placeOfIssue: string;
-  startRentDate: Dayjs;
-  finishRentDate: Dayjs;
+  startRentDate: Dayjs | null;
+  finishRentDate: Dayjs | null;
   comments: string;
-  [key: string]: string | Dayjs;
 }
 
 export const initialFormState: RentCar = {
@@ -22,14 +21,6 @@ export const initialFormState: RentCar = {
   finishRentDate: dayjs(),
   comments: "",
 };
-
-export interface FieldErrors {
-  firstName: boolean;
-  lastName: boolean;
-  phoneNumber: boolean;
-  email: boolean;
-  placeOfIssue: boolean;
-}
 
 export type CarGroup = {
   cars: FormData[];
