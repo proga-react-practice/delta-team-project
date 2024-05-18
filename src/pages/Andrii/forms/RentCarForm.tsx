@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
+import { textPattern, numberPattern, emailPattern, format } from '../../../pattern';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import InputMask from 'react-input-mask';
@@ -33,8 +34,8 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
     const handleReset = () => {
         reset({
             ...initialFormState,
-            startRentDate: undefined,
-            finishRentDate: undefined,
+            startRentDate: null,
+            finishRentDate: null,
         });
     };
 
@@ -68,7 +69,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
         boxSizing: 'border-box',
     }
 
-    const getError = (fieldName: string) => ({
+    const getError = (fieldName: keyof RentCar) => ({
         borderColor: errors[fieldName] ? theme.palette.error.main : '#bcbcbc',
         '& .MuiOutlinedInput-root': {
             '& fieldset': {
@@ -144,7 +145,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
                         {...register('firstName', { 
                             required: 'First name is required', 
                             pattern: {
-                                value: /^[A-Z][a-z]*$/, 
+                                value: textPattern, 
                                 message: 'First name must start with a capital letter and cannot contain numbers or special characters'
                             } 
                         })}
@@ -159,7 +160,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
                         {...register('lastName', { 
                             required: 'Last name is required', 
                             pattern: {
-                                value: /^[A-Z][a-z]*$/, 
+                                value: textPattern, 
                                 message: 'Last name must start with a capital letter and cannot contain numbers or special characters'
                             } 
                         })}
@@ -183,7 +184,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
                 name="phoneNumber"
                 control={control}
                 rules={{ required: 'Phone number is required', pattern: {
-                    value: /\+38\(0\d{2}\) \d{3} \d{4}/,
+                    value: numberPattern,
                     message: 'Phone number must be in format: +38(0__) ___ ____'
                 }}}
                 render={({ field }) => (
@@ -202,20 +203,20 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
                 )}
             />
             <StyledTextField 
-                {...register('email', { required: 'Email is required', pattern: /.+@.+/ })}
+                {...register('email', { required: 'Email is required', pattern: emailPattern })}
                 error={Boolean(errors.email)}
                 helperText={errors.email && errors.email.message}
                 className="email"
                 label="Email" 
                 name="email" 
                 placeholder="Email" 
-                inputProps={{ pattern: ".+@.+" }}
+                inputProps={{ pattern: emailPattern }}
             />
             <StyledTextField 
                 {...register('placeOfIssue', { 
                     required: 'Place of Issue is required', 
                     pattern: {
-                        value: /^[A-Z][a-z]*$/, 
+                        value: textPattern, 
                         message: 'Place of Issue must start with a capital letter and cannot contain numbers or special characters'
                     } 
                 })}
@@ -225,7 +226,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
                 label="Place of Issue"   
                 name="placeOfIssue" 
                 placeholder="Place of Issue" 
-                inputProps={{ pattern: "^[A-Z][a-z]*$" }}
+                inputProps={{ pattern: textPattern }}
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Controller
@@ -242,8 +243,8 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
                                 sx={{...DateAndTimeStyle,
                                     ...getError('startRentDate')
                                 }}  
-                                format="YYYY-MM-DD HH:mm"
-                                minDateTime={dayjs()}
+                                format={format}
+                                minDateTime={dayjs().add(5, 'h')}
                             />
                             {errors.startRentDate && (
                                 <FormHelperText sx={HelperText} error>
@@ -272,7 +273,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
                                 sx={{...DateAndTimeStyle,
                                     ...getError('finishRentDate')
                                 }}
-                                format="YYYY-MM-DD HH:mm"
+                                format={format}
                                 minDateTime={watch('startRentDate') ? dayjs(watch('startRentDate')).add(5, 'h') : dayjs()}
                             />
                             {errors.finishRentDate && (
