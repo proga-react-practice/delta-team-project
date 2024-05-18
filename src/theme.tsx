@@ -1,5 +1,19 @@
 import { createTheme } from "@mui/material/styles";
 
+declare module "@mui/material/styles" {
+  interface PaletteOptions {
+    quaternary?: {
+      main?: string;
+      dark?: string;
+    };
+    navbar?: {
+      main?: string;
+      dark?: string;
+      light?: string;
+    }
+  }
+}
+
 export const theme = createTheme({
   palette: {
     primary: {
@@ -13,6 +27,15 @@ export const theme = createTheme({
     },
     background: {
       default: "#f3e9db",
+    },
+    quaternary: {
+      main: '#bcbcbc',
+      dark: '#636363',
+    },
+    navbar: {
+      main: '#c19f7b',
+      dark: '#d3c5b6',
+      light: '#5d3f1f',
     },
     error: {
       main: '#c84238',
