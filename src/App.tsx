@@ -6,21 +6,17 @@ import Home from "./pages/Home";
 import Error from "./pages/Error";
 import { CssBaseline, ThemeProvider} from "@mui/material";
 import { theme, darkTheme } from "./theme";
-
 import { useState } from 'react';
-
 import './App.css';
-
-
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
 
-const toggleDarkMode = () => {
-  setDarkMode(!darkMode);
-};
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
 
-const currentTheme = darkMode ? darkTheme : theme;
+  const currentTheme = darkMode ? darkTheme : theme;
 
   return (
     <ThemeProvider theme={currentTheme}>
