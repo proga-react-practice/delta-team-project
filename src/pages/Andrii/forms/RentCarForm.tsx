@@ -69,10 +69,10 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
     }
 
     const getError = (fieldName: keyof RentCar) => ({
-        borderColor: errors[fieldName] ? "error.main" : '#bcbcbc',
+        borderColor: errors[fieldName] ? "error.main" : "quaternary.main",
         '& .MuiOutlinedInput-root': {
             '& fieldset': {
-                borderColor: errors[fieldName] ? "error.main" : '#bcbcbc',
+                borderColor: errors[fieldName] ? "error.main" : "quaternary.main",
             },
             '&:hover fieldset': {
                 borderColor: errors[fieldName] ? "error.main" : "secondary.dark",
@@ -82,7 +82,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
             },
         },
         '& .MuiFormLabel-root': {
-            color: errors[fieldName] ? "error.main": '#636363',
+            color: errors[fieldName] ? "error.main": "quaternary.dark",
         },
         '& .MuiFormLabel-root.Mui-focused': {
             color: errors[fieldName] ? "error.main" : "secondary.dark",

@@ -7,14 +7,14 @@ function Layout({ darkMode, toggleDarkMode }: { darkMode: any, toggleDarkMode: a
 
     const NavBar = {
         width: '100%', 
-        backgroundColor: '#c19f7b', 
+        backgroundColor: "navbar.main", 
         boxShadow: '0 0 7px rgba(0,0,0,0.15)',
     }
 
     const Buttons = {
         '&:hover': {
-            backgroundColor: '#d3c5b6',
-            color: '#5d3f1f',
+            backgroundColor: "navbar.dark",
+            color: "navbar.light",
         },
     }
 
