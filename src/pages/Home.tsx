@@ -1,4 +1,6 @@
 import { Typography, Box } from "@mui/material";
+import { useFormContext } from '../Context';
+
 
 const ContainerHomeStyle = {
   display: "flex",
@@ -13,6 +15,8 @@ const TypographyStyle = {
 };
 
 function Home() {
+  const { formData } = useFormContext();
+
   return (
     <Box sx={ContainerHomeStyle}>
         <Typography variant="h2"  sx={TypographyStyle}>About our project</Typography>
@@ -23,6 +27,8 @@ function Home() {
         <Typography variant="h6"  sx={TypographyStyle}>
          Mykyta made the form for adding a car. Andrii made the form for renting a car. To connect these two forms, we used the react-router-dom library.
         </Typography>
+        <h1>Form Data:</h1>
+        <pre>{JSON.stringify(formData)}</pre>
     </Box>
   );
 }
