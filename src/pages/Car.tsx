@@ -15,7 +15,6 @@ function Car() {
   const [editingCardIndex, setEditingCardIndex] = useState<number | null>(null);
 
   const handleEditClick = (index: number) => {
-    // console.log("EDITING INDEX", index);
     setEditingCardIndex(index);
   };
 
