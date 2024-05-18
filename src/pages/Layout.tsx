@@ -3,7 +3,7 @@ import {AppBar, Toolbar, Typography, Button, IconButton } from '@mui/material';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 
-function Layout({ darkMode, toggleDarkMode }: { darkMode: any, toggleDarkMode: any }) {
+function Layout({ darkMode, toggleDarkMode }: { darkMode: boolean, toggleDarkMode: () => void }) {
 
     const NavBar = {
         width: '100%', 
