@@ -1,5 +1,6 @@
 import React from "react";
 import { FormData } from "../../../../interfaces";
+import { radioOptionsGearbox, radioOptionsFuel, initialFormData } from "../../../../interfaces";
 import { useForm, Controller } from "react-hook-form";
 import {
   TextField,
@@ -22,31 +23,6 @@ import { InputAdornment } from "@mui/material";
 interface FormProps {
   onSubmit: (data: FormData) => void;
 }
-
-const initialFormData = {
-  brand: "",
-  model: "",
-  year: 2000,
-  body_type: "",
-  mileage_km: 0,
-  gearbox: "",
-  fuel: "",
-  price_per_day: 0,
-  horse_power: 0,
-  engine_capacity: 0,
-  purpose: "",
-};
-
-const radioOptionsFuel = [
-  { value: "Petrol", label: "Petrol" },
-  { value: "Diesel", label: "Diesel" },
-  { value: "Electric", label: "Electric" },
-];
-
-const radioOptionsGearbox = [
-  { value: "Manual", label: "Manual" },
-  { value: "Automatic", label: "Automatic" },
-];
 
 const BoxFormStyle = {
   backgroundColor: "secondary.main",
