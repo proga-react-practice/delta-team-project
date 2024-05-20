@@ -1,37 +1,56 @@
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { FormData} from './interfaces';
+import { CarGroup, FormData } from './interfaces';
+import { v4 as uuidv4 } from 'uuid';
 
-interface FormContextType {
-  formData: FormData[];
-  addFormData: (data: FormData) => void;
-  resetFormData: () => void;
+interface CarGroupContextType {
+  carGroup: CarGroup;
+  addCar: (data: FormData) => void;
+  updateCar: (index: number, data: FormData) => void;
+  removeCar: (index: number) => void;
+  resetCarGroup: () => void;
 }
 
-const FormContext = createContext<FormContextType | undefined>(undefined);
+const CarGroupContext = createContext<CarGroupContextType | undefined>(undefined);
 
-export const useFormContext = () => {
-  const context = useContext(FormContext);
+export const useCarGroupContext = () => {
+  const context = useContext(CarGroupContext);
   if (!context) {
-    throw new Error('useFormContext must be used within a FormProvider');
+    throw new Error('useCarGroupContext must be used within a CarGroupProvider');
   }
   return context;
 };
-
-export const FormProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [formData, setFormData] = useState<FormData[]>([]);
-
-  const addFormData = (data: FormData) => {
-    setFormData((prevData) => [...prevData, data]);
+export const CarGroupProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+    const [carGroup, setCarGroup] = useState<CarGroup>({ cars: [] });
+  
+    const addCar = (data: FormData) => {
+        setCarGroup((prevGroup) => ({
+          ...prevGroup,
+          cars: [...prevGroup.cars, { ...data, id: uuidv4() }], 
+        }));
+      };
+      
+      const updateCar = (index: number, data: FormData) => {
+        setCarGroup((prevGroup) => {
+          const newCars = [...prevGroup.cars];
+          newCars[index] = data;
+          return { ...prevGroup, cars: newCars };
+        });
+      };
+    const removeCar = (index: number) => {
+      setCarGroup((prevGroup) => ({
+        ...prevGroup,
+        cars: prevGroup.cars.filter((_, i) => i !== index),
+      }));
+    };
+  
+    const resetCarGroup = () => {
+      setCarGroup({ cars: [] });
+    };
+  
+    return (
+      <CarGroupContext.Provider value={{ carGroup, addCar, updateCar, removeCar, resetCarGroup }}>
+        {children}
+      </CarGroupContext.Provider>
+    );
   };
-
-  const resetFormData = () => {
-    setFormData([]);
-  };
-
-  return (
-    <FormContext.Provider value={{ formData, addFormData, resetFormData }}>
-      {children}
-    </FormContext.Provider>
-  );
-};
+  
