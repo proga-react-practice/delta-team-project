@@ -9,6 +9,7 @@ export interface RentCar {
   startRentDate: Dayjs | null;
   finishRentDate: Dayjs | null;
   comments: string;
+  selectedCar: string;
 }
 
 export const initialFormState: RentCar = {
@@ -20,6 +21,7 @@ export const initialFormState: RentCar = {
   startRentDate: dayjs(),
   finishRentDate: dayjs(),
   comments: "",
+  selectedCar: "",
 };
 
 export type CarGroup = {
