@@ -16,7 +16,6 @@ import { FormData, initialFormData, radioOptionsGearbox, radioOptionsFuel, purpo
 import RadioFormControlLabel from '../RadioFormControlLabel/RadioFormControlLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import { InputAdornment } from '@mui/material';
-import { useFormContext } from '../../../../Context';
 interface FormProps {
   onSubmit: (data: FormData) => void;
 }
@@ -73,7 +72,6 @@ const RadioGroupStyle = {
 };
 
 const Form: React.FC<FormProps> = ({ onSubmit }) => {
-  const { addFormData } = useFormContext();
   const {
     register,
     handleSubmit,
@@ -91,7 +89,6 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
 
   const handleOnSubmit = (data: FormData) => {
     onSubmit(data);
-    addFormData(data);
     handleReset();
   };
 
