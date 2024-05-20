@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 import Error from "./pages/Error";
 import { CssBaseline, ThemeProvider} from "@mui/material";
 import { theme, darkTheme } from "./theme";
-import { FormProvider } from './Context';
+import { CarGroupProvider } from './Context';
 import { useState } from 'react';
 import './App.css';
 
@@ -20,7 +20,7 @@ function App() {
   const currentTheme = darkMode ? darkTheme : theme;
 
   return (
-    <FormProvider>
+    <CarGroupProvider>
       <ThemeProvider theme={currentTheme}>
       <CssBaseline/>
       <BrowserRouter>
@@ -34,7 +34,7 @@ function App() {
         </Routes>
       </BrowserRouter>
       </ThemeProvider>
-    </FormProvider>
+    </CarGroupProvider>
   );
 }
 
