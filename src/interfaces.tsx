@@ -27,6 +27,7 @@ export type CarGroup = {
 };
 
 export interface FormData {
+  id: string;
   brand: string;
   model: string;
   year: number;
@@ -60,6 +61,7 @@ export const radioOptionsGearbox = [
 ];
 
 export const initialFormData = {
+  id: "",
   brand: "",
   model: "",
   year: 2000,
