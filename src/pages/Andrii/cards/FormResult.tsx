@@ -111,6 +111,7 @@ export const FormResults: React.FC<FormResultsProps> = ({ forms, onDelete, onEdi
             <StyledTableCell>Start Rent Date</StyledTableCell>
             <StyledTableCell>End Rent Date</StyledTableCell>
             <StyledTableCell>Comments</StyledTableCell>
+            <StyledTableCell>Car</StyledTableCell>
             <StyledTableCell>Action</StyledTableCell>
           </TableRow>
         </TableHead>
@@ -224,6 +225,7 @@ export const FormResults: React.FC<FormResultsProps> = ({ forms, onDelete, onEdi
                       <StyledTableCell>{form.startRentDate?.format(format)}</StyledTableCell>
                       <StyledTableCell>{form.finishRentDate?.format(format)}</StyledTableCell>
                       <StyledTableCell>{form.comments}</StyledTableCell>
+                      <StyledTableCell>{form.selectedCar}</StyledTableCell>
                       <StyledTableCell>
                         <StyledButtonDelete onClick={() => onDelete(index)}>Delete</StyledButtonDelete>
                         <StyledButtonEdit onClick={() => handleEditClick(index)}>Edit</StyledButtonEdit>

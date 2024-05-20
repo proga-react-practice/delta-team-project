@@ -266,6 +266,10 @@ export const FormResultsMobile: React.FC<FormResultsMobileProps> = ({ form, onDe
                       </StyledTableCellMobile>
                 </StyledTableRow>
                 <StyledTableRow>
+                    <StyledTableCellMobile>Car</StyledTableCellMobile>
+                    <StyledTableCellMobile>{form.selectedCar}</StyledTableCellMobile>
+                </StyledTableRow>
+                <StyledTableRow>
                     <StyledTableCellMobile>
                         <StyledButtonDelete onClick={onDelete}>Delete</StyledButtonDelete>
                     </StyledTableCellMobile>
