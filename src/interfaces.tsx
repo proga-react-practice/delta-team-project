@@ -1,6 +1,7 @@
 import dayjs, { Dayjs } from "dayjs";
 
 export interface RentCar {
+  id: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;
@@ -13,6 +14,7 @@ export interface RentCar {
 }
 
 export const initialFormState: RentCar = {
+  id: "",
   firstName: "",
   lastName: "",
   phoneNumber: "",
@@ -22,6 +24,10 @@ export const initialFormState: RentCar = {
   finishRentDate: dayjs(),
   comments: "",
   selectedCar: "",
+};
+
+export type OrderGroup = {
+  orders: RentCar[];
 };
 
 export type CarGroup = {
