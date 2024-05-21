@@ -1,5 +1,6 @@
 import { Typography, Box } from "@mui/material";
 import { useCarGroupContext } from '../Context';
+import { useRentCarContext } from './Andrii/RentCarContext';
 
 
 const ContainerHomeStyle = {
@@ -16,6 +17,7 @@ const TypographyStyle = {
 
 function Home() {
   const { carGroup } = useCarGroupContext();
+  const { orderGroup } = useRentCarContext();
 
   return (
     <Box sx={ContainerHomeStyle}>
@@ -29,6 +31,8 @@ function Home() {
         </Typography>
         <h1>Form Data:</h1>
         <pre>{JSON.stringify(carGroup)}</pre>
+        <h1>Order Data:</h1>
+        <pre>{JSON.stringify(orderGroup)}</pre>
     </Box>
   );
 }
