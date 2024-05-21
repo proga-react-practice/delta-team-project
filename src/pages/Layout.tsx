@@ -28,6 +28,7 @@ function Layout({ darkMode, toggleDarkMode }: { darkMode: boolean, toggleDarkMod
                     <Button sx={Buttons} color="inherit" component={Link} to="/">Main page</Button>
                     <Button sx={Buttons} color="inherit" component={Link} to="/rent-car-form">Rent Car</Button>
                     <Button sx={Buttons} color="inherit" component={Link} to="/adding-car-form">Add Car</Button>
+                    <Button sx={Buttons} color="inherit" component={Link} to="/orders">Orders</Button>
                     <IconButton edge="end" color="inherit" onClick={toggleDarkMode}>
                         {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
                     </IconButton>
