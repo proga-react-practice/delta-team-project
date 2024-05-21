@@ -26,21 +26,21 @@ export const RentCarProvider: React.FC<{ children: ReactNode }> = ({ children })
     const addOrder = (data: RentCar) => {
         setOrderGroup((prevGroup) => ({
           ...prevGroup,
-          cars: [...prevGroup.orders, { ...data, id: uuidv4() }], 
+          orders: [...prevGroup.orders, { ...data, id: uuidv4() }], 
         }));
       };
       
       const updateOrder = (index: number, data: RentCar) => {
         setOrderGroup((prevGroup) => {
-          const newCars = [...prevGroup.orders];
-          newCars[index] = data;
-          return { ...prevGroup, cars: newCars };
+          const newOrders = [...prevGroup.orders];
+          newOrders[index] = data;
+          return { ...prevGroup, orders: newOrders };
         });
       };
     const removeOrder = (index: number) => {
         setOrderGroup((prevGroup) => ({
         ...prevGroup,
-        cars: prevGroup.orders.filter((_, i) => i !== index),
+        orders: prevGroup.orders.filter((_, i) => i !== index),
       }));
     };
   
