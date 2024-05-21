@@ -13,7 +13,9 @@ import { useForm, Controller } from 'react-hook-form';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { Table, TableBody, TableContainer } from '@mui/material';
+import { Table, TableBody, TableContainer, MenuItem } from '@mui/material';
+import { useCarGroupContext } from '../../../Context';
+import { StyledSelect } from '../styledComponents/StyledSelect';
 
 interface FormResultsMobileProps {
   form: RentCar;
@@ -41,16 +43,22 @@ export const FormResultsMobile: React.FC<FormResultsMobileProps> = ({ form, onDe
     isEditing ? onSave(data) : onEdit(index);
   };
 
+  const { carGroup } = useCarGroupContext();
+
   const MobileStyle = {
     display: 'flex',
-    maxWidth: 320,
-    minWidth: 260,
+    maxWidth: 350,
+    minWidth: 280,
     marginBottom: '20px',
     marginTop: '50px',
     backgroundColor: "secondary.main",
     borderRadius: '5px',
     boxShadow: '0 0 10px rgba(0,0,0,0.25)',
   }  
+
+  const Field = {
+    padding: '0px',
+  }
 
   return (
     <TableContainer sx={ MobileStyle } component={'form'} onSubmit={handleSubmit(onSubmit)}>
@@ -68,6 +76,7 @@ export const FormResultsMobile: React.FC<FormResultsMobileProps> = ({ form, onDe
                                   message: 'First name must start with a capital letter and cannot contain numbers or special characters'
                               } 
                           })}
+                          sx={Field}
                           name="firstName"
                           error={Boolean(errors.firstName)}
                           helperText={errors.firstName?.message}
@@ -90,6 +99,7 @@ export const FormResultsMobile: React.FC<FormResultsMobileProps> = ({ form, onDe
                               } 
                           })}
                           name="lastName"
+                          sx={Field}
                           error={Boolean(errors.lastName)}
                           helperText={errors.lastName?.message}
                         />
@@ -110,6 +120,8 @@ export const FormResultsMobile: React.FC<FormResultsMobileProps> = ({ form, onDe
                                   message: 'Phone number must be in format: +38(0__) ___ ____'
                               } 
                           })}
+                          name="phoneNumber"
+                          sx={Field}
                           error={Boolean(errors.phoneNumber)}
                           helperText={errors.phoneNumber?.message}
                         />
@@ -132,6 +144,7 @@ export const FormResultsMobile: React.FC<FormResultsMobileProps> = ({ form, onDe
                               } 
                           })}
                           name='email'
+                          sx={Field}
                           error={Boolean(errors.email)}
                           helperText={errors.email?.message}
                         />
@@ -153,6 +166,7 @@ export const FormResultsMobile: React.FC<FormResultsMobileProps> = ({ form, onDe
                             } 
                           })}
                           name='placeOfIssue'
+                          sx={Field}
                           error={Boolean(errors.placeOfIssue)}
                           helperText={errors.placeOfIssue?.message}
                         />
@@ -187,7 +201,7 @@ export const FormResultsMobile: React.FC<FormResultsMobileProps> = ({ form, onDe
               </StyledTableRow>
               <StyledTableRow>
                   <StyledTableCellMobile>Finish Rent Date</StyledTableCellMobile>
-                  <StyledTableCellMobile>
+                  <StyledTableCellMobile sx={{ alignItem: 'center'}}>
                     {isEditing ? 
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <Controller 
@@ -219,6 +233,7 @@ export const FormResultsMobile: React.FC<FormResultsMobileProps> = ({ form, onDe
                               render={({ field: { onChange, value } }) => (
                                   <StyledTextField 
                                       value={value} 
+                                      sx={Field}
                                       onChange={onChange} 
                                   />
                               )}
@@ -230,7 +245,27 @@ export const FormResultsMobile: React.FC<FormResultsMobileProps> = ({ form, onDe
                 </StyledTableRow>
                 <StyledTableRow>
                     <StyledTableCellMobile>Car</StyledTableCellMobile>
-                    <StyledTableCellMobile>{form.selectedCar}</StyledTableCellMobile>
+                    <StyledTableCellMobile>
+                      {isEditing ?  
+                        <Controller
+                          name="selectedCar"
+                          control={control}
+                          defaultValue={form.selectedCar}
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <StyledSelect {...field}>
+                              {carGroup.cars.map((car, index) => (
+                                <MenuItem sx={{width: '100%'}} key={index} value={car.brand + ' ' + car.model}>
+                                  {car.brand + ' ' + car.model}
+                                </MenuItem>
+                              ))}
+                            </StyledSelect> 
+                          )}
+                        />
+                        : 
+                        form.selectedCar
+                      }
+                    </StyledTableCellMobile>
                 </StyledTableRow>
                 <StyledTableRow>
                     <StyledTableCellMobile>

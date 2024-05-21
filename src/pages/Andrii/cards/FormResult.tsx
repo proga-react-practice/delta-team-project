@@ -5,6 +5,7 @@ import { textPattern, numberPattern, emailPattern, format } from '../../../patte
 import { StyledTableCell } from '../styledComponents/StyledTableCell';
 import { StyledTableRow } from '../styledComponents/StyledTableRow';
 import { StyledButtonDelete } from '../styledComponents/StyledButtonDelete';
+import { StyledSelect } from '../styledComponents/StyledSelect';
 import { StyledButtonEdit } from '../styledComponents/StyledButtonEdit';
 import { StyledButtonSave } from '../styledComponents/StyledButtonSave';
 import { StyledTextField } from '../styledComponents/StyledTextField';
@@ -14,7 +15,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { DateTimeValidationError } from '@mui/x-date-pickers/models';
 import { useForm, Controller } from 'react-hook-form';
-import { Table, TableBody, TableContainer, TableHead, Box, TableRow, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { useCarGroupContext } from '../../../Context';
+import { Table, MenuItem, TableBody, TableContainer, TableHead, Box, TableRow, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
 interface FormResultsProps {
   form: RentCar;
@@ -33,6 +35,8 @@ export const FormResults: React.FC<FormResultsProps> = ({ form, onDelete, index,
   const { handleSubmit, control, formState: { errors } } = useForm<RentCar>();
 
   const [openDialog, setOpenDialog] = useState(false);
+
+  const { carGroup } = useCarGroupContext();
 
   const handleEdit = (index: number) =>{
     onEdit(index);
@@ -203,6 +207,21 @@ export const FormResults: React.FC<FormResultsProps> = ({ form, onDelete, index,
                         control={control}
                         defaultValue={form.comments}
                         render={({ field }) => <StyledTextField label="Comments" {...field} />}
+                      />
+                      <Controller
+                        name="selectedCar"
+                        control={control}
+                        defaultValue={form.selectedCar}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <StyledSelect {...field} labelId="select-label" label='Car'>
+                            {carGroup.cars.map((car, index) => (
+                                <MenuItem key={index} value={car.brand + ' ' + car.model}>
+                                    {car.brand + ' ' + car.model}
+                                </MenuItem>
+                            ))}
+                          </StyledSelect>
+                        )}
                       />
                     </Box>
                   </DialogContent>
