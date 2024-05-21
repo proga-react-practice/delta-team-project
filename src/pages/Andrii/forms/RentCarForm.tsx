@@ -4,15 +4,15 @@ import { textPattern, numberPattern, emailPattern, format } from '../../../patte
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import InputMask from 'react-input-mask';
-import { RentCar, initialFormState } from '../../../interfaces';
 import { Button, Box, FormHelperText, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { StyledTextField } from '../styledComponents/StyledTextField'
-import { StyledSelect } from '../styledComponents/StyledSelect'
-import { createTransform } from '../animations/animation' 
+import { StyledTextField } from '../styledComponents/StyledTextField';
+import { StyledSelect } from '../styledComponents/StyledSelect';
+import { createTransform } from '../animations/animation';
 import { useCarGroupContext } from '../../../Context';
+import { RentCar, initialFormState } from '../../../interfaces';
 
 interface RentCarFormProps {
     onSubmit: (data: RentCar) => void;
@@ -205,7 +205,13 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
                 )}
             />
             <StyledTextField 
-                {...register('email', { required: 'Email is required', pattern: emailPattern })}
+                {...register('email', { 
+                    required: 'Email is required', 
+                    pattern: {
+                        value: emailPattern,
+                        message: 'Email must contain @'
+                    } 
+                })}
                 error={Boolean(errors.email)}
                 helperText={errors.email && errors.email.message}
                 className="email"
