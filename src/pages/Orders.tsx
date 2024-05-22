@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useMediaQuery } from '@mui/material';
+import { useMediaQuery, TableContainer, Table, TableBody, TableHead } from '@mui/material';
 import Box from '@mui/material/Box';
 import { useForm, useFieldArray } from "react-hook-form";
 import { theme } from '../theme';
@@ -7,6 +7,7 @@ import { FormResults } from './Andrii/cards/FormResult';
 import { FormResultsMobile } from './Andrii/cards/FormResultMobile';
 import { RentCar, OrderGroup } from '../interfaces';
 import { useRentCarContext } from './Andrii/RentCarContext';
+import { FormResultsTableHead } from './Andrii/styledComponents/FormResultsTableHead';
 
 const Orders: React.FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
@@ -22,7 +23,7 @@ const Orders: React.FC = () => {
     setValue('orders', orderGroup.orders);
   }, [orderGroup.orders, setValue]);
 
-  const handleEdit = (index: number) => {
+  const handleEdit = (index: number | null) => {
     setEditingCardIndex(index);
   };
 
@@ -52,11 +53,25 @@ const Orders: React.FC = () => {
     alignItems: { lg: 'start', md: 'center', xs: 'center' },
   };
 
+  const FormResult = {
+    // ...Transform,
+    display: 'flex',
+    width: '100%',
+    minWidth: '820px',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    marginBottom: '20px',
+    marginTop: '50px',
+    backgroundColor: "secondary.main",
+    borderRadius: '5px',
+    boxShadow: '0 0 10px rgba(0,0,0,0.15)',
+  };
+
   return (
     <Box sx={RentStyle}>
       <Box sx={FormResultStyle}>
-        {fields.map((form, index) => (
-        isMobile ?
+        {isMobile &&
+          fields.map((form, index) => (
             <FormResultsMobile
             key={index}
             form={form}
@@ -65,17 +80,30 @@ const Orders: React.FC = () => {
             index={index}
             onEdit={handleEdit}
             isEditing={index === editingCardIndex}
-            /> :
-            <FormResults
-                key={index}
-                form={form}
-                onSave={(form) => handleSave(index, form)}
-                onDelete={handleDelete}
-                onEdit={handleEdit}
-                index={index}
-                isEditing={index === editingCardIndex}
-            />
-        ))}
+            />)) 
+        }
+        {!isMobile && 
+          <TableContainer sx={FormResult}>
+            <Table aria-label="customize table">
+              <TableHead>
+                <FormResultsTableHead />
+              </TableHead>
+              <TableBody>
+                {fields.map((form, index) => (
+                  <FormResults
+                    key={index}
+                    form={form}
+                    onSave={(form) => handleSave(index, form)}
+                    onDelete={handleDelete}
+                    onEdit={handleEdit}
+                    index={index}
+                    isEditing={index === editingCardIndex}
+                  />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        }
       </Box>
     </Box>
   );
