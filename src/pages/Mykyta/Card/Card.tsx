@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FormData } from "../../../interfaces";
 import {
   Table,
@@ -18,8 +18,8 @@ type CardProps = {
 
 const TableContainerStyle = {
   border: "none",
-  maxWidth: { md: "300px", sm: "300px", xs: "300px" },
-  minWidth: { md: "200px", sm: "100px", xs: "100px" },
+  maxWidth: { md: "400px", sm: "300px", xs: "300px" },
+  minWidth: { md: "250px", sm: "100px", xs: "100px" },
   borderRadius: "10px",
   backgroundColor: "secondary.main",
   color: "primary.main",
@@ -42,7 +42,6 @@ const TableRowDataStyle = {
 
 const Card: React.FC<CardProps> = ({
   data,
-  index,
 }) => {
   const {
   } = useForm<FormData>({
@@ -50,12 +49,35 @@ const Card: React.FC<CardProps> = ({
     mode: "onChange",
   });
 
+  const [imageURL, setImageURL] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (data.auto_photo instanceof File) {
+      const url = URL.createObjectURL(data.auto_photo);
+      setImageURL(url);
+
+      return () => {
+        URL.revokeObjectURL(url);
+      };
+    } else {
+      setImageURL(null);
+    }
+  }, [data.auto_photo]);
 
   return (
     <Box>
       <TableContainer sx={TableContainerStyle}>
         <Table aria-label="a dense table" size="small">
           <TableBody>
+            <TableRow>
+              <TableCell sx={TableRowDataStyle}>
+                {imageURL ? (
+                  <img src={imageURL} alt="Car" style={{ width: "300px", height: '180px', borderRadius: '5px' }} />
+                ) : (
+                  "No Image"
+                )}
+              </TableCell>
+            </TableRow>
             <TableRow>
               <TableCell sx={TableRowDataStyle}>
                   {data.brand + " " + data.model + " " + data.price_per_day + "$"}
