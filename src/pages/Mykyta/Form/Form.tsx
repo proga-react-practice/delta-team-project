@@ -16,6 +16,8 @@ import { FormData, initialFormData, radioOptionsGearbox, radioOptionsFuel, purpo
 import RadioFormControlLabel from '../componets/RadioFormControlLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import { InputAdornment } from '@mui/material';
+import FileUpload from '../componets/FileUpload';
+
 interface FormProps {
   onSubmit: (data: FormData) => void;
 }
@@ -252,6 +254,17 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
         />
         {errors.purpose && <FormHelperText error>{errors.purpose.message}</FormHelperText>}
       </FormControl>
+      <Box sx={{width: '85%'}}>
+        <FormLabel component="legend">Photo</FormLabel>
+        <FileUpload 
+          control={control} 
+          rules={{ required: 'Photo is required' }} 
+          name="auto_photo" 
+          label="Upload Photo" 
+          error={Boolean(errors.auto_photo)}
+          helperText={errors.auto_photo?.message}
+        />
+      </Box>
       <Box sx={BoxButton}>
         <Button type="submit" variant="contained" color="success" sx={{ '&:hover': { backgroundColor: 'primary.dark' }, ButtonStyle }}>
           Submit
