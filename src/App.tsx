@@ -5,6 +5,8 @@ import Rent from "./pages/Rent";
 import Orders from "./pages/Orders";
 import Home from "./pages/Home";
 import Error from "./pages/Error";
+import CarList from "./pages/CarList";
+import CarInfo from "./pages/CarInfo";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { theme, darkTheme } from "./theme";
 import { CarGroupProvider } from './Context';
@@ -48,6 +50,8 @@ function App() {
                   <Route path="rent-car-form" element={<Rent />} />
                   <Route path="adding-car-form" element={<Car />} />
                   <Route path="orders" element={<Orders />} />
+                  <Route path="car-list" element={<CarList />} />
+                  <Route path="car/:index" element={<CarInfo />} />
                   <Route path="*" element={<Error />} />
                 </Route>
               </Routes>
