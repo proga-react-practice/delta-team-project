@@ -31,13 +31,13 @@ function CarList() {
   };
 
   const CardLayout = {
-    width: { md: "80%", sm: "100%", xs: "100%" },
+    width: { md: "85%", sm: "100%", xs: "100%" },
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: { md: "flex-start", sm: "center", xs: "center" },
     alignItems: { sm: "center", xs: "center" },
-    gap: "20%",
+    gap: "10%",
   };
 
   return (
