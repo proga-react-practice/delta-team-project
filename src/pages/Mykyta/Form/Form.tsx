@@ -12,8 +12,8 @@ import {
   Typography,
   Box,
 } from '@mui/material';
-import { FormData, initialFormData, radioOptionsGearbox, radioOptionsFuel, purposes, bodyTypes } from '../../../../interfaces';
-import RadioFormControlLabel from '../RadioFormControlLabel/RadioFormControlLabel';
+import { FormData, initialFormData, radioOptionsGearbox, radioOptionsFuel, purposes, bodyTypes } from '../../../interfaces';
+import RadioFormControlLabel from '../componets/RadioFormControlLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import { InputAdornment } from '@mui/material';
 interface FormProps {
