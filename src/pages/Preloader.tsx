@@ -15,7 +15,7 @@ const Preloader: React.FC = () => {
       }}
     >
       <video autoPlay loop muted style={{ width: '100%', height: '100%' }}>
-        <source src="../../public/preloader.mp4" type="video/mp4" />
+        <source src="../../preloader.mp4" type="video/mp4" />
       </video>
     </Box>
   );
