@@ -26,7 +26,17 @@ function CarInfo() {
   };
 
   if (carIndex < 0 || !car) {
-    return <Typography variant="h4">Car not found.</Typography>;
+    return (
+      <Typography 
+        variant="h4" 
+        sx={{
+          textAlign: 'center', 
+          marginTop: {lg: '5%', md: '10%', sm: '15%', xs: '20%'},
+        }}
+      >
+        Car not found
+      </Typography>
+    );
   }
 
   const ContainerStyle = {
