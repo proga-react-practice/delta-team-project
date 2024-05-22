@@ -1,7 +1,4 @@
 import { Typography, Box } from "@mui/material";
-import { useCarGroupContext } from '../Context';
-import { useRentCarContext } from './Andrii/RentCarContext';
-
 
 const ContainerHomeStyle = {
   display: "flex",
@@ -16,8 +13,6 @@ const TypographyStyle = {
 };
 
 function Home() {
-  const { carGroup } = useCarGroupContext();
-  const { orderGroup } = useRentCarContext();
 
   return (
     <Box sx={ContainerHomeStyle}>
@@ -29,10 +24,6 @@ function Home() {
         <Typography variant="h6"  sx={TypographyStyle}>
          Mykyta made the form for adding a car. Andrii made the form for renting a car. To connect these two forms, we used the react-router-dom library.
         </Typography>
-        <h1>Form Data:</h1>
-        <pre>{JSON.stringify(carGroup)}</pre>
-        <h1>Order Data:</h1>
-        <pre>{JSON.stringify(orderGroup)}</pre>
     </Box>
   );
 }
