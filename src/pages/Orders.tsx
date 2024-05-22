@@ -8,11 +8,13 @@ import { FormResultsMobile } from './Andrii/cards/FormResultMobile';
 import { RentCar, OrderGroup } from '../interfaces';
 import { useRentCarContext } from './Andrii/RentCarContext';
 import { FormResultsTableHead } from './Andrii/styledComponents/FormResultsTableHead';
+import { createTransform } from './Andrii/animations/animation';
 
 const Orders: React.FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
   const { orderGroup, updateOrder, removeOrder } = useRentCarContext();
   const { control, setValue } = useForm<OrderGroup>();
+  const Transform = createTransform();
   const [editingCardIndex, setEditingCardIndex] = useState<number | null>(null);
   const { fields, update, remove } = useFieldArray({
     control,
@@ -54,7 +56,7 @@ const Orders: React.FC = () => {
   };
 
   const FormResult = {
-    // ...Transform,
+    ...Transform,
     display: 'flex',
     width: '100%',
     minWidth: '820px',
