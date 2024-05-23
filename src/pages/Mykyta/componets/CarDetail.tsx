@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState }  from "react";
 import {
   Box,
   Button,
@@ -8,9 +8,17 @@ import {
   TableCell,
   TableContainer,
   TableRow,
+  Dialog, 
+  DialogTitle, 
+  DialogContent, 
+  DialogActions,
+  InputAdornment,
+  MenuItem,
+  Select,
+  TextField,
 } from "@mui/material";
-import { useForm } from "react-hook-form";
-import { FormData } from "../../../interfaces";
+import { useForm, Controller } from "react-hook-form";
+import { FormData, bodyTypes, fuelTypes, gearboxTypes, purposes } from "../../../interfaces";
 import { BsFillFuelPumpFill} from "react-icons/bs";
 import { FaCarSide } from "react-icons/fa6";
 import { GiHorseHead } from "react-icons/gi";
@@ -19,6 +27,12 @@ import { TbManualGearbox } from "react-icons/tb";
 import { IoMdSpeedometer } from "react-icons/io";
 import { TbEngine } from "react-icons/tb";
 import { MdFactory } from "react-icons/md";
+import { FaRegEdit } from "react-icons/fa";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { StyledButtonDelete} from "../../Andrii/styledComponents/StyledButtonDelete";
+import { StyledButtonSave} from "../../Andrii/styledComponents/StyledButtonSave";
+import { Link } from 'react-router-dom';
+
 
 type CardProps = {
   data: FormData;
@@ -26,8 +40,10 @@ type CardProps = {
   index: number;
   onSave: (data: FormData) => void;
   isEditing: boolean;
-  onEdit: (index: number) => void;
+  onEdit: (index: number | null) => void;
 };
+
+
 
 const TableContainerStyle = {
   border: "none",
@@ -48,6 +64,12 @@ const TableContainerStyle = {
   },
 };
 
+const DialogButtons = {
+  display: 'flex',
+  justifyContent: 'space-around',
+  alignItems: 'center',
+}
+
 const ImageStyle = {
   width: "80%",
   margin: "4%",
@@ -67,13 +89,16 @@ const ButtonStyle = {
 const InfoPhotoContainer = {
   display: "flex",
   flexDirection: "row",
-  alignItems: "center",
+  // alignItems: "center",
   width: "100%",
 };
 
 const InfoContainerStyle = {
-  width: "50%",
+  display: "flex",
+  flexDirection: "column",
+  width: "25%",
   marginLeft: "5%",
+  justifyContent: "center",
 };
 
 const InfoTableColumn = {
@@ -90,6 +115,11 @@ const ImageContainerStyle = {
   width: "60%",
 };
 
+const CardTextField = {
+  width: "100%",
+  marginTop: "10px",
+};
+
 const CarDetail: React.FC<CardProps> = ({
   data,
   onDelete,
@@ -98,15 +128,32 @@ const CarDetail: React.FC<CardProps> = ({
   onEdit,
   isEditing,
 }) => {
-  const { handleSubmit, control, formState: { errors } } = useForm<FormData>({
+  const { handleSubmit, control, register, formState: { errors } } = useForm<FormData>({
     defaultValues: data,
     mode: "onChange",
   });
 
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleEdit = (index: number) =>{
+    onEdit(index);
+    setOpenDialog(true);
+  }
+
+  const handleSave = (data: FormData) =>{
+    onSave(data);
+    setOpenDialog(false);
+  }
+
   const onSubmit = (data: FormData) => {
-    isEditing ? onSave(data) : onEdit(index);
+    isEditing ? handleSave(data) : handleEdit(index);
   };
-  
+
+  const handleCloseDialog = () => {
+    onEdit(null);
+    setOpenDialog(false);
+  };
+
   const carImage = data.auto_photo ? URL.createObjectURL(data.auto_photo) : '';
 
   const InfoTableCellStyle = {
@@ -117,19 +164,217 @@ const CarDetail: React.FC<CardProps> = ({
     width: "50%",
   }
 
+  const ButtonContainer = {
+    width: "100%",
+    display: "flex",
+    justifyContent: "start",
+  }
+
+  const EditContainerStyle = {
+    border: "none",
+    width: "100%",
+    color: "primary.main",
+    marginBottom: 4,
+  }
+
   const IconSize = 25;
 
   return (
-    <Box sx={TableContainerStyle}>
+    
+    <Box sx={TableContainerStyle} >
+      { isEditing ? (
+      <>
+        <Dialog component={'form'} open={openDialog} onClose={handleCloseDialog} onSubmit={handleSubmit(onSubmit)}>
+          <DialogTitle>Edit Car</DialogTitle>
+           <DialogContent>
+            <Box sx={EditContainerStyle} >
+                <TextField
+                  {...register("brand", {
+                    required: "Brand is required",
+                    validate: {
+                      isFirstLetterUppercase: (value) =>
+                        /^[A-Z]/.test(value) || "The first letter must be uppercase",
+                    },
+                  })}
+                    name="brand"
+                    sx={CardTextField}
+                    error={Boolean(errors.brand)}
+                    helperText={errors.brand?.message}
+                  />
+                <TextField
+                  {...register("model", {
+                    required: "Model is required",
+                    validate: {
+                      isFirstLetterUppercase: (value) =>
+                        /^[A-Z]/.test(value) || "The first letter must be uppercase",
+                    },
+                  })}
+                    name="model"
+                    sx={CardTextField}
+                    error={Boolean(errors.model)}
+                    helperText={errors.model?.message}
+                  />
+                  <TextField
+                  {...register("year", {
+                    required: "Year is required",
+                    min: { value: 1900, message: "Year must be 1900 or later" },
+                    max: {
+                      value: new Date().getFullYear(),
+                      message: "Year must be this year or earlier",
+                    },
+                  })}
+                    name="year"
+                    type="number"
+                    sx={CardTextField}
+                    error={Boolean(errors.year)}
+                    helperText={errors.year?.message}
+                  />
+                   <Controller
+                    name="body_type"
+                    control={control}
+                    defaultValue={data.body_type}
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <Select {...field} sx={CardTextField}>
+                        {bodyTypes.map((option) => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
+                      </Select>  
+                    )}
+                  />
+                   <TextField
+                  {...register("mileage_km", {
+                    required: "Mileage is required",
+                    min: { value: 0, message: "Mileage must be 0 or bigger" },
+                    max: { value: 1000, message: "Mileage must be 1000 or fewer" },
+                  })}
+                    name="mileage_km"
+                    type="number"
+                    sx={CardTextField}
+                    error={Boolean(errors.mileage_km)}
+                    helperText={errors.mileage_km?.message}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">1,000 km</InputAdornment>
+                      ),
+                    }}
+                  />
+                   <Controller
+                    name="gearbox"
+                    control={control}
+                    defaultValue={data.gearbox}
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <Select {...field} sx={CardTextField}>
+                        {gearboxTypes.map((option) => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
+                      </Select>  
+                    )}
+                  />
+                  <Controller
+                    name="fuel"
+                    control={control}
+                    defaultValue={data.fuel}
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <Select {...field} sx={CardTextField}>
+                        {fuelTypes.map((option) => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
+                      </Select>  
+                    )}
+                  />
+                   <TextField
+                  {...register("price_per_day", {
+                    required: "Price is required",
+                    min: { value: 1, message: "Price must be 1 or bigger" },
+                  })}
+                    name="price_per_day"
+                    type="number"
+                    sx={CardTextField}
+                    error={Boolean(errors.price_per_day)}
+                    helperText={errors.price_per_day?.message}
+                    InputProps={{
+                      endAdornment: <InputAdornment position="end">$</InputAdornment>,
+                    }}
+                  />
+                  <TextField
+                  {...register("horse_power", {
+                    required: "Horse power is required",
+                    min: { value: 1, message: "Horse power must be 1 or bigger" },
+                    max: { value: 1000, message: "Horse power must be 1000 or fewer" },
+                  })}
+                    name="horse_power"
+                    type="number"
+                    sx={CardTextField}
+                    error={Boolean(errors.horse_power)}
+                    helperText={errors.horse_power?.message}
+                    InputProps={{
+                      endAdornment: <InputAdornment position="end">kW</InputAdornment>,
+                    }}
+                  />
+                   <TextField
+                  {...register("engine_capacity", {
+                    required: "Engine capacity is required",
+                    min: { value: 0.1, message: "Engine capacity must be 0.1 or bigger" },
+                    max: { value: 10, message: "Engine capacity must be 10 or fewer" },
+                  })}
+                    name="engine_capacity"
+                    sx={CardTextField}
+                    type="number"
+                    error={Boolean(errors.engine_capacity)}
+                    helperText={errors.engine_capacity?.message}
+                    InputProps={{
+                      endAdornment: <InputAdornment position="end">cm3</InputAdornment>,
+                    }}
+                  />
+                  <Controller
+                  name="purpose"
+                  control={control}
+                  defaultValue={data.purpose}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <Select {...field} sx={CardTextField}>
+                      {purposes.map((option) => (
+                        <MenuItem key={option} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </Select>  
+                  )}
+                />
+              </Box>
+           </DialogContent>
+           <DialogActions sx={DialogButtons}>
+                  <StyledButtonDelete sx={{ width: '40%' }} onClick={handleCloseDialog}>Close</StyledButtonDelete>
+                  <StyledButtonSave sx={{ width: '40%' }} type='submit'>Save</StyledButtonSave>
+            </DialogActions>
+        </Dialog>
+      </> 
+    ):( 
+      <>
       <Box sx={InfoPhotoContainer}>
         <Box sx={ImageContainerStyle}>
           {carImage && <img src={carImage} alt={`${data.brand} ${data.model}`} style={ImageStyle} />}
         </Box>
-        <Box sx={InfoContainerStyle}>
-          <Typography variant="h3">{data.brand} {data.model}</Typography>
-          <Typography variant="h5">{data.year}</Typography>
-          <Typography variant="h5" sx={PriceStyle}>${data.price_per_day}/Day</Typography>
-          <Button variant="contained" color="primary" sx={ButtonStyle}>Book Your Ride</Button>
+          <Box sx={InfoContainerStyle}>
+            <Typography variant="h3">{data.brand} {data.model}</Typography>
+            <Typography variant="h5">{data.year}</Typography>
+            <Typography variant="h5" sx={PriceStyle}>${data.price_per_day}/Day</Typography>
+            <Button variant="contained" color="primary" sx={ButtonStyle}>Book Your Ride</Button>
+          </Box>
+          <Box component={"form"} onSubmit={handleSubmit(onSubmit)} sx={{width:"10%", display:"flex", justifyContent:"start", alignItems:"start", height:"100%"}}>
+            <Box sx={ButtonContainer}>
+              <Button type="submit" ><FaRegEdit size={IconSize}/></Button>
+              <Link to="/car-list"> <Button onClick={() => onDelete(index)}><FaRegTrashAlt size={IconSize}/></Button> </Link>
+            </Box> 
         </Box>
       </Box>
       <Box>
@@ -204,6 +449,9 @@ const CarDetail: React.FC<CardProps> = ({
           </Table>
         </TableContainer>
       </Box>
+      </>
+      )}
+  
     </Box>
   );
 };
