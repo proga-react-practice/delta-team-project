@@ -4,9 +4,12 @@ import { CarGroup, FormData } from "../interfaces";
 import { Box } from "@mui/material";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useState } from "react";
+import { useCarGroupContext } from '../Context';
+import { useEffect } from "react";
 
 function Car() {
-  const { control } = useForm<CarGroup>();
+  const { control, setValue } = useForm<CarGroup>();
+  const { carGroup , addCar, updateCar, removeCar } = useCarGroupContext();
   const { fields, append, update, remove } = useFieldArray({
     control,
     name: "cars",
@@ -14,20 +17,27 @@ function Car() {
 
   const [editingCardIndex, setEditingCardIndex] = useState<number | null>(null);
 
+  useEffect(() => {
+    setValue('cars', carGroup.cars);
+  }, [carGroup.cars, setValue]);
+
   const handleEditClick = (index: number) => {
     setEditingCardIndex(index);
   };
 
   function handleAddNewCar(formData: FormData) {
     append(formData);
+    addCar(formData);
   }
 
   const handleDelete = (index: number) => {
     remove(index);
+    removeCar(index);
   };
 
   const handleSave = (index: number, data: FormData) => {
     update(index, data);
+    updateCar(index, data);
     setEditingCardIndex(null);
   };
 

@@ -4,13 +4,15 @@ import { textPattern, numberPattern, emailPattern, format } from '../../../patte
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import InputMask from 'react-input-mask';
-import { RentCar, initialFormState } from '../../../interfaces';
-import { Button, Box, FormHelperText } from '@mui/material';
+import { Button, Box, FormHelperText, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { StyledTextField } from '../styledComponents/StyledTextField'
-import { createTransform } from '../animations/animation' 
+import { StyledTextField } from '../styledComponents/StyledTextField';
+import { StyledSelect } from '../styledComponents/StyledSelect';
+import { createTransform } from '../animations/animation';
+import { useCarGroupContext } from '../../../Context';
+import { RentCar, initialFormState } from '../../../interfaces';
 
 interface RentCarFormProps {
     onSubmit: (data: RentCar) => void;
@@ -27,6 +29,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
         mode: 'onChange'
     });
 
+    const { carGroup } = useCarGroupContext();
     const Transform = createTransform();
     dayjs.extend(advancedFormat);
 
@@ -202,14 +205,19 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
                 )}
             />
             <StyledTextField 
-                {...register('email', { required: 'Email is required', pattern: emailPattern })}
+                {...register('email', { 
+                    required: 'Email is required', 
+                    pattern: {
+                        value: emailPattern,
+                        message: 'Email must contain @'
+                    } 
+                })}
                 error={Boolean(errors.email)}
                 helperText={errors.email && errors.email.message}
                 className="email"
                 label="Email" 
                 name="email" 
                 placeholder="Email" 
-                inputProps={{ pattern: emailPattern }}
             />
             <StyledTextField 
                 {...register('placeOfIssue', { 
@@ -225,7 +233,6 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
                 label="Place of Issue"   
                 name="placeOfIssue" 
                 placeholder="Place of Issue" 
-                inputProps={{ pattern: textPattern }}
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Controller
@@ -290,6 +297,23 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
                 name="comments"  
                 placeholder="Comments" 
             />
+            <FormControl>
+                <InputLabel id="select-label">Car</InputLabel>  
+                <Controller
+                    name="selectedCar"
+                    control={control}
+                    rules={{ required: 'Car is required' }}
+                    render={({ field }) => (
+                        <StyledSelect {...field} labelId="select-label" label='Car'>
+                            {carGroup.cars.map((car, index) => (
+                                <MenuItem key={index} value={car.brand + ' ' + car.model}>
+                                    {car.brand + ' ' + car.model}
+                                </MenuItem>
+                            ))}
+                        </StyledSelect>
+                    )}
+                />
+            </FormControl>
             <Box 
                 className="buttons"
                 sx={BoxStyle}

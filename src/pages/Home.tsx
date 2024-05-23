@@ -13,6 +13,7 @@ const TypographyStyle = {
 };
 
 function Home() {
+
   return (
     <Box sx={ContainerHomeStyle}>
         <Typography variant="h2"  sx={TypographyStyle}>About our project</Typography>
