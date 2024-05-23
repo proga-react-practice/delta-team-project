@@ -91,7 +91,7 @@ const Card: React.FC<CardProps> = ({ data }) => {
             <TableRow>
             <TableCell sx={TableRowDataStyle}>
             <Typography variant="h6" component="div">
-              {data.brand} {data.model} {data.year}
+              {data.year} {data.brand} {data.model} 
             </Typography>
             <Box display="flex" justifyContent="space-evenly">
               <Typography variant="body1" color="textSecondary">
