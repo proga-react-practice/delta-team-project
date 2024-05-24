@@ -31,7 +31,7 @@ function CarList() {
   };
 
   const CardLayout = {
-    width: { md: "85%", sm: "100%", xs: "100%" },
+    width: { md: "90%", sm: "100%", xs: "100%" },
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
