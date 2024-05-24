@@ -9,7 +9,6 @@ import { StyledSelect } from '../styledComponents/StyledSelect';
 import { StyledButtonEdit } from '../styledComponents/StyledButtonEdit';
 import { StyledButtonSave } from '../styledComponents/StyledButtonSave';
 import { StyledTextField } from '../styledComponents/StyledTextField';
-// import { createTransform } from '../animations/animation';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -86,6 +85,10 @@ export const FormResults: React.FC<FormResultsProps> = ({ form, onDelete, index,
     marginBottom: '10px',
     boxSizing: 'border-box',
   }
+
+  const carId = form.selectedCar;
+  const cars = carGroup.cars;
+  const selectedCar = cars.find(car => car.id === carId);
 
   return (
     <>
@@ -212,7 +215,7 @@ export const FormResults: React.FC<FormResultsProps> = ({ form, onDelete, index,
               <StyledTableCell>{form.startRentDate?.format(format)}</StyledTableCell>
               <StyledTableCell>{form.finishRentDate?.format(format)}</StyledTableCell>
               <StyledTableCell>{form.comments}</StyledTableCell>
-              <StyledTableCell>{form.selectedCar}</StyledTableCell>
+              <StyledTableCell>{selectedCar?.brand + ' ' + selectedCar?.model}</StyledTableCell>
               <StyledTableCell>
                 <StyledButtonDelete onClick={() => onDelete(index)}>Delete</StyledButtonDelete>
                 <StyledButtonEdit form={`form${index}`} type='submit'>Edit</StyledButtonEdit>
