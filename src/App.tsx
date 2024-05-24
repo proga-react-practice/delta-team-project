@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Car from "./pages/Car";
 import Layout from "./pages/Layout";
-import Rent from "./pages/Rent";
 import Orders from "./pages/Orders";
 import Home from "./pages/Home";
 import Error from "./pages/Error";
@@ -47,7 +46,6 @@ function App() {
               <Routes>
                 <Route path="/" element={<Layout darkMode={darkMode} toggleDarkMode={toggleDarkMode} />}>
                   <Route index element={<Home />} />
-                  <Route path="rent-car-form" element={<Rent />} />
                   <Route path="adding-car-form" element={<Car />} />
                   <Route path="orders" element={<Orders />} />
                   <Route path="car-list" element={<CarList />} />

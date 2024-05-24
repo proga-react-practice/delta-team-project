@@ -26,7 +26,6 @@ function Layout({ darkMode, toggleDarkMode }: { darkMode: boolean, toggleDarkMod
                         Delta
                     </Typography>
                     <Button sx={Buttons} color="inherit" component={Link} to="/">Main page</Button>
-                    <Button sx={Buttons} color="inherit" component={Link} to="/rent-car-form">Rent Car</Button>
                     <Button sx={Buttons} color="inherit" component={Link} to="/adding-car-form">Add Car</Button>
                     <Button sx={Buttons} color="inherit" component={Link} to="/orders">Orders</Button>
                     <Button sx={Buttons} color="inherit" component={Link} to="/car-list">Car List</Button>
