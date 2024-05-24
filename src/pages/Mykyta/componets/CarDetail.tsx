@@ -90,7 +90,6 @@ const ButtonStyle = {
 const InfoPhotoContainer = {
   display: "flex",
   flexDirection: "row",
-  // alignItems: "center",
   width: "100%",
 };
 
@@ -197,14 +196,15 @@ const CarDetail: React.FC<CardProps> = ({
 
   const IconSize = 25;
 
+  const carId = data.id;
+
   return (
-    
     <Box sx={TableContainerStyle} >
       {isRenting && (
         <Dialog open={openDialog}>
           <DialogTitle>Rent Car</DialogTitle>
           <DialogContent>
-            <RentCarForm onSubmit={handleRentSubmit} onClose={handleCloseDialog} />
+            <RentCarForm onSubmit={handleRentSubmit} onClose={handleCloseDialog} index={carId}/>
           </DialogContent>
         </Dialog>
       )} 
