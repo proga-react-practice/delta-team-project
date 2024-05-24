@@ -24,7 +24,7 @@ interface FormResultsProps {
   index: number;
   onSave: (data: RentCar) => void;
   isEditing: boolean;
-  onEdit: (index: number) => void;
+  onEdit: (index: number | null) => void;
 }
 
 export const FormResults: React.FC<FormResultsProps> = ({ form, onDelete, index, onSave, onEdit, isEditing }) => {
