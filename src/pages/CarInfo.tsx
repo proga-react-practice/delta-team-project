@@ -10,10 +10,10 @@ function CarInfo() {
   const carIndex = index ? parseInt(index, 10) : -1;
   const { carGroup, updateCar, removeCar } = useCarGroupContext();
   const car = carGroup.cars[carIndex];
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState<number | null>(null);
 
-  const handleEditClick = () => {
-    setIsEditing(true);
+  const handleEditClick = (index: number | null) => {
+    setIsEditing(index);
   };
 
   const handleDelete = () => {
@@ -22,7 +22,7 @@ function CarInfo() {
 
   const handleSave = (data: FormData) => {
     updateCar(carIndex, data);
-    setIsEditing(false);
+    setIsEditing(null);
   };
 
   if (carIndex < 0 || !car) {
@@ -58,7 +58,7 @@ function CarInfo() {
         onSave={handleSave}
         index={carIndex}
         onEdit={handleEditClick}
-        isEditing={isEditing}
+        isEditing={carIndex === isEditing}
       />
     </Box>
   );
