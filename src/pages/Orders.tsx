@@ -22,7 +22,7 @@ const Orders: React.FC = () => {
     setValue('orders', orderGroup.orders);
   }, [orderGroup.orders, setValue]);
 
-  const handleEdit = (index: number) => {
+  const handleEdit = (index: number | null) => {
     setEditingCardIndex(index);
   };
 
