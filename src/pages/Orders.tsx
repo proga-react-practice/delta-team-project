@@ -48,7 +48,7 @@ const Orders: React.FC = () => {
   };
 
   const FormResultStyle = {
-    width: { xs: '100%', md: '67%', lg: '80%' },
+    width: { xs: '100%', md: '67%', lg: '90%' },
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-around',
