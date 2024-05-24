@@ -1,9 +1,11 @@
 import CarDetail from "./Mykyta/componets/CarDetail";
+import { useForm, useFieldArray } from 'react-hook-form';
 import { Box, Typography} from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useCarGroupContext } from '../Context';
-import { FormData } from "../interfaces";
-import { useState } from "react";
+import { FormData, RentCar, OrderGroup } from "../interfaces";
+import { useState, useEffect } from "react";
+import { useRentCarContext } from './Andrii/RentCarContext';
 
 function CarInfo() {
   const { index } = useParams<{ index: string }>();
@@ -11,6 +13,29 @@ function CarInfo() {
   const { carGroup, updateCar, removeCar } = useCarGroupContext();
   const car = carGroup.cars[carIndex];
   const [isEditing, setIsEditing] = useState<number | null>(null);
+  const [isRenting, setIsRenting] = useState<number | null>(null);
+  const { orderGroup, addOrder } = useRentCarContext();
+  const { control, setValue } = useForm<OrderGroup>();
+  const { append } = useFieldArray({
+    control,
+    name: 'orders',
+  });
+
+  useEffect(() => {
+    setValue('orders', orderGroup.orders);
+  }, [orderGroup.orders, setValue]);
+
+  const handleRent = (form: RentCar | null) => {
+    if (form) {
+      append(form);
+      addOrder(form);
+    }
+    setIsRenting(null);
+  };
+
+  const handleRentClick = (index: number | null) => {
+    setIsRenting(index);
+  };
 
   const handleEditClick = (index: number | null) => {
     setIsEditing(index);
@@ -48,8 +73,6 @@ function CarInfo() {
     backgroundColor: "background.default",
   };
 
-
-
   return (
     <Box sx={ContainerStyle}>
       <CarDetail
@@ -59,6 +82,9 @@ function CarInfo() {
         index={carIndex}
         onEdit={handleEditClick}
         isEditing={carIndex === isEditing}
+        isRenting={carIndex === isRenting}
+        onRent={handleRent}
+        onRentClick={handleRentClick}
       />
     </Box>
   );
