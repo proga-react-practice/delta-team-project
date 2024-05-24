@@ -1,4 +1,4 @@
-import React, { useState }  from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -18,8 +18,8 @@ import {
   TextField,
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
-import { FormData, bodyTypes, fuelTypes, gearboxTypes, purposes } from "../../../interfaces";
-import { BsFillFuelPumpFill} from "react-icons/bs";
+import { FormData, RentCar, bodyTypes, fuelTypes, gearboxTypes, purposes } from "../../../interfaces";
+import { BsFillFuelPumpFill } from "react-icons/bs";
 import { FaCarSide } from "react-icons/fa6";
 import { GiHorseHead } from "react-icons/gi";
 import { BiTask } from "react-icons/bi";
@@ -29,10 +29,10 @@ import { TbEngine } from "react-icons/tb";
 import { MdFactory } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { StyledButtonDelete} from "../../Andrii/styledComponents/StyledButtonDelete";
-import { StyledButtonSave} from "../../Andrii/styledComponents/StyledButtonSave";
+import { StyledButtonDelete } from "../../Andrii/styledComponents/StyledButtonDelete";
+import { StyledButtonSave } from "../../Andrii/styledComponents/StyledButtonSave";
 import { Link } from 'react-router-dom';
-
+import RentCarForm from '../../Andrii/forms/RentCarForm';
 
 type CardProps = {
   data: FormData;
@@ -40,10 +40,11 @@ type CardProps = {
   index: number;
   onSave: (data: FormData) => void;
   isEditing: boolean;
+  isRenting: boolean;
   onEdit: (index: number | null) => void;
+  onRent: (form: RentCar | null) => void;
+  onRentClick: (index: number | null) => void;
 };
-
-
 
 const TableContainerStyle = {
   border: "none",
@@ -127,6 +128,9 @@ const CarDetail: React.FC<CardProps> = ({
   onSave,
   onEdit,
   isEditing,
+  isRenting,
+  onRent,
+  onRentClick,
 }) => {
   const { handleSubmit, control, register, formState: { errors } } = useForm<FormData>({
     defaultValues: data,
@@ -140,6 +144,16 @@ const CarDetail: React.FC<CardProps> = ({
     setOpenDialog(true);
   }
 
+  const handleRent = (index: number) => {
+    onRentClick(index);
+    setOpenDialog(true);
+  };
+
+  const handleRentSubmit = (form: RentCar | null) => {
+    onRent(form);
+    setOpenDialog(false);
+  };
+
   const handleSave = (data: FormData) =>{
     onSave(data);
     setOpenDialog(false);
@@ -150,7 +164,11 @@ const CarDetail: React.FC<CardProps> = ({
   };
 
   const handleCloseDialog = () => {
-    onEdit(null);
+    if (isEditing) {
+      onEdit(null);
+    } else {
+      onRentClick(null);
+    }
     setOpenDialog(false);
   };
 
@@ -182,6 +200,14 @@ const CarDetail: React.FC<CardProps> = ({
   return (
     
     <Box sx={TableContainerStyle} >
+      {isRenting && (
+        <Dialog open={openDialog}>
+          <DialogTitle>Rent Car</DialogTitle>
+          <DialogContent>
+            <RentCarForm onSubmit={handleRentSubmit} onClose={handleCloseDialog} />
+          </DialogContent>
+        </Dialog>
+      )} 
       { isEditing ? (
       <>
         <Dialog component={'form'} open={openDialog} onClose={handleCloseDialog} onSubmit={handleSubmit(onSubmit)}>
@@ -368,12 +394,12 @@ const CarDetail: React.FC<CardProps> = ({
             <Typography variant="h3">{data.brand} {data.model}</Typography>
             <Typography variant="h5">{data.year}</Typography>
             <Typography variant="h5" sx={PriceStyle}>${data.price_per_day}/Day</Typography>
-            <Button variant="contained" color="primary" sx={ButtonStyle}>Book Your Ride</Button>
+            <Button variant="contained" color="primary" onClick={() => handleRent(index)} sx={ButtonStyle}>Book Your Ride</Button>
           </Box>
           <Box component={"form"} onSubmit={handleSubmit(onSubmit)} sx={{width:"10%", display:"flex", justifyContent:"start", alignItems:"start", height:"100%"}}>
             <Box sx={ButtonContainer}>
-              <Button type="submit" ><FaRegEdit size={IconSize}/></Button>
-              <Link to="/car-list"> <Button onClick={() => onDelete(index)}><FaRegTrashAlt size={IconSize}/></Button> </Link>
+              <Button type="submit"><FaRegEdit size={IconSize}/></Button>
+              <Link to="/car-list"><Button onClick={() => onDelete(index)}><FaRegTrashAlt size={IconSize}/></Button></Link>
             </Box> 
         </Box>
       </Box>
@@ -450,8 +476,7 @@ const CarDetail: React.FC<CardProps> = ({
         </TableContainer>
       </Box>
       </>
-      )}
-  
+      )} 
     </Box>
   );
 };
