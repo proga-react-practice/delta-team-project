@@ -15,7 +15,6 @@ function CarList() {
     name: "cars",
   });
 
-
   useEffect(() => {
     setValue('cars', carGroup.cars);
   }, [carGroup.cars, setValue]);
