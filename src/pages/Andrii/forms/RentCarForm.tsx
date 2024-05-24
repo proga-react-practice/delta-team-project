@@ -14,15 +14,17 @@ import { RentCar, initialFormState } from '../../../interfaces';
 interface RentCarFormProps {
     onSubmit: (data: RentCar | null) => void;
     onClose: () => void;
+    index: string;
 }
 
-const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit, onClose }) => {
+const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit, onClose, index }) => {
 
     const { control, register, handleSubmit, reset, watch, formState: { errors } } = useForm<RentCar>({
         defaultValues: {
             ...initialFormState,
             startRentDate: undefined,
             finishRentDate: undefined,
+            selectedCar: index,
         },
         mode: 'onChange'
     });
@@ -290,6 +292,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit, onClose }) => {
                 />
             </LocalizationProvider>
             <StyledTextField
+                {...register('comments')}
                 className="comments"
                 label="Comments"
                 name="comments"  
