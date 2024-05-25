@@ -263,6 +263,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
           label="Upload Photo" 
           error={Boolean(errors.auto_photo)}
           helperText={errors.auto_photo?.message}
+          reset={handleReset}
         />
       </Box>
       <Box sx={BoxButton}>

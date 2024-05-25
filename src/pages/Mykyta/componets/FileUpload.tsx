@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useController, Control, RegisterOptions } from 'react-hook-form';
 import { Button, Input, FormHelperText, Box } from '@mui/material';
 import { FormData } from '../../../interfaces';
@@ -10,9 +10,10 @@ interface FileUploadProps {
   rules?: RegisterOptions;
   error?: boolean;
   helperText?: string;
+  reset?: () => void;
 }
 
-const FileUpload: React.FC<FileUploadProps> = ({ control, name, label, rules, error, helperText }) => {
+const FileUpload: React.FC<FileUploadProps> = ({ control, name, label, rules, error, helperText, reset }) => {
   const { field } = useController({
     name,
     control,
@@ -20,18 +21,35 @@ const FileUpload: React.FC<FileUploadProps> = ({ control, name, label, rules, er
     defaultValue: null,
   });
 
-  const [fileName, setFileName] = useState<string | null>(null);
+  const [, setFileName] = useState<string | null>(null);
+  const [isFileSelected, setIsFileSelected] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
     field.onChange(file);
     setFileName(file ? file.name : null);
+    setIsFileSelected(!!file);
   };
+
+  useEffect(() => {
+    if (reset) {
+      setFileName(null);
+      setIsFileSelected(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  }, [reset]);
 
   const TextFieldStyle = {
     width: '100%',
     padding: '8px',
     marginBottom: '10px',
+    backgroundColor: isFileSelected ? 'green' : 'black',
+    '&:hover': {
+      backgroundColor: isFileSelected ? 'black' : 'green',
+    }
   };
 
   return (
@@ -48,7 +66,6 @@ const FileUpload: React.FC<FileUploadProps> = ({ control, name, label, rules, er
           {label}
         </Button>
       </label>
-      {fileName && <span>{fileName}</span>}
       {error && <FormHelperText error>{helperText}</FormHelperText>}
     </Box>
   );
