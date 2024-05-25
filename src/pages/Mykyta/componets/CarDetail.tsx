@@ -72,14 +72,14 @@ const DialogButtons = {
 }
 
 const ImageStyle = {
-  width: "80%",
+  width: "85%",
   margin: "4%",
   borderRadius: "5px",
 };
 
 const PriceStyle = {
   color: "red",
-  fontSize: "24px",
+  fontSize: {lg: "24px", sm: '24px', xs: '15px',},
   fontWeight: "bold",
 };
 
@@ -93,17 +93,10 @@ const InfoPhotoContainer = {
   width: "100%",
 };
 
-const InfoContainerStyle = {
-  display: "flex",
-  flexDirection: "column",
-  width: "25%",
-  marginLeft: "5%",
-  justifyContent: "center",
-};
-
 const InfoTableColumn = {
   display: "flex",
   flexDirection: "row",
+  width: {xs: '95%'}
 }
 
 const TableCellFontStyle = {
@@ -112,7 +105,7 @@ const TableCellFontStyle = {
 
 
 const ImageContainerStyle = {
-  width: "60%",
+  width: {lg: "60%", md: "90%"},
 };
 
 const CardTextField = {
@@ -181,10 +174,12 @@ const CarDetail: React.FC<CardProps> = ({
     width: "50%",
   }
 
-  const ButtonContainer = {
-    width: "100%",
+  const ButtonsStyle = {
+    width: {lg: "100%", sm:'70%'},
     display: "flex",
     justifyContent: "start",
+    flexDirection: {lg: 'row', sm: 'column', xs: 'column'},
+    fontSize: {xs: '20px'}
   }
 
   const EditContainerStyle = {
@@ -192,6 +187,42 @@ const CarDetail: React.FC<CardProps> = ({
     width: "100%",
     color: "primary.main",
     marginBottom: 4,
+  }
+
+  const ButtonContainerStyle = {
+    width: {lg: "11%", md: '7%', xs: '5%'}, 
+    display:"flex", 
+    justifyContent:"start", 
+    alignItems:"start", 
+    height:"100%"
+  }
+
+  const HeaderCard = {
+    display: "flex",
+    flexDirection: {lg: "row", sm: 'column', xs: "column"},
+    maxWidth: {lg: "89%", md: '93%', sm: '90%', xs: '80%'},
+    minWidth: {lg: "89%", md: '93%', sm: '90%', xs: '80%'},
+  }
+
+  const InfoContainerStyle = {
+    display: "flex",
+    flexDirection: "column",
+    width: {lg: "25%", md: '80%', xs: '80%'},
+    marginLeft: "5%",
+    justifyContent: "center",
+    // alignItems: {lg: 'inherit', md: "inherit", sm: "center"},
+    gap: {lg: '3%', md: "5%", sm: "5%", xs: "5%"},
+  };
+
+  const Size = {
+    fontSize: {lg: '25px', sm:'24px', xs: '15px',},
+    fontWeight: {lg: 'none', xs: 'bold',}
+  }
+
+  const HeaderModel = {
+    display: 'flex', 
+    flexDirection: {lg: 'column', md: 'row'}, 
+    gap: '5%'
   }
 
   const IconSize = 25;
@@ -387,20 +418,24 @@ const CarDetail: React.FC<CardProps> = ({
     ):( 
       <>
       <Box sx={InfoPhotoContainer}>
-        <Box sx={ImageContainerStyle}>
-          {carImage && <img src={carImage} alt={`${data.brand} ${data.model}`} style={ImageStyle} />}
-        </Box>
-          <Box sx={InfoContainerStyle}>
-            <Typography variant="h3">{data.brand} {data.model}</Typography>
-            <Typography variant="h5">{data.year}</Typography>
-            <Typography variant="h5" sx={PriceStyle}>${data.price_per_day}/Day</Typography>
-            <Button variant="contained" color="primary" onClick={() => handleRent(index)} sx={ButtonStyle}>Book Your Ride</Button>
+        <Box sx={HeaderCard}>
+          <Box sx={ImageContainerStyle}>
+            {carImage && <img src={carImage} alt={`${data.brand} ${data.model}`} style={ImageStyle} />}
           </Box>
-          <Box component={"form"} onSubmit={handleSubmit(onSubmit)} sx={{width:"10%", display:"flex", justifyContent:"start", alignItems:"start", height:"100%"}}>
-            <Box sx={ButtonContainer}>
-              <Button type="submit"><FaRegEdit size={IconSize}/></Button>
-              <Link to="/car-list"><Button onClick={() => onDelete(index)}><FaRegTrashAlt size={IconSize}/></Button></Link>
-            </Box> 
+          <Box sx={InfoContainerStyle}>
+            <Box sx={HeaderModel}>
+              <Typography sx={Size} variant="h3">{data.brand} {data.model}</Typography>
+              <Typography sx={Size} variant="h4">{data.year}</Typography>
+              <Typography variant="h5" sx={PriceStyle}>${data.price_per_day}/Day</Typography>
+            </Box>
+            <Button variant="contained" color="primary" onClick={() => handleRent(index)} sx={ButtonStyle}>Book</Button>
+          </Box>
+        </Box>
+        <Box component={"form"} onSubmit={handleSubmit(onSubmit)} sx={ButtonContainerStyle}>
+          <Box sx={ButtonsStyle}>
+            <Button type="submit"><FaRegEdit size={IconSize}/></Button>
+            <Link to="/car-list"><Button onClick={() => onDelete(index)}><FaRegTrashAlt size={IconSize}/></Button></Link>
+          </Box> 
         </Box>
       </Box>
       <Box>

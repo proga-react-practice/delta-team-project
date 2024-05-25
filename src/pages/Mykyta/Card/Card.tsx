@@ -9,7 +9,6 @@ import {
   Box,
   Typography,
 } from "@mui/material";
-import { useForm } from "react-hook-form";
 import { BsFillFuelPumpFill} from "react-icons/bs";
 import { TbManualGearbox } from "react-icons/tb";
 import { IoMdSpeedometer } from "react-icons/io"
@@ -40,16 +39,21 @@ const TableContainerStyle = {
   },
 };
 
+const ImageStyle = {
+  minWidth: {lg: '300px', md: '200px', sm: '235px', xs: '230px'},
+  maxWidth: {lg: '300px', md: '250px', sm: '235px', xs: '230px'},
+  minHeight: {lg: '180px', md: '180px', sm: '180px', xs: '150px'},
+  maxHeight: {lg: '180px', md: '180px', sm: '180px', xs: '150px'},
+  borderRadius: "5px",
+  objectFit: 'cover',
+};
+
 const TableRowDataStyle = {
+  display: 'grid',
   textAlign: "center",
 };
 
 const Card: React.FC<CardProps> = ({ data }) => {
-  const {} = useForm<FormData>({
-    defaultValues: data,
-    mode: "onChange",
-  });
-
   const [imageURL, setImageURL] = useState<string | null>(null);
 
   useEffect(() => {
@@ -73,15 +77,11 @@ const Card: React.FC<CardProps> = ({ data }) => {
             <TableRow>
               <TableCell sx={TableRowDataStyle}>
                 {imageURL ? (
-                  <img
+                  <Box
+                    component={"img"}
                     src={imageURL}
                     alt="Car"
-                    style={{
-                      width: "300px",
-                      height: "180px",
-                      borderRadius: "5px",
-                      objectFit: "cover",
-                    }}
+                    sx={ImageStyle}
                   />
                 ) : (
                   "No Image"
