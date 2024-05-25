@@ -210,7 +210,6 @@ const CarDetail: React.FC<CardProps> = ({
     width: {lg: "25%", md: '80%', xs: '80%'},
     marginLeft: "5%",
     justifyContent: "center",
-    // alignItems: {lg: 'inherit', md: "inherit", sm: "center"},
     gap: {lg: '3%', md: "5%", sm: "5%", xs: "5%"},
   };
 
@@ -469,7 +468,7 @@ const CarDetail: React.FC<CardProps> = ({
                 <Box sx={InfoTableCellStyle}>  
                   <IoMdSpeedometer size={IconSize}/> 
                   <TableCell> 
-                      <Typography sx={TableCellFontStyle}> Mileage: </Typography> {data.mileage_km} km
+                      <Typography sx={TableCellFontStyle}> Mileage: </Typography> {data.mileage_km}k km
                   </TableCell> 
                 </Box>
               </Box>
