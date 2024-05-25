@@ -1,29 +1,39 @@
 import Card from "./Mykyta/Card/Card";
-import { CarGroup} from "../interfaces";
-import { Box, Typography } from "@mui/material";
+import { CarGroup } from "../interfaces";
+import { Box, Typography, TextField, InputAdornment } from "@mui/material";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useCarGroupContext } from '../Context';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
-
+import { CiSearch } from "react-icons/ci";
 
 function CarList() {
   const { control, setValue } = useForm<CarGroup>();
   const { carGroup } = useCarGroupContext();
-  const { fields} = useFieldArray({
+  const { fields } = useFieldArray({
     control,
     name: "cars",
   });
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     setValue('cars', carGroup.cars);
   }, [carGroup.cars, setValue]);
 
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value.toLowerCase());
+  };
+
+  const filteredFields = fields.filter((field) =>
+    field.brand.toLowerCase().includes(searchQuery) ||
+    field.model.toLowerCase().includes(searchQuery)
+  );
+
   const ContainerStyle = {
     display: "flex",
-    flexDirection: { md: "row", sm: "column", xs: "column" },
-    justifyContent: { md: "center", sm: "center", xs: "center" },
+    flexDirection: "column",
+    alignItems: "center",
     marginTop: "2%",
     width: "100%",
     backgroundColor: "background.default",
@@ -39,23 +49,41 @@ function CarList() {
     gap: "10%",
   };
 
+  const SearchInput = {
+    marginBottom: "4%",
+    width: "80%",
+    '& .MuiOutlinedInput-root': { 
+      borderRadius: '15px',
+    }
+  };
+
   return (
     <Box sx={ContainerStyle}>
-        {fields.length > 0 ? (
+      <TextField
+        placeholder="Search by brand or model"
+        variant="outlined"
+        value={searchQuery}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <CiSearch />
+            </InputAdornment>
+          ),
+        }}
+        onChange={handleSearchChange}
+        sx={SearchInput}
+      />
+      {filteredFields.length > 0 ? (
         <Box sx={CardLayout}>
-          {fields.map((data, index) => (
+          {filteredFields.map((data, index) => (
             <Link to={`/car/${index}`} key={index}>
-              <Card
-                data={data}
-                index={index}
-              />
+              <Card data={data} index={index} />
             </Link>
-            
           ))}
         </Box>
-        ) : (
-          <Typography  variant="h4">No cars available.</Typography>
-        )}
+      ) : (
+        <Typography variant="h4">No cars available.</Typography>
+      )}
     </Box>
   );
 }
