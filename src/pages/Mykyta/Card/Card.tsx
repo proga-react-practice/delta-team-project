@@ -40,8 +40,8 @@ const TableContainerStyle = {
 };
 
 const ImageStyle = {
-  minWidth: {lg: '300px', md: '200px', sm: '245px', xs: '230px'},
-  maxWidth: {lg: '300px', md: '250px', sm: '245px', xs: '230px'},
+  minWidth: {lg: '300px', md: '200px', sm: '235px', xs: '230px'},
+  maxWidth: {lg: '300px', md: '250px', sm: '235px', xs: '230px'},
   minHeight: {lg: '180px', md: '180px', sm: '180px', xs: '150px'},
   maxHeight: {lg: '180px', md: '180px', sm: '180px', xs: '150px'},
   borderRadius: "5px",
