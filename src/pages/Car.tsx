@@ -36,10 +36,9 @@ function Car() {
 
   const FormLayout = {
     display: "flex",
-    width: { md: "35%", sm: "100%", xs: "100%" },
+    width: { md: "100%", sm: "100%", xs: "100%" },
     marginBottom: "30px",
-    justifyContent: { md: "flex-start", sm: "center", xs: "center" },
-    alignItems: { sm: "flex-start", xs: "center" },
+    justifyContent: { md: "center", sm: "center", xs: "center" },
   };
 
   return (
