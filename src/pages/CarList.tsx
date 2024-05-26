@@ -6,6 +6,7 @@ import { useCarGroupContext } from '../Context';
 import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { CiSearch } from "react-icons/ci";
+import { useTheme } from '@mui/material/styles';
 
 function CarList() {
   const { control, setValue } = useForm<CarGroup>();
@@ -15,6 +16,7 @@ function CarList() {
     name: "cars",
   });
   const [searchQuery, setSearchQuery] = useState('');
+  const theme = useTheme();
 
   useEffect(() => {
     setValue('cars', carGroup.cars);
@@ -66,7 +68,7 @@ function CarList() {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <CiSearch />
+              <CiSearch color={theme.palette.primary.main} size="1.5em" style={{ lineHeight: '0.75' }}/>
             </InputAdornment>
           ),
         }}
