@@ -74,17 +74,24 @@ const DialogButtons = {
 const ImageStyle = {
   width: "85%",
   margin: "4%",
-  borderRadius: "5px",
+  borderRadius: "10px",
+  border: '1px solid black'
 };
 
 const PriceStyle = {
-  color: "red",
+  color: "error.dark",
   fontSize: {lg: "24px", sm: '24px', xs: '15px',},
   fontWeight: "bold",
 };
 
 const ButtonStyle = {
+  backgroundColor: 'black',
+  color: 'white',
   marginTop: "20px",
+  '&:hover': {
+    color: 'black',
+    backgroundColor: 'darkgrey',
+  },
 };
 
 const InfoPhotoContainer = {
@@ -103,7 +110,6 @@ const TableCellFontStyle = {
   fontWeight: "bold",
 };
 
-
 const ImageContainerStyle = {
   width: {lg: "60%", md: "90%"},
 };
@@ -111,6 +117,29 @@ const ImageContainerStyle = {
 const CardTextField = {
   width: "100%",
   marginTop: "10px",
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: 'quaternary.main',
+    },
+    '&:hover fieldset': {
+      borderColor: 'secondary.dark',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: 'secondary.dark', 
+    },
+  },
+  '& .MuiFormLabel-root': {
+    color: 'quaternary.dark',
+  },
+  '& .MuiFormLabel-root.Mui-focused': {
+    color: 'secondary.dark',
+  },
+};
+
+const CardSelect = {
+  width: "100%",
+  marginTop: "10px",
+  borderColor: "primary.main",
 };
 
 const CarDetail: React.FC<CardProps> = ({
@@ -215,13 +244,53 @@ const CarDetail: React.FC<CardProps> = ({
 
   const Size = {
     fontSize: {lg: '25px', sm:'24px', xs: '15px',},
-    fontWeight: {lg: 'none', xs: 'bold',}
+    fontWeight: {lg: 'none', xs: 'bold',},
+    color: 'text.primary'
   }
 
   const HeaderModel = {
     display: 'flex', 
     flexDirection: {lg: 'column', md: 'row'}, 
     gap: '5%'
+  }
+
+  const DialogStyle = {
+    backgroundColor: 'secondary.main',
+  }
+
+  const TableCellStyle = {
+    border: 0,
+    width: "100%",
+  }
+
+  const InnerCell = {
+    display: 'flex', 
+    alignItems: 'center'
+  }
+
+  const IconSizeStyle = {
+    minWidth: '20px', 
+    minHeight: '20px'
+  }
+
+  const InnerText = {
+    marginLeft: {lg: '3%', md: '3%', sm: '3%', xs: '15%'},
+  }
+
+  const DeleteButtonStyle = {
+    color: 'text.primary',
+    '&:hover': {
+      color: 'error.dark',
+      backgroundColor: '#93B1A6',
+    },
+  }
+
+  const EditButtonStyle = {
+    color: 'text.primary',
+    '&:hover': {
+      color: 'info.light',
+      backgroundColor: '#93B1A6',
+    },
   }
 
   const IconSize = 25;
@@ -232,18 +301,21 @@ const CarDetail: React.FC<CardProps> = ({
     <Box sx={TableContainerStyle} >
       {isRenting && (
         <Dialog open={openDialog}>
+          <Box sx={DialogStyle}>
           <DialogTitle>Rent Car</DialogTitle>
-          <DialogContent>
+          <DialogContent >
             <RentCarForm onSubmit={handleRentSubmit} onClose={handleCloseDialog} index={carId}/>
           </DialogContent>
+          </Box>
         </Dialog>
       )} 
       { isEditing ? (
       <>
         <Dialog component={'form'} open={openDialog} onClose={handleCloseDialog} onSubmit={handleSubmit(onSubmit)}>
-          <DialogTitle>Edit Car</DialogTitle>
-           <DialogContent>
-            <Box sx={EditContainerStyle} >
+          <Box sx={DialogStyle}>
+            <DialogTitle>Edit Car</DialogTitle>
+            <DialogContent>
+              <Box sx={EditContainerStyle}>
                 <TextField
                   {...register("brand", {
                     required: "Brand is required",
@@ -257,41 +329,41 @@ const CarDetail: React.FC<CardProps> = ({
                     error={Boolean(errors.brand)}
                     helperText={errors.brand?.message}
                   />
-                <TextField
-                  {...register("model", {
-                    required: "Model is required",
-                    validate: {
-                      isFirstLetterUppercase: (value) =>
-                        /^[A-Z]/.test(value) || "The first letter must be uppercase",
-                    },
-                  })}
-                    name="model"
-                    sx={CardTextField}
-                    error={Boolean(errors.model)}
-                    helperText={errors.model?.message}
+                  <TextField
+                    {...register("model", {
+                      required: "Model is required",
+                      validate: {
+                        isFirstLetterUppercase: (value) =>
+                          /^[A-Z]/.test(value) || "The first letter must be uppercase",
+                      },
+                    })}
+                      name="model"
+                      sx={CardTextField}
+                      error={Boolean(errors.model)}
+                      helperText={errors.model?.message}
                   />
                   <TextField
-                  {...register("year", {
-                    required: "Year is required",
-                    min: { value: 1900, message: "Year must be 1900 or later" },
-                    max: {
-                      value: new Date().getFullYear(),
-                      message: "Year must be this year or earlier",
-                    },
-                  })}
-                    name="year"
-                    type="number"
-                    sx={CardTextField}
-                    error={Boolean(errors.year)}
-                    helperText={errors.year?.message}
+                    {...register("year", {
+                      required: "Year is required",
+                      min: { value: 1900, message: "Year must be 1900 or later" },
+                      max: {
+                        value: new Date().getFullYear(),
+                        message: "Year must be this year or earlier",
+                      },
+                    })}
+                      name="year"
+                      type="number"
+                      sx={CardTextField}
+                      error={Boolean(errors.year)}
+                      helperText={errors.year?.message}
                   />
-                   <Controller
+                  <Controller
                     name="body_type"
                     control={control}
                     defaultValue={data.body_type}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <Select {...field} sx={CardTextField}>
+                      <Select {...field} sx={CardSelect}>
                         {bodyTypes.map((option) => (
                           <MenuItem key={option} value={option}>
                             {option}
@@ -300,12 +372,12 @@ const CarDetail: React.FC<CardProps> = ({
                       </Select>  
                     )}
                   />
-                   <TextField
-                  {...register("mileage_km", {
-                    required: "Mileage is required",
-                    min: { value: 0, message: "Mileage must be 0 or bigger" },
-                    max: { value: 1000, message: "Mileage must be 1000 or fewer" },
-                  })}
+                  <TextField
+                    {...register("mileage_km", {
+                      required: "Mileage is required",
+                      min: { value: 0, message: "Mileage must be 0 or bigger" },
+                      max: { value: 1000, message: "Mileage must be 1000 or fewer" },
+                    })}
                     name="mileage_km"
                     type="number"
                     sx={CardTextField}
@@ -317,13 +389,13 @@ const CarDetail: React.FC<CardProps> = ({
                       ),
                     }}
                   />
-                   <Controller
+                  <Controller
                     name="gearbox"
                     control={control}
                     defaultValue={data.gearbox}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <Select {...field} sx={CardTextField}>
+                      <Select {...field} sx={CardSelect}>
                         {gearboxTypes.map((option) => (
                           <MenuItem key={option} value={option}>
                             {option}
@@ -338,7 +410,7 @@ const CarDetail: React.FC<CardProps> = ({
                     defaultValue={data.fuel}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <Select {...field} sx={CardTextField}>
+                      <Select {...field} sx={CardSelect}>
                         {fuelTypes.map((option) => (
                           <MenuItem key={option} value={option}>
                             {option}
@@ -347,11 +419,11 @@ const CarDetail: React.FC<CardProps> = ({
                       </Select>  
                     )}
                   />
-                   <TextField
-                  {...register("price_per_day", {
-                    required: "Price is required",
-                    min: { value: 1, message: "Price must be 1 or bigger" },
-                  })}
+                  <TextField
+                    {...register("price_per_day", {
+                      required: "Price is required",
+                      min: { value: 1, message: "Price must be 1 or bigger" },
+                    })}
                     name="price_per_day"
                     type="number"
                     sx={CardTextField}
@@ -362,11 +434,11 @@ const CarDetail: React.FC<CardProps> = ({
                     }}
                   />
                   <TextField
-                  {...register("horse_power", {
-                    required: "Horse power is required",
-                    min: { value: 1, message: "Horse power must be 1 or bigger" },
-                    max: { value: 1000, message: "Horse power must be 1000 or fewer" },
-                  })}
+                    {...register("horse_power", {
+                      required: "Horse power is required",
+                      min: { value: 1, message: "Horse power must be 1 or bigger" },
+                      max: { value: 1000, message: "Horse power must be 1000 or fewer" },
+                    })}
                     name="horse_power"
                     type="number"
                     sx={CardTextField}
@@ -376,12 +448,12 @@ const CarDetail: React.FC<CardProps> = ({
                       endAdornment: <InputAdornment position="end">kW</InputAdornment>,
                     }}
                   />
-                   <TextField
-                  {...register("engine_capacity", {
-                    required: "Engine capacity is required",
-                    min: { value: 0.1, message: "Engine capacity must be 0.1 or bigger" },
-                    max: { value: 10, message: "Engine capacity must be 10 or fewer" },
-                  })}
+                  <TextField
+                    {...register("engine_capacity", {
+                      required: "Engine capacity is required",
+                      min: { value: 0.1, message: "Engine capacity must be 0.1 or bigger" },
+                      max: { value: 10, message: "Engine capacity must be 10 or fewer" },
+                    })}
                     name="engine_capacity"
                     sx={CardTextField}
                     type="number"
@@ -397,7 +469,7 @@ const CarDetail: React.FC<CardProps> = ({
                   defaultValue={data.purpose}
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <Select {...field} sx={CardTextField}>
+                    <Select {...field} sx={CardSelect}>
                       {purposes.map((option) => (
                         <MenuItem key={option} value={option}>
                           {option}
@@ -407,11 +479,12 @@ const CarDetail: React.FC<CardProps> = ({
                   )}
                 />
               </Box>
-           </DialogContent>
-           <DialogActions sx={DialogButtons}>
+            </DialogContent>
+            <DialogActions sx={DialogButtons}>
                   <StyledButtonDelete sx={{ width: '40%' }} onClick={handleCloseDialog}>Close</StyledButtonDelete>
                   <StyledButtonSave sx={{ width: '40%' }} type='submit'>Save</StyledButtonSave>
             </DialogActions>
+          </Box>
         </Dialog>
       </> 
     ):( 
@@ -419,7 +492,7 @@ const CarDetail: React.FC<CardProps> = ({
       <Box sx={InfoPhotoContainer}>
         <Box sx={HeaderCard}>
           <Box sx={ImageContainerStyle}>
-            {carImage && <img src={carImage} alt={`${data.brand} ${data.model}`} style={ImageStyle} />}
+            {carImage && <Box component={"img"} src={carImage} alt={`${data.brand} ${data.model}`} sx={ImageStyle} />}
           </Box>
           <Box sx={InfoContainerStyle}>
             <Box sx={HeaderModel}>
@@ -427,13 +500,13 @@ const CarDetail: React.FC<CardProps> = ({
               <Typography sx={Size} variant="h4">{data.year}</Typography>
               <Typography variant="h5" sx={PriceStyle}>${data.price_per_day}/Day</Typography>
             </Box>
-            <Button variant="contained" color="primary" onClick={() => handleRent(index)} sx={ButtonStyle}>Book</Button>
+            <Button variant="contained" onClick={() => handleRent(index)} sx={ButtonStyle}>Book</Button>
           </Box>
         </Box>
         <Box component={"form"} onSubmit={handleSubmit(onSubmit)} sx={ButtonContainerStyle}>
           <Box sx={ButtonsStyle}>
-            <Button type="submit"><FaRegEdit size={IconSize}/></Button>
-            <Link to="/car-list"><Button onClick={() => onDelete(index)}><FaRegTrashAlt size={IconSize}/></Button></Link>
+            <Button sx={EditButtonStyle} type="submit"><FaRegEdit size={IconSize}/></Button>
+            <Link to="/car-list"><Button sx={DeleteButtonStyle} onClick={() => onDelete(index)}><FaRegTrashAlt size={IconSize}/></Button></Link>
           </Box> 
         </Box>
       </Box>
@@ -444,15 +517,47 @@ const CarDetail: React.FC<CardProps> = ({
               <TableRow>
               <Box sx={InfoTableColumn}>
                 <Box sx={InfoTableCellStyle}>  
-                  <BsFillFuelPumpFill size={IconSize}/> 
-                  <TableCell> 
-                      <Typography sx={TableCellFontStyle}> Fuel Type: </Typography> {data.fuel}
+                  <TableCell sx={TableCellStyle}> 
+                    <Box sx={InnerCell}>
+                      <BsFillFuelPumpFill size={IconSize} style={IconSizeStyle}/> 
+                      <Box sx={InnerText}>
+                        <Typography sx={TableCellFontStyle}> Fuel Type: </Typography> {data.fuel}
+                      </Box>
+                    </Box>
                   </TableCell> 
                 </Box>
                 <Box sx={InfoTableCellStyle}>  
-                  <TbManualGearbox size={IconSize}/> 
-                  <TableCell> 
-                      <Typography sx={TableCellFontStyle}> Gear: </Typography> {data.gearbox}
+                  <TableCell sx={TableCellStyle}>
+                    <Box sx={InnerCell}>
+                      <TbManualGearbox size={IconSize} style={IconSizeStyle}/> 
+                      <Box sx={InnerText}>  
+                          <Typography sx={TableCellFontStyle}> Gear: </Typography> {data.gearbox}
+                      </Box>
+                    </Box>
+                  </TableCell>
+                </Box>
+              </Box>
+              </TableRow>
+              <TableRow>
+              <Box sx={InfoTableColumn}>
+                <Box sx={InfoTableCellStyle}>  
+                  <TableCell sx={TableCellStyle}> 
+                    <Box sx={InnerCell}>   
+                      <FaCarSide size={IconSize} style={IconSizeStyle}/> 
+                      <Box sx={InnerText}>
+                        <Typography sx={TableCellFontStyle}> Body type: </Typography> {data.body_type}
+                      </Box>
+                    </Box>
+                  </TableCell> 
+                </Box>
+                <Box sx={InfoTableCellStyle}>  
+                  <TableCell sx={TableCellStyle}> 
+                    <Box sx={InnerCell}>
+                      <IoMdSpeedometer size={IconSize} style={IconSizeStyle}/> 
+                      <Box sx={InnerText}>
+                        <Typography sx={TableCellFontStyle}> Mileage: </Typography> {data.mileage_km}k km
+                      </Box>
+                    </Box>
                   </TableCell> 
                 </Box>
               </Box>
@@ -460,31 +565,23 @@ const CarDetail: React.FC<CardProps> = ({
               <TableRow>
               <Box sx={InfoTableColumn}>
                 <Box sx={InfoTableCellStyle}>  
-                  <FaCarSide size={IconSize}/> 
-                  <TableCell> 
-                      <Typography sx={TableCellFontStyle}> Body type: </Typography> {data.body_type}
+                  <TableCell sx={TableCellStyle}> 
+                    <Box sx={InnerCell}>
+                      <GiHorseHead size={IconSize} style={IconSizeStyle}/> 
+                      <Box sx={InnerText}>
+                        <Typography sx={TableCellFontStyle}> Horse powers: </Typography> {data.horse_power}
+                      </Box>
+                    </Box>
                   </TableCell> 
                 </Box>
                 <Box sx={InfoTableCellStyle}>  
-                  <IoMdSpeedometer size={IconSize}/> 
-                  <TableCell> 
-                      <Typography sx={TableCellFontStyle}> Mileage: </Typography> {data.mileage_km}k km
-                  </TableCell> 
-                </Box>
-              </Box>
-              </TableRow>
-              <TableRow>
-              <Box sx={InfoTableColumn}>
-                <Box sx={InfoTableCellStyle}>  
-                  < GiHorseHead size={IconSize}/> 
-                  <TableCell> 
-                      <Typography sx={TableCellFontStyle}> Horse powers: </Typography> {data.horse_power}
-                  </TableCell> 
-                </Box>
-                <Box sx={InfoTableCellStyle}>  
-                  <TbEngine size={IconSize}/> 
-                  <TableCell> 
-                      <Typography sx={TableCellFontStyle}> Engine capacity: </Typography> {data.engine_capacity} cm3
+                  <TableCell sx={TableCellStyle}> 
+                    <Box sx={InnerCell}>
+                      <TbEngine size={IconSize} style={IconSizeStyle}/> 
+                      <Box sx={InnerText}>
+                        <Typography sx={TableCellFontStyle}> Engine capacity: </Typography> {data.engine_capacity} cm3
+                      </Box>
+                    </Box>
                   </TableCell> 
                 </Box>
               </Box>
@@ -492,15 +589,23 @@ const CarDetail: React.FC<CardProps> = ({
               <TableRow>
               <Box sx={InfoTableColumn}>
                 <Box sx={InfoTableCellStyle}>  
-                  <BiTask size={IconSize}/> 
-                  <TableCell> 
-                      <Typography sx={TableCellFontStyle}> Purpose: </Typography> {data.purpose}
+                  <TableCell sx={TableCellStyle}> 
+                    <Box sx={InnerCell}>
+                      <BiTask size={IconSize} style={IconSizeStyle}/> 
+                      <Box sx={InnerText}>
+                        <Typography sx={TableCellFontStyle}> Purpose: </Typography> {data.purpose}
+                      </Box>
+                    </Box>
                   </TableCell> 
                 </Box>
                 <Box sx={InfoTableCellStyle}>  
-                  <MdFactory size={IconSize}/> 
-                  <TableCell> 
-                      <Typography sx={TableCellFontStyle}> Manufacter: </Typography> Europe
+                  <TableCell sx={TableCellStyle}> 
+                    <Box sx={InnerCell}>
+                      <MdFactory size={IconSize} style={IconSizeStyle}/> 
+                      <Box sx={InnerText}>
+                        <Typography sx={TableCellFontStyle}> Manufacter: </Typography> Europe
+                      </Box>
+                    </Box>
                   </TableCell> 
                 </Box>
               </Box>
