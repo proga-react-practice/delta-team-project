@@ -19,6 +19,7 @@ function Layout({ darkMode, toggleDarkMode }: { darkMode: boolean, toggleDarkMod
     };
 
     const Buttons = {
+        color: 'primary.light',
         '&:hover': {
             backgroundColor: "navbar.dark",
             color: "navbar.light",
@@ -46,7 +47,7 @@ function Layout({ darkMode, toggleDarkMode }: { darkMode: boolean, toggleDarkMod
         <>
             <AppBar position="static" sx={NavBar}>
                 <Toolbar>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'primary.light' }}>
                         Delta
                     </Typography>
                     <Box sx={{ display: {lg: 'flex', md: 'flex', sm: 'flex', xs: 'none'}, justifyContent: 'end', flexGrow: 1 }}>
