@@ -33,7 +33,6 @@ const BoxFormStyle = {
   border: 'none',
   borderRadius: '10px',
   boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.25)',
-  color: 'primary.main',
   opacity: 0,
   animation: 'fadeIn 1.5s forwards',
   '@keyframes fadeIn': {
@@ -46,6 +45,23 @@ const TextFieldStyle = {
   width: '90%',
   padding: '8px',
   marginBottom: '10px',
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: 'quaternary.main',
+    },
+    '&:hover fieldset': {
+      borderColor: 'secondary.dark',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: 'secondary.dark', 
+    },
+  },
+  '& .MuiFormLabel-root': {
+    color: 'quaternary.dark',
+  },
+  '& .MuiFormLabel-root.Mui-focused': {
+    color: 'secondary.dark',
+  },
 };
 
 const ButtonStyle = {
@@ -70,6 +86,31 @@ const RadioGroupStyle = {
   flexDirection: 'row',
   justifyContent: 'space-around',
   alignItems: 'center',
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: 'quaternary.main',
+    },
+    '&:hover fieldset': {
+      borderColor: 'secondary.dark',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: 'secondary.dark', 
+    },
+  },
+  '& .MuiRadio-root': {
+    '&$checked': {
+      color: 'black',
+    },
+  },
+  '&.Mui-checked': {
+    color: 'black',
+  },
+  '& .MuiFormLabel-root': {
+    color: 'quaternary.dark',
+  },
+  '& .MuiFormLabel-root.Mui-focused': {
+    color: 'secondary.dark',
+  },
 };
 
 const Form: React.FC<FormProps> = ({ onSubmit }) => {
@@ -95,7 +136,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
 
   return (
     <Box component="form" onSubmit={handleSubmit(handleOnSubmit)} sx={BoxFormStyle}>
-      <Typography variant="h5" sx={{ textAlign: 'center', color: 'primary.main', marginBottom: { xs: '10px' } }}>
+      <Typography variant="h5" sx={{ textAlign: 'center', marginBottom: { xs: '10px' } }}>
         Car adding form
       </Typography>
       <TextField
