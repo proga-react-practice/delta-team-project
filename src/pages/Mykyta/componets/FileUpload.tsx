@@ -23,6 +23,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ control, name, label, rules, er
 
   const [, setFileName] = useState<string | null>(null);
   const [isFileSelected, setIsFileSelected] = useState(false);
+  const [fileUrl, setFileUrl] = useState<string | null>(null); 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,12 +31,18 @@ const FileUpload: React.FC<FileUploadProps> = ({ control, name, label, rules, er
     field.onChange(file);
     setFileName(file ? file.name : null);
     setIsFileSelected(!!file);
+    if (file) {
+      setFileUrl(URL.createObjectURL(file)); 
+    } else {
+      setFileUrl(null);
+    }
   };
 
   useEffect(() => {
     if (reset) {
       setFileName(null);
       setIsFileSelected(false);
+      setFileUrl(null);
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
@@ -66,6 +73,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ control, name, label, rules, er
           {label}
         </Button>
       </label>
+      {fileUrl && <img src={fileUrl} alt="Preview" style={{ width: '100%', height: 'auto' , marginBottom: "2%"}} />}
       {error && <FormHelperText error>{helperText}</FormHelperText>}
     </Box>
   );
