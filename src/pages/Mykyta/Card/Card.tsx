@@ -51,6 +51,7 @@ const ImageStyle = {
 const TableRowDataStyle = {
   display: 'grid',
   textAlign: "center",
+  border: 0,
 };
 
 const Card: React.FC<CardProps> = ({ data }) => {
@@ -94,10 +95,10 @@ const Card: React.FC<CardProps> = ({ data }) => {
               {data.year} {data.brand} {data.model} 
             </Typography>
             <Box display="flex" justifyContent="space-evenly">
-              <Typography variant="body1" color="textSecondary">
+              <Typography variant="body1">
                 ${data.price_per_day}/Day
               </Typography>
-              <Typography variant="body1" color="textSecondary">
+              <Typography variant="body1">
                 ${data.price_per_day * 30}/Month
               </Typography>
             </Box>
@@ -106,13 +107,13 @@ const Card: React.FC<CardProps> = ({ data }) => {
             <TableRow>
             <TableCell sx={TableRowDataStyle}>
               <Box display="flex" justifyContent="space-between">
-                <Typography variant="body2" color="textSecondary">
+                <Typography variant="body2">
                 <IoMdSpeedometer /> {data.mileage_km}k km 
                 </Typography>
-                <Typography variant="body2" color="textSecondary">
+                <Typography variant="body2">
                 <TbManualGearbox /> {data.gearbox}
                 </Typography>
-                <Typography variant="body2" color="textSecondary">
+                <Typography variant="body2">
                 <BsFillFuelPumpFill />   {data.fuel}
                 </Typography>
               </Box>
