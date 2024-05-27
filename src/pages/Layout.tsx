@@ -31,6 +31,9 @@ function Layout({ darkMode, toggleDarkMode }: { darkMode: boolean, toggleDarkMod
             <ListItem component={Link} to="/" onClick={handleDrawerToggle}>
                 <ListItemText primary="Main page" />
             </ListItem>
+            <ListItem component={Link} to="/about-us" onClick={handleDrawerToggle}>
+                <ListItemText primary="About Us" />
+            </ListItem>
             <ListItem component={Link} to="/adding-car-form" onClick={handleDrawerToggle}>
                 <ListItemText primary="Add Car" />
             </ListItem>
@@ -52,6 +55,7 @@ function Layout({ darkMode, toggleDarkMode }: { darkMode: boolean, toggleDarkMod
                     </Typography>
                     <Box sx={{ display: {lg: 'flex', md: 'flex', sm: 'flex', xs: 'none'}, justifyContent: 'end', flexGrow: 1 }}>
                         <Button sx={Buttons} color="inherit" component={Link} to="/">Main page</Button>
+                        <Button sx={Buttons} color="inherit" component={Link} to="/about-us">About Us</Button>
                         <Button sx={Buttons} color="inherit" component={Link} to="/adding-car-form">Add Car</Button>
                         <Button sx={Buttons} color="inherit" component={Link} to="/orders">Orders</Button>
                         <Button sx={Buttons} color="inherit" component={Link} to="/car-list">Car List</Button>

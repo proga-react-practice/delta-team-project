@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Error from "./pages/Error";
 import CarList from "./pages/CarList";
 import CarInfo from "./pages/CarInfo";
+import AboutUs from "./pages/AboutUs";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { theme, darkTheme } from "./theme";
 import { CarGroupProvider } from './Context';
@@ -46,6 +47,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Layout darkMode={darkMode} toggleDarkMode={toggleDarkMode} />}>
                   <Route index element={<Home />} />
+                  <Route path="about-us" element={<AboutUs />} />
                   <Route path="adding-car-form" element={<Car />} />
                   <Route path="orders" element={<Orders />} />
                   <Route path="car-list" element={<CarList />} />
