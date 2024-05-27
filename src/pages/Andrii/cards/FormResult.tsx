@@ -5,7 +5,6 @@ import { textPattern, numberPattern, emailPattern, format } from '../../../patte
 import { StyledTableCell } from '../styledComponents/StyledTableCell';
 import { StyledTableRow } from '../styledComponents/StyledTableRow';
 import { StyledButtonDelete } from '../styledComponents/StyledButtonDelete';
-import { StyledButtonEdit } from '../styledComponents/StyledButtonEdit';
 import { StyledButtonSave } from '../styledComponents/StyledButtonSave';
 import { StyledTextField } from '../styledComponents/StyledTextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -14,7 +13,9 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { DateTimeValidationError } from '@mui/x-date-pickers/models';
 import { useForm, Controller } from 'react-hook-form';
 import { useCarGroupContext } from '../../../Context';
-import { Box, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { Box, Dialog, DialogTitle, DialogContent, DialogActions, IconButton } from '@mui/material';
+import { FaRegEdit } from "react-icons/fa";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 interface FormResultsProps {
   form: RentCar;
@@ -115,8 +116,21 @@ export const FormResults: React.FC<FormResultsProps> = ({ form, onDelete, index,
     backgroundColor: 'secondary.main',
   }
 
-  // const cars = carGroup.cars;
-  // const selectedCar = cars.find(car => car.id === carId);
+  const DeleteButtonStyle = {
+    color: 'text.primary',
+    '&:hover': {
+      color: 'error.dark',
+      backgroundColor: '#93B1A6',
+    },
+  }
+
+  const EditButtonStyle = {
+    color: 'text.primary',
+    '&:hover': {
+      color: 'info.light',
+      backgroundColor: '#93B1A6',
+    },
+  }
 
   return (
     <>
@@ -239,8 +253,8 @@ export const FormResults: React.FC<FormResultsProps> = ({ form, onDelete, index,
               <StyledTableCell>{form.comments}</StyledTableCell>
               <StyledTableCell>{selectedCar?.brand + ' ' + selectedCar?.model}</StyledTableCell>
               <StyledTableCell>
-                <StyledButtonDelete onClick={() => onDelete(index)}>Delete</StyledButtonDelete>
-                <StyledButtonEdit form={`form${index}`} type='submit'>Edit</StyledButtonEdit>
+                <IconButton sx={EditButtonStyle} form={`form${index}`} type='submit'><FaRegEdit/></IconButton>
+                <IconButton sx={DeleteButtonStyle} onClick={() => onDelete(index)}><FaRegTrashAlt/></IconButton>
               </StyledTableCell>
             </>
           )}
