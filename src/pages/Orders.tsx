@@ -75,13 +75,13 @@ const Orders: React.FC = () => {
         {isMobile &&
           fields.map((form, index) => (
             <FormResultsMobile
-            key={index}
-            form={form}
-            onDelete={handleDelete}
-            onSave={(data) => handleSave(index, data)}
-            index={index}
-            onEdit={handleEdit}
-            isEditing={index === editingCardIndex}
+              key={index}
+              form={form}
+              onDelete={handleDelete}
+              onSave={(data) => handleSave(index, data)}
+              index={index}
+              onEdit={handleEdit}
+              isEditing={index === editingCardIndex}
             />)) 
         }
         {!isMobile && 
