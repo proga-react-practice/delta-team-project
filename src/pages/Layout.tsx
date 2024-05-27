@@ -25,23 +25,33 @@ function Layout({ darkMode, toggleDarkMode }: { darkMode: boolean, toggleDarkMod
             color: "navbar.light",
         },
     };
-
+    
+    const BurgerButtons = {
+        color: 'primary.light',
+        borderRadius: '5px',
+        padding: '1%',
+        width: '100%',
+        '&:hover': {
+            backgroundColor: "navbar.dark",
+            color: "navbar.light",
+        },
+    };
     const drawerItems = (
-        <List sx={{backgroundColor:"secondary.main", height:"100%"}}>
-            <ListItem component={Link} to="/" onClick={handleDrawerToggle}>
-                <ListItemText primary="Main page" />
+        <List sx={{backgroundColor:"navbar.main", height:"100%",}}>
+            <ListItem sx={{}} component={Link} to="/" onClick={handleDrawerToggle}>
+                <ListItemText sx={BurgerButtons} primary="Main page" />
             </ListItem>
             <ListItem component={Link} to="/about-us" onClick={handleDrawerToggle}>
-                <ListItemText primary="About Us" />
+                <ListItemText sx={BurgerButtons} primary="About Us" />
             </ListItem>
             <ListItem component={Link} to="/adding-car-form" onClick={handleDrawerToggle}>
-                <ListItemText primary="Add Car" />
+                <ListItemText sx={BurgerButtons} primary="Add Car" />
             </ListItem>
             <ListItem component={Link} to="/orders" onClick={handleDrawerToggle}>
-                <ListItemText primary="Orders" />
+                <ListItemText sx={BurgerButtons} primary="Orders" />
             </ListItem>
             <ListItem component={Link} to="/car-list" onClick={handleDrawerToggle}>
-                <ListItemText primary="Car List" />
+                <ListItemText sx={BurgerButtons} primary="Car List" />
             </ListItem>
         </List>
     );
@@ -78,14 +88,22 @@ function Layout({ darkMode, toggleDarkMode }: { darkMode: boolean, toggleDarkMod
                     </IconButton>
                 </Toolbar>
             </AppBar>
-            <Drawer
-                anchor="left"
-                open={drawerOpen}
-                onClose={handleDrawerToggle}
-                sx={{ display: { xs: 'block', sm: 'none' }, color: 'secondary.main', }}
-            >
-                {drawerItems}
-            </Drawer>
+            <Box sx={{width: '25%'}}>
+                <Drawer
+                    anchor="left"
+                    open={drawerOpen}
+                    onClose={handleDrawerToggle}
+                    sx={{ 
+                        display: { xs: 'block', sm: 'none' }, 
+                        color: 'navbar.main',
+                        '& .MuiDrawer-paper': {
+                            width: '20%',
+                        },
+                    }}
+                >
+                    {drawerItems}
+                </Drawer>
+            </Box>
             <Outlet />
         </>
     );
