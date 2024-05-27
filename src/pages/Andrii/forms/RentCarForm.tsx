@@ -1,36 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { textPattern, numberPattern, emailPattern, format } from '../../../pattern';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import InputMask from 'react-input-mask';
-import { Button, Box, FormHelperText, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { Button, Box, FormHelperText } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { StyledTextField } from '../styledComponents/StyledTextField';
-import { StyledSelect } from '../styledComponents/StyledSelect';
-import { createTransform } from '../animations/animation';
-import { useCarGroupContext } from '../../../Context';
 import { RentCar, initialFormState } from '../../../interfaces';
 
 interface RentCarFormProps {
-    onSubmit: (data: RentCar) => void;
+    onSubmit: (data: RentCar | null) => void;
+    onClose: () => void;
+    index: string;
 }
 
-const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
+const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit, onClose, index }) => {
 
     const { control, register, handleSubmit, reset, watch, formState: { errors } } = useForm<RentCar>({
         defaultValues: {
             ...initialFormState,
             startRentDate: undefined,
             finishRentDate: undefined,
+            selectedCar: index,
         },
         mode: 'onChange'
     });
 
-    const { carGroup } = useCarGroupContext();
-    const Transform = createTransform();
+    const [, setOpenDialog] = useState(false);
+
     dayjs.extend(advancedFormat);
 
     const handleReset = () => {
@@ -39,6 +39,11 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
             startRentDate: null,
             finishRentDate: null,
         });
+    };
+
+    const handleCloseDialog = () => {
+        onClose();
+        setOpenDialog(false);
     };
 
     const onSubmitForm = (data: RentCar) => {
@@ -51,11 +56,6 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
         maxWidth: '300px',
         display: 'flex',
         flexDirection: 'column',
-        marginTop: '70px',
-        backgroundColor: "secondary.main",
-        padding: '20px',
-        borderRadius: '10px',
-        boxShadow: '0 0 10px rgba(0,0,0,0.20)',
     }
 
     const FullNameStyle = {
@@ -136,7 +136,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
         <Box 
             component="form" 
             onSubmit={handleSubmit(onSubmitForm)}
-            sx={{...FormStyle, ...Transform}}
+            sx={FormStyle}
         >
             <Box>
                 <Box
@@ -292,28 +292,12 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
                 />
             </LocalizationProvider>
             <StyledTextField
+                {...register('comments')}
                 className="comments"
                 label="Comments"
                 name="comments"  
                 placeholder="Comments" 
             />
-            <FormControl>
-                <InputLabel id="select-label">Car</InputLabel>  
-                <Controller
-                    name="selectedCar"
-                    control={control}
-                    rules={{ required: 'Car is required' }}
-                    render={({ field }) => (
-                        <StyledSelect {...field} labelId="select-label" label='Car'>
-                            {carGroup.cars.map((car, index) => (
-                                <MenuItem key={index} value={car.brand + ' ' + car.model}>
-                                    {car.brand + ' ' + car.model}
-                                </MenuItem>
-                            ))}
-                        </StyledSelect>
-                    )}
-                />
-            </FormControl>
             <Box 
                 className="buttons"
                 sx={BoxStyle}
@@ -326,12 +310,10 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit}) => {
                     Submit
                 </Button>
                 <Button 
-                    className="reset" 
-                    onClick={handleReset} 
-                    type="reset"
+                    onClick={handleCloseDialog} 
                     sx={ResetButtonStyle}
                 >
-                    Reset
+                    Close
                 </Button>
             </Box>
         </Box>

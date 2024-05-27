@@ -13,9 +13,8 @@ import { useForm, Controller } from 'react-hook-form';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { Table, TableBody, TableContainer, MenuItem } from '@mui/material';
+import { Table, TableBody, TableContainer} from '@mui/material';
 import { useCarGroupContext } from '../../../Context';
-import { StyledSelect } from '../styledComponents/StyledSelect';
 
 interface FormResultsMobileProps {
   form: RentCar;
@@ -59,6 +58,10 @@ export const FormResultsMobile: React.FC<FormResultsMobileProps> = ({ form, onDe
   const Field = {
     padding: '0px',
   }
+
+  const carId = form.selectedCar;
+  const cars = carGroup.cars;
+  const selectedCar = cars.find(car => car.id === carId);
 
   return (
     <TableContainer sx={ MobileStyle } component={'form'} onSubmit={handleSubmit(onSubmit)}>
@@ -245,27 +248,7 @@ export const FormResultsMobile: React.FC<FormResultsMobileProps> = ({ form, onDe
                 </StyledTableRow>
                 <StyledTableRow>
                     <StyledTableCellMobile>Car</StyledTableCellMobile>
-                    <StyledTableCellMobile>
-                      {isEditing ?  
-                        <Controller
-                          name="selectedCar"
-                          control={control}
-                          defaultValue={form.selectedCar}
-                          rules={{ required: true }}
-                          render={({ field }) => (
-                            <StyledSelect {...field}>
-                              {carGroup.cars.map((car, index) => (
-                                <MenuItem sx={{width: '100%'}} key={index} value={car.brand + ' ' + car.model}>
-                                  {car.brand + ' ' + car.model}
-                                </MenuItem>
-                              ))}
-                            </StyledSelect> 
-                          )}
-                        />
-                        : 
-                        form.selectedCar
-                      }
-                    </StyledTableCellMobile>
+                    <StyledTableCellMobile>{selectedCar?.brand + ' ' + selectedCar?.model}</StyledTableCellMobile>
                 </StyledTableRow>
                 <StyledTableRow>
                     <StyledTableCellMobile>

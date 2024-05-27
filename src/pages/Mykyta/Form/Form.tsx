@@ -12,10 +12,12 @@ import {
   Typography,
   Box,
 } from '@mui/material';
-import { FormData, initialFormData, radioOptionsGearbox, radioOptionsFuel, purposes, bodyTypes } from '../../../../interfaces';
-import RadioFormControlLabel from '../RadioFormControlLabel/RadioFormControlLabel';
+import { FormData, initialFormData, radioOptionsGearbox, radioOptionsFuel, purposes, bodyTypes } from '../../../interfaces';
+import RadioFormControlLabel from '../componets/RadioFormControlLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import { InputAdornment } from '@mui/material';
+import FileUpload from '../componets/FileUpload';
+
 interface FormProps {
   onSubmit: (data: FormData) => void;
 }
@@ -25,14 +27,12 @@ const BoxFormStyle = {
   justifyContent: 'center',
   alignItems: 'center',
   flexDirection: 'column',
-  width: '100%',
-  maxWidth: { md: '500px', sm: '500px', xs: '500px' },
-  minWidth: { md: '300px', sm: '400px', xs: '370px' },
+  maxWidth: { lg: '40%', md: '50%', sm: "60%", xs: '90%' },
+  minWidth: { lg: '30%', md: '40%', sm: "50%", xs: '85%' },
   padding: '20px',
   border: 'none',
   borderRadius: '10px',
   boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.25)',
-  color: 'primary.main',
   opacity: 0,
   animation: 'fadeIn 1.5s forwards',
   '@keyframes fadeIn': {
@@ -45,6 +45,23 @@ const TextFieldStyle = {
   width: '90%',
   padding: '8px',
   marginBottom: '10px',
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: 'quaternary.main',
+    },
+    '&:hover fieldset': {
+      borderColor: 'secondary.dark',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: 'secondary.dark', 
+    },
+  },
+  '& .MuiFormLabel-root': {
+    color: 'quaternary.dark',
+  },
+  '& .MuiFormLabel-root.Mui-focused': {
+    color: 'secondary.dark',
+  },
 };
 
 const ButtonStyle = {
@@ -69,6 +86,31 @@ const RadioGroupStyle = {
   flexDirection: 'row',
   justifyContent: 'space-around',
   alignItems: 'center',
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: 'quaternary.main',
+    },
+    '&:hover fieldset': {
+      borderColor: 'secondary.dark',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: 'secondary.dark', 
+    },
+  },
+  '& .MuiRadio-root': {
+    '&$checked': {
+      color: 'black',
+    },
+  },
+  '&.Mui-checked': {
+    color: 'black',
+  },
+  '& .MuiFormLabel-root': {
+    color: 'quaternary.dark',
+  },
+  '& .MuiFormLabel-root.Mui-focused': {
+    color: 'secondary.dark',
+  },
 };
 
 const Form: React.FC<FormProps> = ({ onSubmit }) => {
@@ -94,7 +136,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
 
   return (
     <Box component="form" onSubmit={handleSubmit(handleOnSubmit)} sx={BoxFormStyle}>
-      <Typography variant="h5" sx={{ textAlign: 'center', color: 'primary.main', marginBottom: { xs: '10px' } }}>
+      <Typography variant="h5" sx={{ textAlign: 'center', marginBottom: { xs: '10px' } }}>
         Car adding form
       </Typography>
       <TextField
@@ -252,6 +294,18 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
         />
         {errors.purpose && <FormHelperText error>{errors.purpose.message}</FormHelperText>}
       </FormControl>
+      <Box sx={{width: '85%'}}>
+        <FormLabel component="legend">Photo</FormLabel>
+        <FileUpload 
+          control={control} 
+          rules={{ required: 'Photo is required' }} 
+          name="auto_photo" 
+          label="Upload Photo" 
+          error={Boolean(errors.auto_photo)}
+          helperText={errors.auto_photo?.message}
+          reset={handleReset}
+        />
+      </Box>
       <Box sx={BoxButton}>
         <Button type="submit" variant="contained" color="success" sx={{ '&:hover': { backgroundColor: 'primary.dark' }, ButtonStyle }}>
           Submit

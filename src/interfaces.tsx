@@ -47,6 +47,7 @@ export interface FormData {
   horse_power: number;
   engine_capacity: number;
   purpose: string;
+  auto_photo: File | null;
 }
 
 export const purposes = ["Personal", "Commercial"];
@@ -81,4 +82,5 @@ export const initialFormData = {
   horse_power: 0,
   engine_capacity: 0,
   purpose: "",
+  auto_photo: null,
 };

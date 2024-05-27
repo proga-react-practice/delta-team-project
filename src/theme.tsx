@@ -11,6 +11,9 @@ declare module "@mui/material/styles" {
       dark?: string;
       light?: string;
     }
+    orders?: {
+      main?: string;
+    }
   }
 }
 
@@ -19,6 +22,7 @@ export const theme = createTheme({
     primary: {
       main: "#000000",
       dark: "#388023",
+      light: '#ffffff',
     },
     secondary: {
       main: "#eeeeee",
@@ -36,6 +40,9 @@ export const theme = createTheme({
       main: '#c19f7b',
       dark: '#d3c5b6',
       light: '#5d3f1f',
+    },
+    orders: {
+      main: '#484542',
     },
     error: {
       main: '#c84238',
@@ -61,16 +68,26 @@ export const theme = createTheme({
 export const darkTheme = createTheme({
   palette: {
     primary: {
-      main: "#000000",
+      main: "#183D3D",
       dark: "#388023",
+      light: "#93B1A6",
     },
     secondary: {
-      main: "#eeeeee",
+      main: "#183D3D",
       dark: '#484542',
       light: '#ffffff',
     },
     background: {
-      default: "#000000",
+      default: "#040D12",
+    },
+    quaternary: {
+      main: '#bcbcbc',
+      dark: '#636363',
+    },
+    navbar: {
+      main: '#183D3D',
+      dark: '#5C8374',
+      light: '#F5E8C7',
     },
     error: {
       main: '#c84238',
@@ -78,7 +95,7 @@ export const darkTheme = createTheme({
       dark: '#9a000f'
     },
     success: {
-      main: '#28a745',
+      main: '#126525',
       light: '#34d058',
       dark: '#22863a'
     },
@@ -87,10 +104,25 @@ export const darkTheme = createTheme({
       light: '#007bff',
       dark: '#003d7f'
     },
+    text: {
+      primary: '#93B1A6',
+    },
+    action: {
+      disabled: '#183D3D',
+    },
   },
   typography: {
     fontFamily: 'Goudy Bookletter 1911',
   },
+  components: {
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#183D3D',
+          },
+        },
+      },
+    },
+  },
 });
-
-
