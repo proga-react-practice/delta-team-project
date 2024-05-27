@@ -14,6 +14,9 @@ declare module "@mui/material/styles" {
     orders?: {
       main?: string;
     }
+    uploadPhoto?: {
+      main?: string;
+    }
   }
 }
 
@@ -58,6 +61,9 @@ export const theme = createTheme({
       main: '#17a2b8',
       light: '#007bff',
       dark: '#003d7f'
+    },
+    uploadPhoto: {
+      main: '#00000',
     },
   },
   typography: {
@@ -109,6 +115,9 @@ export const darkTheme = createTheme({
     },
     action: {
       disabled: '#183D3D',
+    },
+    uploadPhoto: {
+      main: '#040D12',
     },
   },
   typography: {
