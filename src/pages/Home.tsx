@@ -69,11 +69,11 @@ function Home() {
         <Typography variant={isSmallScreen ? "h5" : "h3"}  sx={{...TypographyStyle, fontWeight: 'bold'}}>
           Welcome To Delta Team Project
         </Typography>
-        <Typography variant={isSmallScreen ? "h4" : "h2"}  sx={{...TypographyStyle, fontWeight: 'bold'}}>
+        <Typography variant={isSmallScreen ? "h6" : "h4"}  sx={{...TypographyStyle, fontWeight: 'bold'}}>
           Rent The Best Quality Cars With Us
         </Typography>
         <Typography variant="body1" sx={{ marginBottom: '2%' }}>
-          Pellentesque a massa at lorem tincidunt efficitur fringilla eget mauris. Maecenas finibus dignissim varius. Fusce vitae ipsum dignissim, molestie arcu sit amet, dictum urna aenean eu elementum diam, vitae vulputate dui.
+        We are excited to introduce our car rental service, a project born out of passion and a collaborative effort. Our platform offers a seamless and reliable way to rent high-quality cars, whether for business or leisure. We aim to provide an exceptional rental experience with a wide variety of cars to choose from, ensuring you find the perfect vehicle for your needs. Join us in this journey and enjoy the convenience and comfort of renting with Delta Team.
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link to='/car-list'>
