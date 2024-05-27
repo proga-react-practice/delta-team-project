@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { RentCar } from '../../../interfaces';
 import { textPattern, numberPattern, emailPattern, format } from '../../../pattern';
@@ -36,13 +36,22 @@ export const FormResults: React.FC<FormResultsProps> = ({ form, onDelete, index,
 
   const { carGroup } = useCarGroupContext();
 
+  const carId = form.selectedCar;
+  const cars = carGroup.cars;
+
+  const [selectedCar, setSelectedCar] = useState(cars.find(car => car.id === carId));
+
+  useEffect(() => {
+    setSelectedCar(cars.find(car => car.id === carId));
+  }, [carId, cars]);
+
   const handleEdit = (index: number) =>{
     onEdit(index);
     setOpenDialog(true);
   }
 
   const handleSave = (data: RentCar) =>{
-    onSave(data);
+    onSave({...data, selectedCar: carId});
     setOpenDialog(false);
   }
 
@@ -106,9 +115,8 @@ export const FormResults: React.FC<FormResultsProps> = ({ form, onDelete, index,
     backgroundColor: 'secondary.main',
   }
 
-  const carId = form.selectedCar;
-  const cars = carGroup.cars;
-  const selectedCar = cars.find(car => car.id === carId);
+  // const cars = carGroup.cars;
+  // const selectedCar = cars.find(car => car.id === carId);
 
   return (
     <>
