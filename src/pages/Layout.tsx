@@ -27,7 +27,7 @@ function Layout({ darkMode, toggleDarkMode }: { darkMode: boolean, toggleDarkMod
     };
 
     const drawerItems = (
-        <List>
+        <List sx={{backgroundColor:"secondary.main", height:"100%"}}>
             <ListItem component={Link} to="/" onClick={handleDrawerToggle}>
                 <ListItemText primary="Main page" />
             </ListItem>
@@ -78,7 +78,7 @@ function Layout({ darkMode, toggleDarkMode }: { darkMode: boolean, toggleDarkMod
                 anchor="left"
                 open={drawerOpen}
                 onClose={handleDrawerToggle}
-                sx={{ display: { xs: 'block', sm: 'none' } }}
+                sx={{ display: { xs: 'block', sm: 'none' }, color: 'secondary.main', }}
             >
                 {drawerItems}
             </Drawer>
