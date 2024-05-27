@@ -83,6 +83,27 @@ export const FormResults: React.FC<FormResultsProps> = ({ form, onDelete, index,
     padding: '10px',
     marginBottom: '10px',
     boxSizing: 'border-box',
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'quaternary.main',
+      },
+      '&:hover fieldset': {
+        borderColor: 'quaternary.dark',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'quaternary.dark',
+      },
+    },
+    '& .MuiFormLabel-root': {
+      color: "quaternary.dark",
+    },
+    '& .MuiFormLabel-root.Mui-focused': {
+      color: "secondary.dark",
+    },
+  }
+
+  const ModalStyle = {
+    backgroundColor: 'secondary.main',
   }
 
   const carId = form.selectedCar;
@@ -96,102 +117,106 @@ export const FormResults: React.FC<FormResultsProps> = ({ form, onDelete, index,
           {isEditing ? (
             <>
               <Dialog component={'form'} open={openDialog} onClose={handleCloseDialog} onSubmit={handleSubmit(onSubmit)}>
-                <DialogTitle>Edit Form</DialogTitle>
-                <DialogContent>
-                  <Box>
-                    <Controller
-                      name="firstName"
-                      control={control}
-                      defaultValue={form.firstName}
-                      rules={{ required: 'This field is required', pattern: { value: textPattern, message: 'First Name must start with a capital letter and cannot contain numbers or special characters' } }}
-                      render={({ field }) => <StyledTextField label='First Name' {...field} error={!!errors.firstName} helperText={errors.firstName?.message} />}
-                    />
-                    <Controller
-                      name="lastName"
-                      control={control}
-                      defaultValue={form.lastName}
-                      rules={{ required: 'This field is required', pattern: { value: textPattern, message: 'Last Name must start with a capital letter and cannot contain numbers or special characters' } }}
-                      render={({ field }) => <StyledTextField label='Last Name' {...field} error={!!errors.lastName} helperText={errors.lastName?.message} />}
-                    />
-                    <Controller
-                      name="phoneNumber"
-                      control={control}
-                      defaultValue={form.phoneNumber}
-                      rules={{ required: 'This field is required', pattern: { value: numberPattern, message: 'Phone number must be in the format +38(0xx) xxx xxxx and contain only digits.' } }}
-                      render={({ field }) => <StyledTextField label='Phone number' {...field} error={!!errors.phoneNumber} helperText={errors.phoneNumber?.message} />}
-                    />
-                    <Controller
-                      name="email"
-                      control={control}
-                      defaultValue={form.email}
-                      rules={{ required: 'This field is required', pattern: { value: emailPattern, message: 'Email must contain @' } }}
-                      render={({ field }) => <StyledTextField label='Email' {...field} error={!!errors.email} helperText={errors.email?.message} />}
-                    />
-                    <Controller
-                      name="placeOfIssue"
-                      control={control}
-                      defaultValue={form.placeOfIssue}
-                      rules={{ required: 'This field is required', pattern: { value: textPattern, message: 'Place of Issue must start with a capital letter and cannot contain numbers or special characters' } }}
-                      render={({ field }) => <StyledTextField label='Place of Issue' {...field} error={!!errors.placeOfIssue} helperText={errors.placeOfIssue?.message} />}
-                    />
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <Box sx={ModalStyle}>
+                  <DialogTitle>Edit Form</DialogTitle>
+                  <DialogContent>
+                    <Box sx={{marginTop: '1%'}}>
                       <Controller
-                        name="startRentDate"
+                        name="firstName"
                         control={control}
-                        defaultValue={form.startRentDate}
-                        render={({ field }) => (
-                          <DateTimePicker
-                            {...field}
-                            label="Start Rent Date"
-                            minDateTime={dayjs()}
-                            onError={(newError) => setError(newError)}
-                            slotProps={{
-                              textField: {
-                                helperText: errorMessage,
-                              },
-                            }}
-                            sx={DateAndTimeStyle}
-                          />
-                        )}
+                        defaultValue={form.firstName}
+                        rules={{ required: 'This field is required', pattern: { value: textPattern, message: 'First Name must start with a capital letter and cannot contain numbers or special characters' } }}
+                        render={({ field }) => <StyledTextField label='First Name' {...field} error={!!errors.firstName} helperText={errors.firstName?.message} />}
                       />
+                      <Controller
+                        name="lastName"
+                        control={control}
+                        defaultValue={form.lastName}
+                        rules={{ required: 'This field is required', pattern: { value: textPattern, message: 'Last Name must start with a capital letter and cannot contain numbers or special characters' } }}
+                        render={({ field }) => <StyledTextField label='Last Name' {...field} error={!!errors.lastName} helperText={errors.lastName?.message} />}
+                      />
+                      <Controller
+                        name="phoneNumber"
+                        control={control}
+                        defaultValue={form.phoneNumber}
+                        rules={{ required: 'This field is required', pattern: { value: numberPattern, message: 'Phone number must be in the format +38(0xx) xxx xxxx and contain only digits.' } }}
+                        render={({ field }) => <StyledTextField label='Phone number' {...field} error={!!errors.phoneNumber} helperText={errors.phoneNumber?.message} />}
+                      />
+                      <Controller
+                        name="email"
+                        control={control}
+                        defaultValue={form.email}
+                        rules={{ required: 'This field is required', pattern: { value: emailPattern, message: 'Email must contain @' } }}
+                        render={({ field }) => <StyledTextField label='Email' {...field} error={!!errors.email} helperText={errors.email?.message} />}
+                      />
+                      <Controller
+                        name="placeOfIssue"
+                        control={control}
+                        defaultValue={form.placeOfIssue}
+                        rules={{ required: 'This field is required', pattern: { value: textPattern, message: 'Place of Issue must start with a capital letter and cannot contain numbers or special characters' } }}
+                        render={({ field }) => <StyledTextField label='Place of Issue' {...field} error={!!errors.placeOfIssue} helperText={errors.placeOfIssue?.message} />}
+                      />
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <Controller
+                          name="startRentDate"
+                          control={control}
+                          defaultValue={form.startRentDate}
+                          render={({ field }) => (
+                            <DateTimePicker
+                              {...field}
+                              label="Start Rent Date"
+                              minDateTime={dayjs()}
+                              onError={(newError) => setError(newError)}
+                              slotProps={{
+                                textField: {
+                                  helperText: errorMessage,
+                                },
+                              }}
+                              sx={DateAndTimeStyle}
+                            />
+                          )}
+                        />
 
+                        <Controller
+                          name="finishRentDate"
+                          control={control}
+                          defaultValue={form.finishRentDate}
+                          render={({ field }) => (
+                            <DateTimePicker
+                              {...field}
+                              label="Finish Rent Date"
+                              minDateTime={form?.finishRentDate ? form.startRentDate?.add(5, 'hour') : dayjs()}
+                              onError={(newError) => setError(newError)}
+                              slotProps={{
+                                textField: {
+                                  helperText: errorMessage,
+                                },
+                              }}
+                              sx={DateAndTimeStyle}
+                            />
+                          )}
+                        />
+                      </LocalizationProvider>
                       <Controller
-                        name="finishRentDate"
+                        name="comments"
                         control={control}
-                        defaultValue={form.finishRentDate}
-                        render={({ field }) => (
-                          <DateTimePicker
-                            {...field}
-                            label="Finish Rent Date"
-                            minDateTime={form?.finishRentDate ? form.startRentDate?.add(5, 'hour') : dayjs()}
-                            onError={(newError) => setError(newError)}
-                            slotProps={{
-                              textField: {
-                                helperText: errorMessage,
-                              },
-                            }}
-                            sx={DateAndTimeStyle}
-                          />
-                        )}
+                        defaultValue={form.comments}
+                        render={({ field }) => <StyledTextField label="Comments" {...field} />}
                       />
-                    </LocalizationProvider>
-                    <Controller
-                      name="comments"
-                      control={control}
-                      defaultValue={form.comments}
-                      render={({ field }) => <StyledTextField label="Comments" {...field} />}
-                    />
-                    <StyledTextField 
-                      label='Selected Car' 
-                      disabled value={selectedCar?.brand + ' ' + selectedCar?.model}
-                      InputLabelProps={{ shrink: true }}
-                    />
-                  </Box>
-                </DialogContent>
-                <DialogActions sx={DialogButtons}>
-                  <StyledButtonDelete sx={{ width: '40%' }} onClick={handleCloseDialog}>Close</StyledButtonDelete>
-                  <StyledButtonSave sx={{ width: '40%' }} type='submit'>Save</StyledButtonSave>
-                </DialogActions>
+                      <StyledTextField 
+                        label='Selected Car' 
+                        value={selectedCar?.brand + ' ' + selectedCar?.model}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                    </Box>
+                  </DialogContent>
+                  <DialogActions sx={DialogButtons}>
+                    <StyledButtonDelete sx={{ width: '40%' }} onClick={handleCloseDialog}>Close</StyledButtonDelete>
+                    <StyledButtonSave sx={{ width: '40%' }} type='submit'>Save</StyledButtonSave>
+                  </DialogActions>
+                </Box>
               </Dialog>
             </>
           ) : (
