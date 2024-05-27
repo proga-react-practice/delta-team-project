@@ -34,8 +34,6 @@ import { StyledButtonDelete } from "../../Andrii/styledComponents/StyledButtonDe
 import { StyledButtonSave } from "../../Andrii/styledComponents/StyledButtonSave";
 import { Link } from 'react-router-dom';
 import RentCarForm from '../../Andrii/forms/RentCarForm';
-import { useTheme } from '@mui/material/styles';
-import { MenuProps } from '@mui/material/Menu';
 
 type CardProps = {
   data: FormData;
@@ -296,16 +294,6 @@ const CarDetail: React.FC<CardProps> = ({
     },
   }
 
-  const theme = useTheme();
-
-  const menuProps: Partial<MenuProps> = {
-    PaperProps: {
-      style: {
-        backgroundColor: theme.palette.secondary.main, 
-      },
-    },
-  };
-
   const IconSize = 25;
 
   const carId = data.id;
@@ -377,7 +365,7 @@ const CarDetail: React.FC<CardProps> = ({
                     defaultValue={data.body_type}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <Select {...field} sx={CardSelect} MenuProps={menuProps}>
+                      <Select {...field} sx={CardSelect}>
                         {bodyTypes.map((option) => (
                           <MenuItem key={option} value={option}>
                             {option}
@@ -411,7 +399,7 @@ const CarDetail: React.FC<CardProps> = ({
                     defaultValue={data.gearbox}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <Select {...field} sx={CardSelect}  MenuProps={menuProps}>
+                      <Select {...field} sx={CardSelect}>
                         {gearboxTypes.map((option) => (
                           <MenuItem key={option} value={option}>
                             {option}
@@ -428,7 +416,7 @@ const CarDetail: React.FC<CardProps> = ({
                     defaultValue={data.fuel}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <Select {...field} sx={CardSelect}  MenuProps={menuProps}>
+                      <Select {...field} sx={CardSelect}>
                         {fuelTypes.map((option) => (
                           <MenuItem key={option} value={option}>
                             {option}
@@ -489,7 +477,7 @@ const CarDetail: React.FC<CardProps> = ({
                   defaultValue={data.purpose}
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <Select {...field} sx={CardSelect}  MenuProps={menuProps}>
+                    <Select {...field} sx={CardSelect}>
                       {purposes.map((option) => (
                         <MenuItem key={option} value={option}>
                           {option}

@@ -130,6 +130,13 @@ export const darkTheme = createTheme({
     fontFamily: 'Goudy Bookletter 1911',
   },
   components: {
+    MuiMenu: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: '#183D3D', 
+        },
+      },
+    },
     MuiOutlinedInput: {
       styleOverrides: {
         root: {

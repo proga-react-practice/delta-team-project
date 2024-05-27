@@ -17,8 +17,6 @@ import RadioFormControlLabel from '../componets/RadioFormControlLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import { InputAdornment } from '@mui/material';
 import FileUpload from '../componets/FileUpload';
-import { MenuProps } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 
 interface FormProps {
   onSubmit: (data: FormData) => void;
@@ -129,15 +127,15 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
     mode: 'onChange',
   });
 
-  const theme = useTheme();
+  // const theme = useTheme();
 
-  const menuProps: Partial<MenuProps> = {
-    PaperProps: {
-      style: {
-        backgroundColor: theme.palette.secondary.main, 
-      },
-    },
-  };
+  // const menuProps: Partial<MenuProps> = {
+  //   PaperProps: {
+  //     style: {
+  //       backgroundColor: theme.palette.secondary.main, 
+  //     },
+  //   },
+  // };
 
   const handleReset = () => {
     reset(initialFormData);
@@ -196,7 +194,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
           control={control}
           rules={{ required: 'Body type is required' }}
           render={({ field }) => (
-            <Select {...field} MenuProps={menuProps}>
+            <Select {...field}>
               {bodyTypes.map((type) => (
                 <MenuItem key={type} value={type}>
                   {type}
@@ -297,7 +295,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
           control={control}
           rules={{ required: 'Purpose is required' }}
           render={({ field }) => (
-            <Select {...field} MenuProps={menuProps}>
+            <Select {...field}>
               {purposes.map((type) => (
                 <MenuItem key={type} value={type}>
                   {type}
