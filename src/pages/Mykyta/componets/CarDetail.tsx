@@ -16,6 +16,7 @@ import {
   MenuItem,
   Select,
   TextField,
+  FormControl,
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { FormData, RentCar, bodyTypes, fuelTypes, gearboxTypes, purposes } from "../../../interfaces";
@@ -33,6 +34,8 @@ import { StyledButtonDelete } from "../../Andrii/styledComponents/StyledButtonDe
 import { StyledButtonSave } from "../../Andrii/styledComponents/StyledButtonSave";
 import { Link } from 'react-router-dom';
 import RentCarForm from '../../Andrii/forms/RentCarForm';
+import { useTheme } from '@mui/material/styles';
+import { MenuProps } from '@mui/material/Menu';
 
 type CardProps = {
   data: FormData;
@@ -293,6 +296,16 @@ const CarDetail: React.FC<CardProps> = ({
     },
   }
 
+  const theme = useTheme();
+
+  const menuProps: Partial<MenuProps> = {
+    PaperProps: {
+      style: {
+        backgroundColor: theme.palette.secondary.main, 
+      },
+    },
+  };
+
   const IconSize = 25;
 
   const carId = data.id;
@@ -357,13 +370,14 @@ const CarDetail: React.FC<CardProps> = ({
                       error={Boolean(errors.year)}
                       helperText={errors.year?.message}
                   />
+                  <FormControl sx={CardTextField}>
                   <Controller
                     name="body_type"
                     control={control}
                     defaultValue={data.body_type}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <Select {...field} sx={CardSelect}>
+                      <Select {...field} sx={CardSelect} MenuProps={menuProps}>
                         {bodyTypes.map((option) => (
                           <MenuItem key={option} value={option}>
                             {option}
@@ -372,6 +386,7 @@ const CarDetail: React.FC<CardProps> = ({
                       </Select>  
                     )}
                   />
+                  </FormControl>
                   <TextField
                     {...register("mileage_km", {
                       required: "Mileage is required",
@@ -389,13 +404,14 @@ const CarDetail: React.FC<CardProps> = ({
                       ),
                     }}
                   />
+                  <FormControl sx={CardTextField}>
                   <Controller
                     name="gearbox"
                     control={control}
                     defaultValue={data.gearbox}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <Select {...field} sx={CardSelect}>
+                      <Select {...field} sx={CardSelect}  MenuProps={menuProps}>
                         {gearboxTypes.map((option) => (
                           <MenuItem key={option} value={option}>
                             {option}
@@ -404,13 +420,15 @@ const CarDetail: React.FC<CardProps> = ({
                       </Select>  
                     )}
                   />
+                  </FormControl>
+                  <FormControl sx={CardTextField}>
                   <Controller
                     name="fuel"
                     control={control}
                     defaultValue={data.fuel}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <Select {...field} sx={CardSelect}>
+                      <Select {...field} sx={CardSelect}  MenuProps={menuProps}>
                         {fuelTypes.map((option) => (
                           <MenuItem key={option} value={option}>
                             {option}
@@ -419,6 +437,7 @@ const CarDetail: React.FC<CardProps> = ({
                       </Select>  
                     )}
                   />
+                  </FormControl>
                   <TextField
                     {...register("price_per_day", {
                       required: "Price is required",
@@ -463,13 +482,14 @@ const CarDetail: React.FC<CardProps> = ({
                       endAdornment: <InputAdornment position="end">cm3</InputAdornment>,
                     }}
                   />
+                  <FormControl sx={CardTextField}>
                   <Controller
                   name="purpose"
                   control={control}
                   defaultValue={data.purpose}
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <Select {...field} sx={CardSelect}>
+                    <Select {...field} sx={CardSelect}  MenuProps={menuProps}>
                       {purposes.map((option) => (
                         <MenuItem key={option} value={option}>
                           {option}
@@ -478,6 +498,7 @@ const CarDetail: React.FC<CardProps> = ({
                     </Select>  
                   )}
                 />
+                </FormControl>
               </Box>
             </DialogContent>
             <DialogActions sx={DialogButtons}>
