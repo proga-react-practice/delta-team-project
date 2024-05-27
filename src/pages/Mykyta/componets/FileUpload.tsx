@@ -53,9 +53,9 @@ const FileUpload: React.FC<FileUploadProps> = ({ control, name, label, rules, er
     width: '100%',
     padding: '8px',
     marginBottom: '10px',
-    backgroundColor: isFileSelected ? 'success.dark' : 'primary.main',
+    backgroundColor: isFileSelected ? 'success.dark' : 'uploadPhoto.main',
     '&:hover': {
-      backgroundColor: isFileSelected ? 'primary.main' : 'success.dark',
+      backgroundColor: isFileSelected ? 'uploadPhoto.main' : 'success.dark',
     }
   };
 
