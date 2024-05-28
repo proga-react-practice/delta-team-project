@@ -23,7 +23,7 @@ const RentButtonStyle = {
   fontSize: '16px',
   fontWeight: 'bold',
   border: '0',
-  color: 'text.primary',
+  color: 'bisque',
   backgroundColor: 'info.dark',
   '&:hover': {
     backgroundColor: 'text.primary',
@@ -37,7 +37,7 @@ const AddButtonStyle = {
   fontSize: '16px',
   fontWeight: 'bold',
   border: '0',
-  color: 'text.primary',
+  color: 'bisque',
   backgroundColor: 'success.dark',
   '&:hover': {
     backgroundColor: 'text.primary',
