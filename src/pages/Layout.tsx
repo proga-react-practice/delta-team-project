@@ -54,11 +54,11 @@ function Layout({ darkMode, toggleDarkMode }: { darkMode: boolean, toggleDarkMod
             <ListItem component={Link} to={CARFORM} onClick={handleDrawerToggle}>
                 <ListItemText sx={BurgerButtons} primary="Add Car" />
             </ListItem>
-            <ListItem component={Link} to={ORDERS} onClick={handleDrawerToggle}>
-                <ListItemText sx={BurgerButtons} primary="Orders" />
-            </ListItem>
             <ListItem component={Link} to={CARLIST} onClick={handleDrawerToggle}>
                 <ListItemText sx={BurgerButtons} primary="Car List" />
+            </ListItem>
+            <ListItem component={Link} to={ORDERS} onClick={handleDrawerToggle}>
+                <ListItemText sx={BurgerButtons} primary="Orders" />
             </ListItem>
         </List>
     );
@@ -74,8 +74,8 @@ function Layout({ darkMode, toggleDarkMode }: { darkMode: boolean, toggleDarkMod
                         <Button sx={Buttons} color="inherit" component={Link} to={HOME}>Main page</Button>
                         <Button sx={Buttons} color="inherit" component={Link} to={ABOUT}>About Us</Button>
                         <Button sx={Buttons} color="inherit" component={Link} to={CARFORM}>Add Car</Button>
-                        <Button sx={Buttons} color="inherit" component={Link} to={ORDERS}>Orders</Button>
                         <Button sx={Buttons} color="inherit" component={Link} to={CARLIST}>Car List</Button>
+                        <Button sx={Buttons} color="inherit" component={Link} to={ORDERS}>Orders</Button>
                     </Box>
                     <IconButton
                         color="inherit"
