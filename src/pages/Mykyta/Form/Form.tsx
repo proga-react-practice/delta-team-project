@@ -127,16 +127,6 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
     mode: 'onChange',
   });
 
-  // const theme = useTheme();
-
-  // const menuProps: Partial<MenuProps> = {
-  //   PaperProps: {
-  //     style: {
-  //       backgroundColor: theme.palette.secondary.main, 
-  //     },
-  //   },
-  // };
-
   const handleReset = () => {
     reset(initialFormData);
   };
@@ -319,10 +309,10 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
         />
       </Box>
       <Box sx={BoxButton}>
-        <Button type="submit" variant="contained" color="success" sx={{ '&:hover': { backgroundColor: 'primary.dark' }, ButtonStyle }}>
+        <Button type="submit" variant="contained" sx={{ backgroundColor: 'success.main', '&:hover': { color: 'text.primary', backgroundColor: 'success.dark' }, ButtonStyle }}>
           Submit
         </Button>
-        <Button type="button" variant="contained" color="error" onClick={handleReset} sx={{ '&:hover': { backgroundColor: 'dark' }, ButtonStyle }}>
+        <Button type="button" variant="contained" onClick={handleReset} sx={{ backgroundColor: 'error.light', '&:hover': { color: 'text.primary', backgroundColor: 'error.dark' }, ButtonStyle }}>
           Reset
         </Button>
       </Box>
