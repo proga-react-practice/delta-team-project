@@ -8,7 +8,6 @@ import { StyledButtonDelete } from '../styledComponents/StyledButtonDelete'
 import { StyledButtonEdit } from '../styledComponents/StyledButtonEdit'
 import { StyledButtonSave } from '../styledComponents/StyledButtonSave'
 import { StyledTextField } from '../styledComponents/StyledTextField'
-import { createTransform } from '../animations/animation' 
 import { useForm, Controller } from 'react-hook-form';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -36,7 +35,6 @@ export const FormResultsMobile: React.FC<FormResultsMobileProps> = ({ form, onDe
     defaultValues: form,
     mode: "onChange",
   });
-  const Transform = createTransform()
 
   const onSubmit = (data: RentCar) => {
     isEditing ? onSave(data) : onEdit(index);
@@ -66,7 +64,7 @@ export const FormResultsMobile: React.FC<FormResultsMobileProps> = ({ form, onDe
   return (
     <TableContainer sx={ MobileStyle } component={'form'} onSubmit={handleSubmit(onSubmit)}>
         <Table aria-label="customize table">
-            <TableBody sx={Transform}>
+            <TableBody>
                 <StyledTableRow>
                     <StyledTableCellMobile>First Name</StyledTableCellMobile>
                     <StyledTableCellMobile>
