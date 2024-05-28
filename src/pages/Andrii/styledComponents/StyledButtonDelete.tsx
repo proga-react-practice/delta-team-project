@@ -3,9 +3,10 @@ import { styled } from '@mui/system';
 
 export const StyledButtonDelete = styled(Button)(({theme}) => ({
   width: '100%',
+  color: 'beige',
   backgroundColor: theme.palette.error.light,
-  color: theme.palette.text.primary,
   '&:hover': {
+    color: theme.palette.text.primary,
     backgroundColor: theme.palette.error.dark,
   },
 }));

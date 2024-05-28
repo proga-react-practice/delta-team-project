@@ -105,10 +105,11 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit, onClose, index }) =
         marginTop: '10px',
         border: 'none',
         borderRadius: '5px',
-        color: "text.primary",
+        color: 'beige',
         backgroundColor: "info.main",
         marginRight: '10%', 
         '&:hover': {
+            color: "text.primary",
             backgroundColor: "info.dark",
         },
     }
@@ -119,9 +120,10 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit, onClose, index }) =
         marginTop: '10px',
         border: 'none',
         borderRadius: '5px',
-        color: "text.primary",
+        color: 'beige',
         backgroundColor: "error.light",
         '&:hover': {
+            color: "text.primary",
             backgroundColor: "error.dark",
         },
     }
