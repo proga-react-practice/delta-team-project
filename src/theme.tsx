@@ -99,16 +99,16 @@ export const darkTheme = createTheme({
     },
     error: {
       main: '#c84238',
-      light: '#dc3545',
-      dark: '#9a000f'
+      light: '#950707',
+      dark: '#6d0202'
     },
     success: {
       main: '#126525',
       light: '#34d058',
-      dark: '#22863a'
+      dark: '#094316'
     },
     info: {
-      main: '#17a2b8',
+      main: '#0e539d',
       light: '#007bff',
       dark: '#003d7f'
     },
