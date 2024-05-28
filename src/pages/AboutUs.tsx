@@ -60,11 +60,11 @@ function AboutUs() {
         </Typography>
         <Box sx={CardContainer}>
             <Box sx={Card}>
-                <Box component={'img'} alt='Andrii' src="/src/icon/Andrii.jpg" sx={CardPhoto} />
+                <Box component={'img'} alt='Andrii' src="../../Andrii.jpg" sx={CardPhoto} />
                 <Typography variant={isSmallScreen ? "h5" : "h4"} sx={TypographyStyle}>Andrii Vovk</Typography>
             </Box>
             <Box sx={Card}>
-                <Box component={'img'} alt='Mykyta' src="/src/icon/Mykyta.jpg" sx={CardPhoto} />
+                <Box component={'img'} alt='Mykyta' src="../../Mykyta.jpg" sx={CardPhoto} />
                 <Typography variant={isSmallScreen ? "h5" : "h4"} sx={TypographyStyle}>Mykyta Nykytiuk</Typography>
             </Box>
         </Box>
