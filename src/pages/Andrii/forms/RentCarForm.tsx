@@ -176,11 +176,14 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ onSubmit, onClose, index }) =
                         placeholder="Last Name" 
                     />
                 </Box>
-                {(errors.firstName && errors.firstName.type === 'pattern') || (errors.lastName && errors.lastName.type === 'pattern') && (
+                {errors.firstName && errors.firstName.type === 'pattern' && (
                     <FormHelperText sx={HelperText} error>
-                        {errors.firstName && errors.firstName.type === 'pattern' && errors.firstName.message}
-                        {errors.firstName && errors.lastName && <br />}
-                        {errors.lastName && errors.lastName.type === 'pattern' && errors.lastName.message}
+                        {errors.firstName.message}
+                    </FormHelperText>
+                )}
+                {errors.lastName && errors.lastName.type === 'pattern' && (
+                    <FormHelperText sx={HelperText} error>
+                        {errors.lastName.message}
                     </FormHelperText>
                 )}
             </Box>
