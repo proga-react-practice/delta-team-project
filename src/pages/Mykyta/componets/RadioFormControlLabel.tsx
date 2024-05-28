@@ -20,7 +20,7 @@ const RadioFormControlLabel: React.FC<RadioFormControlLabelProps> = ({ value, la
   return (
     <FormControlLabel
       value={value}
-      control={<Radio />}
+      control={<Radio color="default" />}
       label={label}
       sx={RadioStyle}
       required={required}

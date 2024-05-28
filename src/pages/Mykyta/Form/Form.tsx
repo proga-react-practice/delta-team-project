@@ -81,6 +81,7 @@ const BoxButton = {
   width: '100%',
 };
 
+
 const RadioGroupStyle = {
   display: 'flex',
   flexDirection: 'row',
@@ -114,6 +115,7 @@ const RadioGroupStyle = {
 };
 
 const Form: React.FC<FormProps> = ({ onSubmit }) => {
+
   const {
     register,
     handleSubmit,
@@ -124,6 +126,16 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
     defaultValues: initialFormData,
     mode: 'onChange',
   });
+
+  // const theme = useTheme();
+
+  // const menuProps: Partial<MenuProps> = {
+  //   PaperProps: {
+  //     style: {
+  //       backgroundColor: theme.palette.secondary.main, 
+  //     },
+  //   },
+  // };
 
   const handleReset = () => {
     reset(initialFormData);

@@ -16,6 +16,7 @@ import {
   MenuItem,
   Select,
   TextField,
+  FormControl,
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { FormData, RentCar, bodyTypes, fuelTypes, gearboxTypes, purposes } from "../../../interfaces";
@@ -357,6 +358,7 @@ const CarDetail: React.FC<CardProps> = ({
                       error={Boolean(errors.year)}
                       helperText={errors.year?.message}
                   />
+                  <FormControl sx={CardTextField}>
                   <Controller
                     name="body_type"
                     control={control}
@@ -372,6 +374,7 @@ const CarDetail: React.FC<CardProps> = ({
                       </Select>  
                     )}
                   />
+                  </FormControl>
                   <TextField
                     {...register("mileage_km", {
                       required: "Mileage is required",
@@ -389,6 +392,7 @@ const CarDetail: React.FC<CardProps> = ({
                       ),
                     }}
                   />
+                  <FormControl sx={CardTextField}>
                   <Controller
                     name="gearbox"
                     control={control}
@@ -404,6 +408,8 @@ const CarDetail: React.FC<CardProps> = ({
                       </Select>  
                     )}
                   />
+                  </FormControl>
+                  <FormControl sx={CardTextField}>
                   <Controller
                     name="fuel"
                     control={control}
@@ -419,6 +425,7 @@ const CarDetail: React.FC<CardProps> = ({
                       </Select>  
                     )}
                   />
+                  </FormControl>
                   <TextField
                     {...register("price_per_day", {
                       required: "Price is required",
@@ -463,6 +470,7 @@ const CarDetail: React.FC<CardProps> = ({
                       endAdornment: <InputAdornment position="end">cm3</InputAdornment>,
                     }}
                   />
+                  <FormControl sx={CardTextField}>
                   <Controller
                   name="purpose"
                   control={control}
@@ -478,6 +486,7 @@ const CarDetail: React.FC<CardProps> = ({
                     </Select>  
                   )}
                 />
+                </FormControl>
               </Box>
             </DialogContent>
             <DialogActions sx={DialogButtons}>

@@ -13,6 +13,10 @@ declare module "@mui/material/styles" {
     }
     orders?: {
       main?: string;
+      dark?: string;
+    }
+    uploadPhoto?: {
+      main?: string;
     }
   }
 }
@@ -43,6 +47,7 @@ export const theme = createTheme({
     },
     orders: {
       main: '#484542',
+      dark: '#ffffff'
     },
     error: {
       main: '#c84238',
@@ -58,6 +63,9 @@ export const theme = createTheme({
       main: '#17a2b8',
       light: '#007bff',
       dark: '#003d7f'
+    },
+    uploadPhoto: {
+      main: '#00000',
     },
   },
   typography: {
@@ -104,17 +112,31 @@ export const darkTheme = createTheme({
       light: '#007bff',
       dark: '#003d7f'
     },
+    orders: {
+      main: '#93B1A6',
+      dark: '#183D3D'
+    },
     text: {
       primary: '#93B1A6',
     },
     action: {
       disabled: '#183D3D',
     },
+    uploadPhoto: {
+      main: '#040D12',
+    },
   },
   typography: {
     fontFamily: 'Goudy Bookletter 1911',
   },
   components: {
+    MuiMenu: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: '#183D3D', 
+        },
+      },
+    },
     MuiOutlinedInput: {
       styleOverrides: {
         root: {

@@ -8,8 +8,8 @@ export const StyledTableCell = styled(TableCell)(({theme}) => ({
     borderBottom: '1px solid #93B1A6',
     
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.primary.light,
-      color: theme.palette.primary.main,
+      backgroundColor: theme.palette.orders.main,
+      color: theme.palette.orders.dark,
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
