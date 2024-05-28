@@ -51,7 +51,7 @@ export const theme = createTheme({
     },
     error: {
       main: '#c84238',
-      light: '#dc3545',
+      light: '#c82636',
       dark: '#9a000f'
     },
     success: {
@@ -60,7 +60,7 @@ export const theme = createTheme({
       dark: '#22863a'
     },
     info: {
-      main: '#17a2b8',
+      main: '#176ecb',
       light: '#007bff',
       dark: '#003d7f'
     },
